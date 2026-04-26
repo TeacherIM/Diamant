@@ -206,14 +206,10 @@ sessionRef.on('value', (snapshot) => {
   const data = snapshot.val();
 
   if (!data) {
-    grid.innerHTML = '';
-    grid.appendChild(emptyMsg);
-    emptyMsg.style.display = 'block';
+    grid.innerHTML = '<div class="empty-msg">Чакаме учениците да се включат...</div>';
     countBadge.textContent = '0 ученика';
     return;
   }
-
-  emptyMsg.style.display = 'none';
   const students = Object.values(data).sort((a,b) => (a.name||'').localeCompare(b.name||''));
   countBadge.textContent = `${students.length} ученик${students.length === 1 ? '' : 'а'}`;
 
