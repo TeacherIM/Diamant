@@ -3,314 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Учителски панел — Диамантът на ценностите</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Учителски панел</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: #2C2318;
-  min-height: 100vh;
-  padding: 1.5rem;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-}
-.header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1.4rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(196,168,130,0.3);
-}
-.header-left h1 { font-size: 22px; font-style: italic; font-weight: 600; color: #FBF6EF; letter-spacing: 0.03em; }
-.header-left p { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #8B7355; margin-top: 2px; }
-.header-right { display: flex; align-items: center; gap: 16px; }
-.live-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: #5A7A4A; padding: 4px 12px;
-  border: 1px solid rgba(90,122,74,0.4); border-radius: 2px;
-}
-.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #5A7A4A; animation: pulse 1.4s infinite; }
-@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
-.count-badge { font-size: 12px; color: #8B7355; letter-spacing: 0.08em; }
-.session-btn {
-  padding: 6px 18px; font-family: 'Cormorant Garamond', serif;
-  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-  border: 1px solid rgba(196,168,130,0.4); border-radius: 2px;
-  background: transparent; color: #8B7355; cursor: pointer; transition: background .15s;
-}
-.session-btn:hover { background: rgba(196,168,130,0.1); }
-.session-btn.danger { border-color: rgba(180,80,60,0.4); color: #B4503C; }
-.session-btn.danger:hover { background: rgba(180,80,60,0.08); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant Garamond',Georgia,serif}
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 14px;
-}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid rgba(196,168,130,.3)}
+.header h1{font-size:20px;font-style:italic;font-weight:600;color:#FBF6EF}
+.header p{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-top:2px}
+.hright{display:flex;align-items:center;gap:12px}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5A7A4A;padding:3px 10px;border:1px solid rgba(90,122,74,.4);border-radius:2px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#5A7A4A;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cnt{font-size:11px;color:#8B7355}
 
-.student-card {
-  background: #FFFDF9; border: 1px solid #D9C9B0; border-radius: 3px;
-  padding: 1rem; transition: border-color .2s;
-}
-.student-card.complete { border-color: #8B7355; }
-.student-card.incomplete { opacity: 0.7; }
+/* Exercise controls */
+.ex-panel{background:rgba(196,168,130,.06);border:1px solid rgba(196,168,130,.2);border-radius:3px;padding:1rem 1.2rem;margin-bottom:1rem}
+.ex-panel-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:.8rem}
+.ex-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.8rem}
+.ex-btn{padding:8px 20px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.08em;border:1px solid rgba(196,168,130,.4);border-radius:2px;background:transparent;color:#C4A882;cursor:pointer;transition:all .15s}
+.ex-btn:hover{border-color:#8B7355;color:#FBF6EF}
+.ex-btn.active{background:#8B7355;color:#FFFDF9;border-color:#8B7355}
+.ex-active-lbl{font-size:12px;font-style:italic;color:#8B7355}
+.ex-active-lbl strong{color:#FBF6EF}
+.danger-btn{padding:5px 14px;font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(180,80,60,.4);border-radius:2px;background:transparent;color:#B4503C;cursor:pointer;transition:background .15s}
+.danger-btn:hover{background:rgba(180,80,60,.08)}
 
-.s-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 0.5px solid rgba(196,168,130,0.3);
-}
-.s-name { font-size: 14px; font-weight: 600; color: #2C1F12; letter-spacing: 0.03em; }
-.s-status { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-.s-status.done { color: #5A7A4A; }
-.s-status.partial { color: #8B7355; }
-.s-status.empty { color: #C4A882; }
+/* Student grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.card{background:#FFFDF9;border:1px solid #D9C9B0;border-radius:3px;padding:.9rem;cursor:pointer;transition:border-color .2s}
+.card:hover{border-color:#8B7355}
+.card.complete{border-color:#8B7355}
+.card.partial{border-color:#C4A882}
+.card.waiting{opacity:.6}
+.s-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid rgba(196,168,130,.3)}
+.s-name{font-size:13px;font-weight:600;color:#2C1F12}
+.s-status{font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.s-status.done{color:#5A7A4A}
+.s-status.partial{color:#8B7355}
+.s-status.wait{color:#C4A882}
 
-.mini-diamond { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.mini-row { display: flex; gap: 5px; justify-content: center; }
-.mini-connector { width: 1px; height: 6px; background: rgba(196,168,130,0.4); }
+/* Mini diamond */
+.mini-d{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mini-row{display:flex;gap:4px;justify-content:center}
+.mini-conn{width:1px;height:5px;background:rgba(196,168,130,.4)}
+.mini-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 5px;min-height:22px;min-width:60px;border:.5px solid rgba(196,168,130,.3);color:#C4A882;background:rgba(196,168,130,.06);font-family:'Cormorant Garamond',serif}
+.mini-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
+.mini-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.mini-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
+.mini-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:7px}
+.mini-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
 
-.mini-slot {
-  border-radius: 2px; display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 4px 6px; min-height: 26px; min-width: 68px;
-  border: 0.5px solid rgba(196,168,130,0.3);
-  color: #C4A882; background: rgba(196,168,130,0.06);
-  font-family: 'Cormorant Garamond', serif;
-}
-.mini-slot.ЛЮБОВ        { background: #EDE0CC; border-color: #8B7355; color: #2C1F12; }
-.mini-slot.НАДЕЖДА      { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
-.mini-slot.ПЕСЕН        { background: #FAEEDA; border-color: #EF9F27; color: #412402; }
-.mini-slot.СЪПРИЧАСТНОСТ{ background: #FAECE7; border-color: #D85A30; color: #4A1B0C; }
-.mini-slot.ТРУД         { background: #F1EFE8; border-color: #888780; color: #2C2C2A; }
+/* Mini thermo */
+.mini-thermo{font-size:11px;color:#2C1F12;font-style:italic;line-height:1.6}
 
-.empty-msg {
-  text-align: center; padding: 3rem 0;
-  font-style: italic; font-size: 14px; color: #8B7355; letter-spacing: 0.06em;
-}
+/* Mini wall */
+.mini-wall{font-size:11px;font-style:italic;color:#2C1F12;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 
-.ornament { display:flex;align-items:center;gap:10px;margin-bottom:1rem; }
-.ornament-line { height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(196,168,130,0.4),transparent); }
-.ornament-diamond { width:6px;height:6px;background:#8B7355;transform:rotate(45deg);flex-shrink:0; }
+/* Mini cloud */
+.mini-cloud{display:flex;flex-wrap:wrap;gap:4px}
+.mini-tag{padding:2px 7px;border:.5px solid #C4A882;border-radius:2px;font-size:9px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif}
 
-.legend {
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-  margin-bottom: 1.2rem; padding: 0.6rem 0.8rem;
-  border: 1px solid rgba(196,168,130,0.2); border-radius: 2px;
-  background: rgba(196,168,130,0.04);
-}
-.leg-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #8B7355; margin-right: 4px; }
-.leg-item { display:flex;align-items:center;gap:5px;font-size:11px; }
-.leg-dot { width:10px;height:10px;border-radius:1px; }
-.leg-txt { color: #FBF6EF; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.06em; }
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,14,8,.88);z-index:100;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.open{display:flex}
+.modal-card{background:#FFFDF9;border:1px solid #C4A882;border-radius:3px;padding:2rem 2.5rem;max-width:520px;width:100%;position:relative;max-height:90vh;overflow-y:auto;animation:fin .18s ease}
+@keyframes fin{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:.8rem;right:1rem;font-size:20px;color:#C4A882;cursor:pointer;background:none;border:none;font-family:'Cormorant Garamond',serif}
+.modal-name{text-align:center;font-size:20px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.2rem}
+.modal-sub{text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:1.5rem}
 
-.student-card { cursor: pointer; }
-.student-card:hover { border-color: #8B7355; box-shadow: 0 0 0 1px rgba(139,115,85,0.3); }
+/* Big diamond */
+.big-d{display:flex;flex-direction:column;align-items:center;gap:8px}
+.big-row{display:flex;gap:10px;justify-content:center}
+.big-conn{width:1px;height:14px;background:rgba(196,168,130,.5)}
+.big-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;min-height:48px;min-width:130px;border:1px solid rgba(196,168,130,.3);color:#C4A882;background:rgba(196,168,130,.06);font-family:'Cormorant Garamond',serif}
+.big-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
+.big-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.big-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
+.big-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:11px}
+.big-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
 
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(20,14,8,0.88); z-index: 100;
-  align-items: center; justify-content: center; padding: 2rem;
-}
-.modal-overlay.open { display: flex; }
-.modal-card {
-  background: #FFFDF9; border: 1px solid #C4A882; border-radius: 3px;
-  padding: 2.5rem 3rem; max-width: 560px; width: 100%;
-  position: relative; animation: fadeIn .18s ease;
-}
-@keyframes fadeIn { from{opacity:0;transform:scale(0.96)} to{opacity:1;transform:scale(1)} }
-.modal-close {
-  position: absolute; top: 1rem; right: 1.2rem;
-  font-size: 22px; color: #C4A882; cursor: pointer;
-  background: none; border: none; line-height: 1;
-  font-family: 'Cormorant Garamond', serif;
-}
-.modal-close:hover { color: #8B7355; }
-.modal-name { text-align: center; font-size: 22px; font-weight: 600; font-style: italic; color: #2C1F12; margin-bottom: 0.3rem; }
-.modal-subtitle { text-align: center; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #8B7355; margin-bottom: 2rem; }
+/* Big thermo */
+.big-thermo-item{margin-bottom:.8rem;padding:.6rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px}
+.big-thermo-hero{font-size:12px;font-weight:600;color:#2C1F12;margin-bottom:.3rem}
+.big-thermo-bar{height:12px;border-radius:6px;background:linear-gradient(to right,#6B9FD4,#C4A882,#D85A30);position:relative;margin-bottom:.2rem}
+.big-thermo-marker{position:absolute;top:-3px;width:18px;height:18px;border-radius:50%;background:#FFFDF9;border:2px solid #8B7355;transform:translateX(-50%)}
+.big-thermo-val{font-size:11px;color:#8B7355;font-style:italic}
 
-.big-diamond { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.big-row { display: flex; gap: 12px; justify-content: center; }
-.big-connector { width: 1px; height: 16px; background: rgba(196,168,130,0.5); }
-.big-slot {
-  border-radius: 2px; display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 14px 20px; min-height: 56px; min-width: 150px;
-  border: 1px solid rgba(196,168,130,0.3);
-  color: #C4A882; background: rgba(196,168,130,0.06);
-  font-family: 'Cormorant Garamond', serif;
-}
-.big-slot.ЛЮБОВ        { background: #EDE0CC; border-color: #8B7355; color: #2C1F12; }
-.big-slot.НАДЕЖДА      { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
-.big-slot.ПЕСЕН        { background: #FAEEDA; border-color: #EF9F27; color: #412402; }
-.big-slot.СЪПРИЧАСТНОСТ{ background: #FAECE7; border-color: #D85A30; color: #4A1B0C; font-size:12px; }
-.big-slot.ТРУД         { background: #F1EFE8; border-color: #888780; color: #2C2C2A; }
-.modal-ornament { display:flex;align-items:center;gap:10px;margin:1.5rem 0 0; }
-.modal-ornament .ml { height:1px;flex:1;background:linear-gradient(to right,transparent,#C4A882,transparent); }
-.modal-ornament .md { width:6px;height:6px;background:#C4A882;transform:rotate(45deg);flex-shrink:0; }
+/* Big wall */
+.big-wall-text{font-size:15px;font-style:italic;color:#2C1F12;line-height:1.8;text-align:center;padding:.8rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px;background:rgba(196,168,130,.04)}
+
+/* Big cloud */
+.big-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.big-tag{padding:6px 16px;border:1px solid #C4A882;border-radius:2px;font-size:14px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
+
+.orn{display:flex;align-items:center;gap:8px;margin:.8rem 0}
+.ol{height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(196,168,130,.4),transparent)}
+.od{width:5px;height:5px;background:#8B7355;transform:rotate(45deg);flex-shrink:0}
+.empty-msg{text-align:center;padding:2.5rem;font-style:italic;font-size:14px;color:#8B7355;grid-column:1/-1}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-left">
-    <h1>Диамантът на ценностите</h1>
-    <p>Учителски панел · „По жътва" · Елин Пелин</p>
+  <div>
+    <h1>Учителски панел</h1>
+    <p>По жътва · Елин Пелин</p>
   </div>
-  <div class="header-right">
-    <span class="count-badge" id="count-badge">0 ученика</span>
-    <span class="live-badge"><span class="live-dot"></span>На живо</span>
-    <button class="session-btn danger" onclick="clearSession()">Изчисти сесията</button>
+  <div class="hright">
+    <span class="cnt" id="cnt">0 ученика</span>
+    <span class="live"><span class="live-dot"></span>На живо</span>
+    <button class="danger-btn" onclick="clearAll()">Изчисти всичко</button>
   </div>
 </div>
 
-<div class="ornament">
-  <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
+<div class="ex-panel">
+  <div class="ex-panel-title">Избери упражнение за учениците</div>
+  <div class="ex-buttons">
+    <button class="ex-btn" onclick="setEx('diamond')">1. Диамант</button>
+    <button class="ex-btn" onclick="setEx('thermometer')">2. Термометър</button>
+    <button class="ex-btn" onclick="setEx('wall')">3. Стена на емпатията</button>
+    <button class="ex-btn" onclick="setEx('wordcloud')">4. Облак от думи</button>
+    <button class="ex-btn" onclick="setEx(null)" style="border-color:rgba(180,80,60,.4);color:#B4503C">Пауза</button>
+  </div>
+  <div class="ex-active-lbl" id="ex-active-lbl">Няма активно упражнение</div>
 </div>
 
-<div class="legend">
-  <span class="leg-label">Ценности:</span>
-  <span class="leg-item"><span class="leg-dot" style="background:#EDE0CC;border:0.5px solid #8B7355"></span><span class="leg-txt">Любов</span></span>
-  <span class="leg-item"><span class="leg-dot" style="background:#E1F5EE;border:0.5px solid #1D9E75"></span><span class="leg-txt">Надежда</span></span>
-  <span class="leg-item"><span class="leg-dot" style="background:#FAEEDA;border:0.5px solid #EF9F27"></span><span class="leg-txt">Песен</span></span>
-  <span class="leg-item"><span class="leg-dot" style="background:#FAECE7;border:0.5px solid #D85A30"></span><span class="leg-txt">Съпричастност</span></span>
-  <span class="leg-item"><span class="leg-dot" style="background:#F1EFE8;border:0.5px solid #888780"></span><span class="leg-txt">Труд</span></span>
-</div>
+<div class="orn"><div class="ol"></div><div class="od"></div><div class="ol"></div></div>
 
 <div class="grid" id="grid">
-  <div class="empty-msg" id="empty-msg">Чакаме учениците да се включат...</div>
+  <div class="empty-msg">Чакаме учениците да се включат...</div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-name" id="m-name"></div>
+    <div class="modal-sub" id="m-sub"></div>
+    <div id="m-content"></div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
+  authDomain:"diamant-703f1.firebaseapp.com",
+  projectId:"diamant-703f1",
+  storageBucket:"diamant-703f1.firebasestorage.app",
+  messagingSenderId:"5172210587",
+  appId:"1:5172210587:web:64f40c40ffb4c7c00e8f3e",
+  databaseURL:"https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+});
+const db = firebase.database();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
-  authDomain: "diamant-703f1.firebaseapp.com",
-  projectId: "diamant-703f1",
-  storageBucket: "diamant-703f1.firebasestorage.app",
-  messagingSenderId: "5172210587",
-  appId: "1:5172210587:web:64f40c40ffb4c7c00e8f3e",
-  databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+const EX_LABELS = {
+  diamond:'Диамант на ценностите',
+  thermometer:'Термометър на емоциите',
+  wall:'Стена на емпатията',
+  wordcloud:'Облак от думи'
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const sessionRef = db.ref('sessions/session1/students');
+let currentEx=null, studentsData={};
 
-sessionRef.on('value', (snapshot) => {
-  const grid = document.getElementById('grid');
-  const emptyMsg = document.getElementById('empty-msg');
-  const countBadge = document.getElementById('count-badge');
-  const data = snapshot.val();
-
-  if (!data) {
-    grid.innerHTML = '<div class="empty-msg">Чакаме учениците да се включат...</div>';
-    countBadge.textContent = '0 ученика';
-    return;
-  }
-  const students = Object.values(data).sort((a,b) => (a.name||'').localeCompare(b.name||''));
-  countBadge.textContent = `${students.length} ученик${students.length === 1 ? '' : 'а'}`;
-
-  grid.innerHTML = '';
-  students.forEach(student => {
-    const slots = student.slots || {};
-    const filled = Object.values(slots).filter(Boolean);
-    const complete = filled.length === 5;
-    const partial = filled.length > 0 && !complete;
-
-    const card = document.createElement('div');
-    card.className = 'student-card' + (complete ? ' complete' : partial ? '' : ' incomplete');
-
-    const statusText = complete ? '✓ завършен' : partial ? `${filled.length}/5` : 'чака...';
-    const statusClass = complete ? 'done' : partial ? 'partial' : 'empty';
-
-    const slotIds = ['s0','s1','s2','s3','s4'];
-    const slotLayout = [
-      ['s0'],
-      ['s1','s2'],
-      ['s3'],
-      ['s4']
-    ];
-
-    let diamondHTML = '<div class="mini-diamond">';
-    slotLayout.forEach((row, ri) => {
-      if (ri > 0) diamondHTML += '<div class="mini-connector"></div>';
-      diamondHTML += '<div class="mini-row">';
-      row.forEach(id => {
-        const word = slots[id] || null;
-        const cls = word ? ` ${word}` : '';
-        diamondHTML += `<div class="mini-slot${cls}">${word ? word : '—'}</div>`;
-      });
-      diamondHTML += '</div>';
+// Set exercise
+window.setEx = function(exId) {
+  db.ref('sessions/session1/currentExercise').set(exId||null);
+  currentEx=exId;
+  document.querySelectorAll('.ex-btn').forEach(b=>b.classList.remove('active'));
+  if(exId){
+    document.querySelectorAll('.ex-btn').forEach(b=>{
+      if(b.textContent.toLowerCase().includes(exId.substring(0,4))||
+         b.onclick.toString().includes(`'${exId}'`))b.classList.add('active');
     });
-    diamondHTML += '</div>';
+    document.getElementById('ex-active-lbl').innerHTML=`Активно: <strong>${EX_LABELS[exId]||exId}</strong>`;
+  } else {
+    document.getElementById('ex-active-lbl').textContent='Пауза — учениците чакат';
+  }
+};
 
-    card.innerHTML = `
-      <div class="s-header">
-        <span class="s-name">${student.name || 'Неизвестен'}</span>
-        <span class="s-status ${statusClass}">${statusText}</span>
-      </div>
-      ${diamondHTML}
-    `;
-    card.addEventListener('click', () => openModal(student));
+// Sync active exercise button on load
+db.ref('sessions/session1/currentExercise').once('value',snap=>{
+  const v=snap.val();
+  if(v) setEx(v);
+});
+
+// Listen students
+db.ref('sessions/session1/students').on('value', snap=>{
+  studentsData = snap.val()||{};
+  renderGrid();
+});
+
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  const students=Object.entries(studentsData).sort(([,a],[,b])=>(a.name||'').localeCompare(b.name||''));
+  document.getElementById('cnt').textContent=`${students.length} ученик${students.length===1?'':'а'}`;
+  if(!students.length){grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>';return;}
+  grid.innerHTML='';
+  students.forEach(([key,student])=>{
+    const card=document.createElement('div');
+    const exData=currentEx&&student.exercises?student.exercises[currentEx]:null;
+    const {cls,statusText}=getStatus(exData,currentEx);
+    card.className='card '+cls;
+    card.innerHTML=`<div class="s-hdr"><span class="s-name">${student.name||'?'}</span><span class="s-status ${cls==='complete'?'done':cls==='partial'?'partial':'wait'}">${statusText}</span></div>`+miniView(exData,currentEx);
+    card.onclick=()=>openModal(student,exData,currentEx);
     grid.appendChild(card);
   });
-});
+}
 
-window.openModal = function(student) {
-  const slots = student.slots || {};
-  const slotLayout = [['s0'],['s1','s2'],['s3'],['s4']];
-  document.getElementById('modal-name').textContent = student.name || 'Неизвестен';
-  const diamond = document.getElementById('modal-diamond');
-  diamond.innerHTML = '';
-  slotLayout.forEach((row, ri) => {
-    if (ri > 0) {
-      const conn = document.createElement('div');
-      conn.className = 'big-connector';
-      diamond.appendChild(conn);
-    }
-    const rowDiv = document.createElement('div');
-    rowDiv.className = 'big-row';
-    row.forEach(id => {
-      const word = slots[id] || null;
-      const slot = document.createElement('div');
-      slot.className = 'big-slot' + (word ? ' ' + word : '');
-      slot.textContent = word || '—';
-      rowDiv.appendChild(slot);
+function getStatus(exData,exId){
+  if(!exId||!exData)return{cls:'waiting',statusText:'чака...'};
+  if(exId==='diamond'){
+    const filled=Object.values(exData.slots||{}).filter(Boolean).length;
+    if(filled===5)return{cls:'complete',statusText:'✓ завършен'};
+    if(filled>0)return{cls:'partial',statusText:`${filled}/5`};
+    return{cls:'waiting',statusText:'не е започнал'};
+  }
+  if(exId==='thermometer'){
+    const entries=Object.keys(exData||{}).length;
+    if(entries>0)return{cls:'partial',statusText:`${entries} героя`};
+    return{cls:'waiting',statusText:'не е започнал'};
+  }
+  if(exId==='wall')return exData.text?{cls:'complete',statusText:'✓ изпратено'}:{cls:'waiting',statusText:'не е написал'};
+  if(exId==='wordcloud'){const n=(exData.words||[]).length;return n>0?{cls:n>=5?'complete':'partial',statusText:`${n}/5 думи`}:{cls:'waiting',statusText:'не е изпратил'};}
+  return{cls:'waiting',statusText:'чака...'};
+}
+
+function miniView(exData,exId){
+  if(!exId||!exData)return'<div style="font-size:11px;font-style:italic;color:#C4A882;text-align:center;padding:.5rem">Изчаква упражнение</div>';
+  if(exId==='diamond'){
+    const slots=exData.slots||{};
+    const layout=[['s0'],['s1','s2'],['s3'],['s4']];
+    let h='<div class="mini-d">';
+    layout.forEach((row,ri)=>{
+      if(ri>0)h+='<div class="mini-conn"></div>';
+      h+='<div class="mini-row">';
+      row.forEach(id=>{const w=slots[id];h+=`<div class="mini-slot${w?' '+w:''}">${w||'—'}</div>`;});
+      h+='</div>';
     });
-    diamond.appendChild(rowDiv);
-  });
+    return h+'</div>';
+  }
+  if(exId==='thermometer'){
+    let h='<div class="mini-thermo">';
+    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([k,v])=>{
+      if(v&&v.hero)h+=`<div>${v.hero}: <strong>${v.value}/100</strong></div>`;
+    });
+    return h||'<div style="color:#C4A882;font-size:11px;font-style:italic">Няма оценки</div>';
+    h+='</div>';return h;
+  }
+  if(exId==='wall')return`<div class="mini-wall">${exData.text||'—'}</div>`;
+  if(exId==='wordcloud'){
+    const words=exData.words||[];
+    return'<div class="mini-cloud">'+words.map(w=>`<div class="mini-tag">${w}</div>`).join('')+'</div>';
+  }
+  return'';
+}
+
+// Modal
+let modalStudent=null;
+window.openModal=function(student,exData,exId){
+  modalStudent={student,exData,exId};
+  document.getElementById('m-name').textContent=student.name||'?';
+  document.getElementById('m-sub').textContent=exId?EX_LABELS[exId]||exId:'Няма активно упражнение';
+  renderModalContent(exData,exId);
   document.getElementById('modal').classList.add('open');
 };
+window.closeModal=function(){document.getElementById('modal').classList.remove('open');};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-window.closeModal = function(e) {
-  if (e.target === document.getElementById('modal')) {
-    document.getElementById('modal').classList.remove('open');
+function renderModalContent(exData,exId){
+  const c=document.getElementById('m-content');
+  if(!exId||!exData){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Ученикът изчаква упражнение.</p>';return;}
+  if(exId==='diamond'){
+    const slots=exData.slots||{};
+    const layout=[['s0'],['s1','s2'],['s3'],['s4']];
+    let h='<div class="big-d">';
+    layout.forEach((row,ri)=>{
+      if(ri>0)h+='<div class="big-conn"></div>';
+      h+='<div class="big-row">';
+      row.forEach(id=>{const w=slots[id];h+=`<div class="big-slot${w?' '+w:''}">${w||'—'}</div>`;});
+      h+='</div>';
+    });
+    c.innerHTML=h+'</div>';
+  } else if(exId==='thermometer'){
+    let h='';
+    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([k,v])=>{
+      if(v&&v.hero){
+        h+=`<div class="big-thermo-item">
+          <div class="big-thermo-hero">${v.hero}</div>
+          <div class="big-thermo-bar"><div class="big-thermo-marker" style="left:${v.value}%"></div></div>
+          <div class="big-thermo-val">${v.value}/100 — ${getThermoDesc(v.value)}</div>
+        </div>`;
+      }
+    });
+    c.innerHTML=h||'<p style="text-align:center;font-style:italic;color:#8B7355">Няма оценки все още.</p>';
+  } else if(exId==='wall'){
+    c.innerHTML=`<div class="big-wall-text">${exData.text||'—'}</div>`;
+  } else if(exId==='wordcloud'){
+    const words=exData.words||[];
+    c.innerHTML='<div class="big-cloud">'+words.map(w=>`<div class="big-tag">${w}</div>`).join('')+'</div>';
   }
-};
+}
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
+function getThermoDesc(v){
+  if(v<=20)return'Дълбока мъка';if(v<=40)return'Тъга и умора';
+  if(v<=60)return'Смесени чувства';if(v<=80)return'Надежда и сила';return'Радост и триумф';
+}
+
+// Auto-refresh modal when data changes
+db.ref('sessions/session1/students').on('value',snap=>{
+  studentsData=snap.val()||{};renderGrid();
+  if(modalStudent){
+    const key=Object.keys(studentsData).find(k=>studentsData[k].name===modalStudent.student.name);
+    if(key){
+      const updated=studentsData[key];
+      const exData=currentEx&&updated.exercises?updated.exercises[currentEx]:null;
+      renderModalContent(exData,currentEx);
+    }
+  }
 });
 
-window.clearSession = function() {
-  if (confirm('Изтриване на всички отговори от тази сесия?')) {
-    db.ref('sessions/session1/students').remove();
-  }
+window.clearAll=function(){
+  if(confirm('Изтриване на всички ученици и отговори?'))
+    db.ref('sessions/session1').remove();
 };
 </script>
-
-<!-- Modal overlay -->
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal-card">
-    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">&#x2715;</button>
-    <div class="modal-name" id="modal-name"></div>
-    <div class="modal-subtitle">Диамант на ценностите · „По жътва"</div>
-    <div class="big-diamond" id="modal-diamond"></div>
-    <div class="modal-ornament"><div class="ml"></div><div class="md"></div><div class="ml"></div></div>
-  </div>
-</div>
 </body>
 </html>

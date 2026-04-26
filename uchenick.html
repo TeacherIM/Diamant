@@ -3,202 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Диамантът на ценностите</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Литературни дейности</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: #2C2318;
-  min-height: 100vh;
-  display: flex; align-items: flex-start; justify-content: center;
-  padding: 2rem 1.5rem 3rem;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-}
-.card {
-  background: #FFFDF9; border: 1px solid #D9C9B0; border-radius: 3px;
-  padding: 2.8rem 3rem 2.4rem; max-width: 1100px; width: 100%;
-}
-.ornament-top { display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:0.3rem; }
-.ornament-line { height:1px;flex:1;background:linear-gradient(to right,transparent,#8B7355,transparent); }
-.ornament-diamond { width:8px;height:8px;background:#8B7355;transform:rotate(45deg);flex-shrink:0; }
-.app-title { text-align:center;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8B7355;font-weight:400;margin-bottom:0.1rem; }
-.app-subtitle { text-align:center;font-size:24px;font-weight:600;color:#2C1F12;font-style:italic;letter-spacing:0.04em;margin-bottom:1.6rem; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem 1rem 3rem;font-family:'Cormorant Garamond',Georgia,serif}
+.card{background:#FFFDF9;border:1px solid #D9C9B0;border-radius:3px;padding:2rem 1.8rem 1.8rem;max-width:560px;width:100%}
+.orn{display:flex;align-items:center;gap:10px;margin-bottom:.3rem}
+.ol{height:1px;flex:1;background:linear-gradient(to right,transparent,#8B7355,transparent)}
+.od{width:7px;height:7px;background:#8B7355;transform:rotate(45deg);flex-shrink:0}
+.app-title{text-align:center;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8B7355;margin-bottom:.1rem}
+.app-sub{text-align:center;font-size:20px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:1.5rem}
 
-#name-screen { text-align:center; padding: 2rem 0; }
-#name-screen h2 { font-size:20px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:0.5rem; }
-#name-screen p { font-size:13px;color:#8B7355;letter-spacing:0.08em;margin-bottom:1.5rem; }
-#name-input {
-  font-family:'Cormorant Garamond',serif;font-size:18px;
-  border:none;border-bottom:1px solid #C4A882;background:transparent;
-  color:#2C1F12;padding:8px 4px;width:280px;text-align:center;outline:none;
-}
-#name-input:focus { border-bottom-color:#8B7355; }
-#name-btn {
-  display:block;margin:1.5rem auto 0;
-  padding:9px 32px;font-family:'Cormorant Garamond',serif;
-  font-size:14px;letter-spacing:0.15em;text-transform:uppercase;
-  border:1px solid #C4A882;border-radius:2px;
-  background:transparent;color:#8B7355;cursor:pointer;transition:background .15s;
-}
-#name-btn:hover { background:rgba(196,168,130,0.14); }
+/* Name screen */
+#name-screen{text-align:center;padding:1.5rem 0}
+#name-screen h2{font-size:18px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.4rem}
+#name-screen p{font-size:12px;color:#8B7355;letter-spacing:.08em;margin-bottom:1.2rem}
+#name-input{font-family:'Cormorant Garamond',serif;font-size:18px;border:none;border-bottom:1px solid #C4A882;background:transparent;color:#2C1F12;padding:8px 4px;width:260px;text-align:center;outline:none}
+#name-input:focus{border-bottom-color:#8B7355}
+.lit-btn{padding:8px 28px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border:1px solid #C4A882;border-radius:2px;background:transparent;color:#8B7355;cursor:pointer;transition:background .15s;display:inline-block;margin-top:1.2rem}
+.lit-btn:hover{background:rgba(196,168,130,.14)}
 
-#main-screen { display:none; }
-.student-label { text-align:center;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#8B7355;margin-bottom:1.4rem; }
+/* Wait screen */
+#wait-screen{display:none;text-align:center;padding:2rem 0}
+#wait-screen p{font-size:14px;font-style:italic;color:#8B7355;margin-bottom:.5rem}
+.wait-dots{display:flex;justify-content:center;gap:6px;margin-top:1rem}
+.wait-dot{width:8px;height:8px;border-radius:50%;background:#C4A882;animation:bounce 1.2s infinite}
+.wait-dot:nth-child(2){animation-delay:.2s}
+.wait-dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
 
-.main-layout {
-  display:grid;grid-template-columns:1fr 1px 1.5fr;gap:0;
-  align-items:center;min-height:400px;
-}
-.divider {
-  background:linear-gradient(to bottom,transparent,#C4A882,transparent);
-  width:1px;justify-self:center;align-self:stretch;min-height:360px;margin:0 0.5rem;
-}
-.pool-side { padding-right:2rem;display:flex;flex-direction:column; }
-.pool-label { font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#8B7355;margin-bottom:0.8rem;text-align:center; }
-.words-pool {
-  display:flex;flex-direction:column;gap:10px;align-items:stretch;
-  padding:14px 16px;border:1px solid #C4A882;border-radius:2px;
-  background:rgba(196,168,130,0.05);transition:background .2s;position:relative;flex:1;
-}
-.words-pool::before,.words-pool::after {
-  content:'';position:absolute;width:6px;height:6px;
-  border:1px solid #C4A882;background:#FFFDF9;transform:rotate(45deg);
-}
-.words-pool::before { top:-4px;left:50%;margin-left:-3px; }
-.words-pool::after  { bottom:-4px;left:50%;margin-left:-3px; }
-.words-pool.drag-over { background:rgba(196,168,130,0.14); }
-.word-chip {
-  padding:10px 18px;border:1px solid #C4A882;border-radius:2px;
-  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;
-  letter-spacing:0.12em;color:#4A3728;background:#FBF6EF;
-  cursor:grab;transition:transform .12s;touch-action:none;
-  text-transform:uppercase;position:relative;user-select:none;text-align:center;
-}
-.word-chip::before {
-  content:'';position:absolute;inset:3px;
-  border:0.5px solid rgba(196,168,130,0.4);pointer-events:none;border-radius:1px;
-}
-.word-chip:active { cursor:grabbing;transform:scale(1.04); }
-.word-chip.dragging { opacity:0.25; }
+/* Exercise screen */
+#ex-screen{display:none}
+.ex-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:.5px solid rgba(196,168,130,.3)}
+.ex-name{font-size:12px;color:#8B7355;letter-spacing:.08em}
+.sync-row{display:flex;align-items:center;gap:5px}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#C4A882}
+.sync-dot.ok{background:#5A7A4A}
+.sync-lbl{font-size:10px;color:#8B7355;letter-spacing:.08em}
+.ex-title{text-align:center;font-size:16px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.3rem}
+.ex-instr{text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-bottom:1.4rem;line-height:1.6}
 
-.diamond-side { padding-left:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center; }
-.diamond-label { font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#8B7355;margin-bottom:0.8rem;text-align:center; }
-.diamond-wrap { position:relative;width:100%;max-width:480px; }
-.conn-svg { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible; }
-.d-row { display:flex;justify-content:center;gap:12px;margin-bottom:12px; }
-.drop-slot {
-  width:190px;height:76px;border:1px dashed #C4A882;border-radius:2px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(196,168,130,0.04);transition:border-color .15s,background .15s;position:relative;
-}
-.slot-number {
-  font-size:26px;color:#C4A882;font-family:'Cormorant Garamond',serif;
-  font-style:italic;pointer-events:none;transition:opacity .15s;
-}
-.drop-slot.filled .slot-number { opacity:0; }
-.drop-slot.drag-over { border-color:#8B7355;border-style:solid;background:rgba(139,115,85,0.1); }
-.drop-slot.filled { border-style:solid;border-color:#8B7355;background:#D9C5A8; }
-.drop-slot .word-chip {
-  border:none;border-radius:0;padding:5px 10px;font-size:15px;
-  background:transparent!important;color:#1A110A!important;font-weight:600;
-  position:relative;z-index:1;
-}
-.drop-slot.filled .word-chip { color:#1A110A!important;background:transparent!important; }
-.drop-slot .word-chip::before { display:none; }
+/* ── DIAMOND ── */
+.pool-label,.diamond-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8B7355;margin-bottom:.6rem;text-align:center}
+.words-pool{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #C4A882;border-radius:2px;background:rgba(196,168,130,.05);position:relative;margin-bottom:1.2rem}
+.words-pool.drag-over{background:rgba(196,168,130,.14)}
+.word-chip{padding:8px 16px;border:1px solid #C4A882;border-radius:2px;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;letter-spacing:.1em;color:#4A3728;background:#FBF6EF;cursor:grab;user-select:none;text-align:center;text-transform:uppercase;position:relative;touch-action:none}
+.word-chip:active{cursor:grabbing}
+.word-chip.dragging{opacity:.25}
+.diamond-wrap{position:relative;max-width:360px;margin:0 auto}
+.conn-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.d-row{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
+.drop-slot{width:150px;height:58px;border:1px dashed #C4A882;border-radius:2px;display:flex;align-items:center;justify-content:center;background:rgba(196,168,130,.04);position:relative;transition:border-color .15s,background .15s}
+.slot-num{font-size:20px;color:#C4A882;font-style:italic;pointer-events:none;transition:opacity .15s}
+.drop-slot.filled .slot-num{opacity:0}
+.drop-slot.drag-over{border-color:#8B7355;border-style:solid;background:rgba(139,115,85,.1)}
+.drop-slot.filled{border-style:solid;border-color:#8B7355;background:#D9C5A8}
+.drop-slot .word-chip{border:none;background:transparent!important;color:#1A110A!important;font-size:13px;padding:4px 8px}
 
-.bottom-strip { margin-top:1.4rem;border-top:1px solid rgba(196,168,130,0.3);padding-top:1rem; }
-.quote-strip { text-align:center;font-style:italic;font-size:14px;color:#8B7355;line-height:1.8;min-height:26px;letter-spacing:0.02em;margin-bottom:0.4rem; }
-.status-bar { text-align:center;font-size:13px;letter-spacing:0.08em;color:#888;min-height:22px; }
-.status-bar.done { color:#5A7A4A;font-style:italic;font-size:15px; }
-.bottom-row { display:flex;justify-content:center;gap:16px;margin-top:0.7rem; }
-.lit-btn {
-  padding:7px 24px;font-family:'Cormorant Garamond',serif;font-size:13px;
-  letter-spacing:0.12em;text-transform:uppercase;border:1px solid #C4A882;
-  border-radius:2px;background:transparent;color:#8B7355;cursor:pointer;transition:background .15s;
-}
-.lit-btn:hover { background:rgba(196,168,130,0.14); }
-.ornament-footer { display:flex;align-items:center;gap:12px;margin-top:1.6rem; }
+/* ── THERMOMETER ── */
+.thermo-heroes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
+.hero-btn{padding:7px 18px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.08em;border:1px solid #C4A882;border-radius:2px;background:transparent;color:#8B7355;cursor:pointer;transition:all .15s}
+.hero-btn.active{background:#8B7355;color:#FFFDF9;border-color:#8B7355}
+.thermo-wrap{margin:1rem 0}
+.thermo-labels{display:flex;justify-content:space-between;margin-bottom:.4rem}
+.thermo-lbl{font-size:11px;font-style:italic;color:#8B7355}
+.thermo-track{position:relative;height:48px;background:linear-gradient(to right,#6B9FD4,#C4A882,#D85A30);border-radius:24px;cursor:pointer;margin-bottom:.8rem}
+.thermo-thumb{position:absolute;top:50%;width:32px;height:32px;border-radius:50%;background:#FFFDF9;border:2px solid #8B7355;transform:translate(-50%,-50%);cursor:grab;transition:left .1s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#8B7355;user-select:none;touch-action:none}
+.thermo-val{text-align:center;font-size:22px;font-weight:600;color:#2C1F12;margin-bottom:.3rem}
+.thermo-desc{text-align:center;font-size:12px;font-style:italic;color:#8B7355;min-height:18px}
 
-.sync-dot {
-  display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:#C4A882;margin-right:6px;vertical-align:middle;
-}
-.sync-dot.synced { background:#5A7A4A; }
+/* ── WALL ── */
+.wall-textarea{width:100%;font-family:'Cormorant Garamond',serif;font-size:16px;color:#2C1F12;border:1px solid #C4A882;border-radius:2px;padding:12px;background:#FFFDF9;outline:none;resize:none;min-height:100px;line-height:1.6}
+.wall-textarea:focus{border-color:#8B7355}
+.char-count{text-align:right;font-size:11px;color:#C4A882;margin-top:.3rem}
+.wall-sent{text-align:center;padding:1.5rem;font-style:italic;color:#5A7A4A;font-size:15px;display:none}
 
-@media(max-width:600px){
-  .main-layout{grid-template-columns:1fr;}
-  .divider{display:none;}
-  .pool-side{padding-right:0;margin-bottom:1.5rem;}
-  .words-pool{flex-direction:row;flex-wrap:wrap;justify-content:center;}
-  .diamond-side{padding-left:0;}
-  .drop-slot{width:130px;height:60px;}
-}
+/* ── WORD CLOUD ── */
+.cloud-input-wrap{display:flex;gap:8px;margin-bottom:1rem}
+.cloud-input{flex:1;font-family:'Cormorant Garamond',serif;font-size:16px;border:none;border-bottom:1px solid #C4A882;background:transparent;color:#2C1F12;padding:6px 4px;outline:none}
+.cloud-input:focus{border-bottom-color:#8B7355}
+.cloud-send{padding:7px 18px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.08em;border:1px solid #C4A882;border-radius:2px;background:transparent;color:#8B7355;cursor:pointer}
+.cloud-send:hover{background:rgba(196,168,130,.14)}
+.cloud-sent-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:.8rem;min-height:40px}
+.cloud-tag{padding:5px 12px;border:1px solid #C4A882;border-radius:2px;font-size:13px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
+.cloud-limit{text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-top:.5rem}
+
+/* Bottom */
+.ex-bottom{margin-top:1.2rem;border-top:.5px solid rgba(196,168,130,.3);padding-top:.8rem}
+.quote-strip{text-align:center;font-style:italic;font-size:13px;color:#8B7355;line-height:1.7;min-height:20px;margin-bottom:.3rem}
+.status-bar{text-align:center;font-size:12px;color:#888;min-height:18px}
+.status-bar.done{color:#5A7A4A;font-style:italic}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="ornament-top">
-    <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
-  </div>
-  <p class="app-title">Дейност 1 · Визуално мислене</p>
-  <p class="app-subtitle">Диамантът на ценностите</p>
+  <div class="orn"><div class="ol"></div><div class="od"></div><div class="ol"></div></div>
+  <p class="app-title">По жътва · Елин Пелин</p>
+  <p class="app-sub">Литературни дейности</p>
 
+  <!-- NAME -->
   <div id="name-screen">
     <h2>Добре дошъл!</h2>
     <p>Въведи името си, за да започнеш</p>
-    <input id="name-input" type="text" placeholder="Твоето име..." autocomplete="off" />
-    <button id="name-btn" onclick="startActivity()">Започни →</button>
+    <input id="name-input" type="text" placeholder="Твоето име..." autocomplete="off"/>
+    <br>
+    <button class="lit-btn" onclick="startActivity()">Започни →</button>
   </div>
 
-  <div id="main-screen">
-    <p class="student-label">Ученик: <strong id="display-name"></strong> &nbsp;·&nbsp; <span class="sync-dot" id="sync-dot"></span><span id="sync-label" style="font-size:11px;color:#8B7355;letter-spacing:0.08em;">свързване...</span></p>
+  <!-- WAIT -->
+  <div id="wait-screen">
+    <p>Изчакай учителя да стартира упражнение</p>
+    <div class="wait-dots">
+      <div class="wait-dot"></div>
+      <div class="wait-dot"></div>
+      <div class="wait-dot"></div>
+    </div>
+  </div>
 
-    <div class="main-layout">
-      <div class="pool-side">
-        <p class="pool-label">Ценности</p>
-        <div class="words-pool" id="pool"
-          ondragover="event.preventDefault();this.classList.add('drag-over')"
-          ondragleave="this.classList.remove('drag-over')"
-          ondrop="dropToPool(event)">
-          <div class="word-chip" data-word="ЛЮБОВ"         draggable="true" ondragstart="ds(event)" ondragend="de(event)">Любов</div>
-          <div class="word-chip" data-word="НАДЕЖДА"       draggable="true" ondragstart="ds(event)" ondragend="de(event)">Надежда</div>
-          <div class="word-chip" data-word="ПЕСЕН"         draggable="true" ondragstart="ds(event)" ondragend="de(event)">Песен</div>
-          <div class="word-chip" data-word="СЪПРИЧАСТНОСТ" draggable="true" ondragstart="ds(event)" ondragend="de(event)">Съпричастност</div>
-          <div class="word-chip" data-word="ТРУД"          draggable="true" ondragstart="ds(event)" ondragend="de(event)">Труд</div>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="diamond-side">
-        <p class="diamond-label">Наредете ценностите</p>
-        <div class="diamond-wrap" id="dwrap">
-          <svg class="conn-svg" id="csvg"></svg>
-          <div class="d-row">
-            <div class="drop-slot" id="s0" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">I</span></div>
-          </div>
-          <div class="d-row">
-            <div class="drop-slot" id="s1" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">II</span></div>
-            <div class="drop-slot" id="s2" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">III</span></div>
-          </div>
-          <div class="d-row">
-            <div class="drop-slot" id="s3" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">IV</span></div>
-          </div>
-          <div class="d-row">
-            <div class="drop-slot" id="s4" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">V</span></div>
-          </div>
-        </div>
+  <!-- EXERCISE -->
+  <div id="ex-screen">
+    <div class="ex-header">
+      <span class="ex-name" id="ex-name-lbl"></span>
+      <div class="sync-row">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span class="sync-lbl" id="sync-lbl">свързване...</span>
       </div>
     </div>
-
-    <div class="bottom-strip">
+    <div id="ex-content"></div>
+    <div class="ex-bottom">
       <div class="quote-strip" id="qstrip"></div>
       <div class="status-bar" id="sbar"></div>
-      <div class="bottom-row">
-        <button class="lit-btn" onclick="resetAll()">Започни отново</button>
-      </div>
-    </div>
-    <div class="ornament-footer">
-      <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
     </div>
   </div>
 </div>
@@ -206,7 +141,6 @@ body {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-
 const firebaseConfig = {
   apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
   authDomain: "diamant-703f1.firebaseapp.com",
@@ -216,222 +150,418 @@ const firebaseConfig = {
   appId: "1:5172210587:web:64f40c40ffb4c7c00e8f3e",
   databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
 };
-
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const quotes = {
-  'ЛЮБОВ':         '„…Никола се усмихваше. Пот се сипеше от челото му, душата без сила оставаше…"',
-  'НАДЕЖДА':       '„…Бог обилно наспори тая година… не иска да им отнеме лелеяната в душа надежда…"',
-  'ПЕСЕН':         '„…над златното поле ехтят песни и се носят на вълни чак до небесата като благодарствени молитви…"',
-  'СЪПРИЧАСТНОСТ': '„…И булки и моми, и мъже и жени, и майки се стекоха на Пенкината нива ужасени…"',
-  'ТРУД':          '„…Усилна жътва кипи из равното Софийско поле… пот се сипе от челата, душата без сила остава…"'
-};
-const connPairs = [['s0','s1'],['s0','s2'],['s1','s3'],['s2','s3'],['s3','s4']];
-let dragged = null, dragSrc = null, studentName = '', studentKey = '';
+let studentName='', studentKey='', currentEx=null;
 
+// ── Exercises definition ──
+const EXERCISES = {
+  diamond: {
+    label: 'Диамант на ценностите',
+    words: ['ЛЮБОВ','НАДЕЖДА','ПЕСЕН','СЪПРИЧАСТНОСТ','ТРУД'],
+    quotes: {
+      'ЛЮБОВ':'„…Никола се усмихваше. Пот се сипеше от челото му…"',
+      'НАДЕЖДА':'„…не иска да им отнеме лелеяната в душа надежда…"',
+      'ПЕСЕН':'„…над златното поле ехтят песни като благодарствени молитви…"',
+      'СЪПРИЧАСТНОСТ':'„…И булки и моми, и майки се стекоха на Пенкината нива ужасени…"',
+      'ТРУД':'„…Усилна жътва кипи из равното Софийско поле…"'
+    }
+  },
+  thermometer: {
+    label: 'Термометър на емоциите',
+    heroes: ['Никола','Пенка','Семейството','Жетварите']
+  },
+  wall: {
+    label: 'Стена на емпатията'
+  },
+  wordcloud: {
+    label: 'Облак от думи'
+  }
+};
+
+// ── Start ──
 window.startActivity = function() {
   const val = document.getElementById('name-input').value.trim();
   if (!val) { document.getElementById('name-input').focus(); return; }
   studentName = val;
-  studentKey = val.toLowerCase().replace(/\s+/g, '_').replace(/[^a-zа-яёА-ЯЁ0-9_]/gu, '');
-  document.getElementById('display-name').textContent = studentName;
-  document.getElementById('name-screen').style.display = 'none';
-  document.getElementById('main-screen').style.display = 'block';
-  setTimeout(drawConn, 120);
-  setSynced(false);
+  studentKey = val.toLowerCase().replace(/\s+/g,'_').replace(/[^a-zа-яёА-ЯЁ0-9_]/gu,'');
+  document.getElementById('name-screen').style.display='none';
+  document.getElementById('wait-screen').style.display='block';
 
-  // Слушай за връзка и запиши веднага
-  firebase.database().ref('.info/connected').on('value', snap => {
-    if (snap.val() === true) {
-      setSynced(false);
-      saveToFirebase();
+  // Register student
+  db.ref('sessions/session1/students/'+studentKey+'/name').set(studentName);
+
+  // Listen for connection
+  db.ref('.info/connected').on('value', snap => {
+    setSynced(snap.val()===true);
+  });
+
+  // Listen for current exercise from teacher
+  db.ref('sessions/session1/currentExercise').on('value', snap => {
+    const exId = snap.val();
+    if (!exId) return;
+    if (exId !== currentEx) {
+      currentEx = exId;
+      loadExercise(exId);
     }
   });
 };
 
 document.getElementById('name-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') window.startActivity();
+  if (e.key==='Enter') window.startActivity();
 });
 
 function setSynced(ok) {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot' + (ok ? ' synced' : '');
-  lbl.textContent = ok ? 'записано' : 'свързване...';
+  document.getElementById('sync-dot').className = 'sync-dot'+(ok?' ok':'');
+  document.getElementById('sync-lbl').textContent = ok?'записано':'свързване...';
 }
 
-function saveToFirebase() {
-  if (!studentKey) return;
-  const slots = ['s0','s1','s2','s3','s4'];
-  const data = { name: studentName, slots: {}, updatedAt: Date.now() };
-  slots.forEach(id => {
-    const chip = document.getElementById(id).querySelector('.word-chip');
-    data.slots[id] = chip ? chip.dataset.word : null;
+function loadExercise(exId) {
+  document.getElementById('wait-screen').style.display='none';
+  document.getElementById('ex-screen').style.display='block';
+  const ex = EXERCISES[exId];
+  document.getElementById('ex-name-lbl').textContent = ex ? ex.label : exId;
+  document.getElementById('qstrip').textContent='';
+  document.getElementById('sbar').textContent='';
+  document.getElementById('sbar').className='status-bar';
+  const content = document.getElementById('ex-content');
+  content.innerHTML='';
+  if (exId==='diamond') buildDiamond(content, ex);
+  else if (exId==='thermometer') buildThermometer(content, ex);
+  else if (exId==='wall') buildWall(content);
+  else if (exId==='wordcloud') buildWordCloud(content);
+}
+
+// ──────────── DIAMOND ────────────
+function buildDiamond(container, ex) {
+  container.innerHTML = `
+    <p class="ex-title">Диамантът на ценностите</p>
+    <p class="ex-instr">Провлачи думите в клетките на диаманта</p>
+    <p class="pool-label">Ценности</p>
+    <div class="words-pool" id="pool"></div>
+    <p class="diamond-label">Наредете ценностите</p>
+    <div class="diamond-wrap" id="dwrap">
+      <svg class="conn-svg" id="csvg"></svg>
+      <div class="d-row"><div class="drop-slot" id="s0"><span class="slot-num">I</span></div></div>
+      <div class="d-row">
+        <div class="drop-slot" id="s1"><span class="slot-num">II</span></div>
+        <div class="drop-slot" id="s2"><span class="slot-num">III</span></div>
+      </div>
+      <div class="d-row"><div class="drop-slot" id="s3"><span class="slot-num">IV</span></div></div>
+      <div class="d-row"><div class="drop-slot" id="s4"><span class="slot-num">V</span></div></div>
+    </div>`;
+
+  const pool = document.getElementById('pool');
+  ex.words.forEach(w => {
+    const chip = makeChip(w);
+    pool.appendChild(chip);
   });
-  db.ref('sessions/session1/students/' + studentKey).set(data)
-    .then(() => setSynced(true))
-    .catch(() => setSynced(false));
+
+  pool.ondragover = e => { e.preventDefault(); pool.classList.add('drag-over'); };
+  pool.ondragleave = () => pool.classList.remove('drag-over');
+  pool.ondrop = e => { e.preventDefault(); pool.classList.remove('drag-over'); dropToPool(); };
+
+  ['s0','s1','s2','s3','s4'].forEach(id => {
+    const slot = document.getElementById(id);
+    slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
+    slot.ondragleave = () => slot.classList.remove('drag-over');
+    slot.ondrop = e => { e.preventDefault(); dropToSlot(slot); };
+  });
+
+  setTimeout(() => drawConn(), 100);
+  initTouchDiamond();
 }
 
-// ── Mouse drag ──
-window.ds = function(e) { dragged=e.currentTarget; dragSrc=dragged.parentElement; setTimeout(()=>dragged.classList.add('dragging'),0); e.dataTransfer.effectAllowed='move'; };
-window.de = function() { if(dragged) dragged.classList.remove('dragging'); };
-window.so = function(e,s) { e.preventDefault(); s.classList.add('drag-over'); };
-window.sl = function(s) { s.classList.remove('drag-over'); };
-
-window.dt = function(e, slot) {
-  e.preventDefault(); sl(slot); if(!dragged) return;
-  const ex = slot.querySelector('.word-chip');
-  if(ex) { dragSrc.appendChild(ex); ex.draggable=true; ex.ondragstart=e2=>ds(e2); ex.ondragend=de; }
-  slot.appendChild(dragged); slot.classList.add('filled');
-  dragged=null; drawConn(); check(); saveToFirebase();
-};
-
-window.dropToPool = function(e) {
-  e.preventDefault(); document.getElementById('pool').classList.remove('drag-over');
+let dragged=null, dragSrc=null;
+function makeChip(word) {
+  const chip = document.createElement('div');
+  chip.className='word-chip'; chip.dataset.word=word;
+  chip.textContent=word.charAt(0)+word.slice(1).toLowerCase();
+  chip.draggable=true;
+  chip.ondragstart=e=>{dragged=chip;dragSrc=chip.parentElement;setTimeout(()=>chip.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';};
+  chip.ondragend=()=>chip.classList.remove('dragging');
+  return chip;
+}
+function dropToSlot(slot) {
   if(!dragged) return;
-  const slot = dragged.parentElement;
+  const ex=slot.querySelector('.word-chip');
+  if(ex){(dragSrc||document.getElementById('pool')).appendChild(ex);if(!slot.querySelector('.word-chip'))slot.classList.remove('filled');}
+  slot.appendChild(dragged);slot.classList.add('filled');
+  dragged=null;drawConn();saveDiamond();
+}
+function dropToPool() {
+  if(!dragged) return;
   document.getElementById('pool').appendChild(dragged);
-  if(slot.id && slot.id.startsWith('s') && !slot.querySelector('.word-chip')) slot.classList.remove('filled');
-  dragged=null; drawConn(); check(); saveToFirebase();
-};
-
-// ── Touch drag (mobile) ──
-let touchClone = null, touchEl = null, touchSrc = null;
-
-function placeChipInSlot(chip, slot) {
-  const ex = slot.querySelector('.word-chip');
-  if (ex) {
-    const src = chip.parentElement;
-    (src && src.id === 'pool' ? src : document.getElementById('pool')).appendChild(ex);
-    if (!slot.querySelector('.word-chip')) slot.classList.remove('filled');
-  }
-  slot.appendChild(chip);
-  slot.classList.add('filled');
-  drawConn(); check(); saveToFirebase();
+  if(dragSrc&&dragSrc.classList.contains('drop-slot')&&!dragSrc.querySelector('.word-chip'))dragSrc.classList.remove('filled');
+  dragged=null;drawConn();saveDiamond();
 }
-
-function placeChipInPool(chip) {
-  const slot = chip.parentElement;
-  document.getElementById('pool').appendChild(chip);
-  if (slot && slot.classList.contains('drop-slot') && !slot.querySelector('.word-chip'))
-    slot.classList.remove('filled');
-  drawConn(); check(); saveToFirebase();
-}
-
-function getElementUnderTouch(e) {
-  const t = e.changedTouches[0];
-  if (touchClone) touchClone.style.display = 'none';
-  const el = document.elementFromPoint(t.clientX, t.clientY);
-  if (touchClone) touchClone.style.display = '';
-  return el;
-}
-
-function closestSlot(el) {
-  if (!el) return null;
-  return el.closest('.drop-slot') || null;
-}
-function closestPool(el) {
-  if (!el) return null;
-  return el.closest('#pool') || null;
-}
-
-document.addEventListener('touchstart', function(e) {
-  const chip = e.target.closest('.word-chip');
-  if (!chip) return;
-  e.preventDefault();
-  touchEl = chip;
-  touchSrc = chip.parentElement;
-  chip.classList.add('dragging');
-  const r = chip.getBoundingClientRect();
-  touchClone = chip.cloneNode(true);
-  touchClone.style.cssText = `position:fixed;z-index:9999;opacity:0.85;pointer-events:none;
-    width:${r.width}px;left:${r.left}px;top:${r.top}px;margin:0;`;
-  document.body.appendChild(touchClone);
-}, {passive: false});
-
-document.addEventListener('touchmove', function(e) {
-  if (!touchEl) return;
-  e.preventDefault();
-  const t = e.touches[0];
-  const r = touchEl.getBoundingClientRect();
-  touchClone.style.left = (t.clientX - r.width/2) + 'px';
-  touchClone.style.top  = (t.clientY - r.height/2) + 'px';
-  document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
-  const under = getElementUnderTouch(e);
-  const slot = closestSlot(under);
-  if (slot) slot.classList.add('drag-over');
-}, {passive: false});
-
-document.addEventListener('touchend', function(e) {
-  if (!touchEl) return;
-  touchEl.classList.remove('dragging');
-  if (touchClone) { touchClone.remove(); touchClone = null; }
-  document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
-  const under = getElementUnderTouch(e);
-  const slot = closestSlot(under);
-  const pool = closestPool(under);
-  if (slot) {
-    placeChipInSlot(touchEl, slot);
-  } else if (pool || !touchEl.parentElement?.classList.contains('drop-slot')) {
-    if (touchEl.parentElement?.classList.contains('drop-slot')) placeChipInPool(touchEl);
-  }
-  touchEl = null; touchSrc = null;
-}, {passive: false});
-
-function ctr(id) {
-  const wrap=document.getElementById('dwrap'), el=document.getElementById(id);
-  const wr=wrap.getBoundingClientRect(), sr=el.getBoundingClientRect();
-  return { x: sr.left-wr.left+sr.width/2, y: sr.top-wr.top+sr.height/2 };
-}
-
 function drawConn() {
-  const svg=document.getElementById('csvg'), wrap=document.getElementById('dwrap');
+  const svg=document.getElementById('csvg'),wrap=document.getElementById('dwrap');
+  if(!svg||!wrap)return;
   svg.setAttribute('viewBox',`0 0 ${wrap.offsetWidth} ${wrap.offsetHeight}`);
   svg.innerHTML='';
-  connPairs.forEach(([a,b]) => {
-    const pa=ctr(a), pb=ctr(b), l=document.createElementNS('http://www.w3.org/2000/svg','line');
-    l.setAttribute('x1',pa.x); l.setAttribute('y1',pa.y);
-    l.setAttribute('x2',pb.x); l.setAttribute('y2',pb.y);
-    l.setAttribute('stroke','#C4A882'); l.setAttribute('stroke-width','1');
-    l.setAttribute('stroke-dasharray','3 4'); l.setAttribute('opacity','0.6');
+  [['s0','s1'],['s0','s2'],['s1','s3'],['s2','s3'],['s3','s4']].forEach(([a,b])=>{
+    const sa=document.getElementById(a),sb=document.getElementById(b);
+    if(!sa||!sb)return;
+    const wr=wrap.getBoundingClientRect();
+    const ra=sa.getBoundingClientRect(),rb=sb.getBoundingClientRect();
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',ra.left-wr.left+ra.width/2);l.setAttribute('y1',ra.top-wr.top+ra.height/2);
+    l.setAttribute('x2',rb.left-wr.left+rb.width/2);l.setAttribute('y2',rb.top-wr.top+rb.height/2);
+    l.setAttribute('stroke','#C4A882');l.setAttribute('stroke-width','1');
+    l.setAttribute('stroke-dasharray','3 4');l.setAttribute('opacity','0.6');
     svg.appendChild(l);
   });
 }
-
-function check() {
-  const slots=['s0','s1','s2','s3','s4'];
-  const filled=slots.filter(id=>document.getElementById(id).querySelector('.word-chip'));
-  const sbar=document.getElementById('sbar'), qstrip=document.getElementById('qstrip');
-  if(!filled.length){sbar.textContent='';qstrip.textContent='';sbar.className='status-bar';return;}
-  const words=filled.map(id=>{const c=document.getElementById(id).querySelector('.word-chip');return c?c.dataset.word:null;}).filter(Boolean);
-  const q=words.map(w=>quotes[w]).filter(Boolean);
-  qstrip.textContent=q.length?q[Math.floor(Math.random()*q.length)]:'';
+function saveDiamond() {
+  const slots={};
+  ['s0','s1','s2','s3','s4'].forEach(id=>{
+    const c=document.getElementById(id)?.querySelector('.word-chip');
+    slots[id]=c?c.dataset.word:null;
+  });
+  const filled=Object.values(slots).filter(Boolean);
+  db.ref('sessions/session1/students/'+studentKey+'/exercises/diamond').set({slots,updatedAt:Date.now()})
+    .then(()=>setSynced(true)).catch(()=>setSynced(false));
+  const ex=EXERCISES.diamond;
   if(filled.length===5){
-    sbar.textContent='Диамантът е завършен!';
-    sbar.className='status-bar done';
-    qstrip.textContent='„Пак жертва! Град да бе паднал, не би тъй убил сърцата…"';
+    document.getElementById('sbar').textContent='Диамантът е завършен!';
+    document.getElementById('sbar').className='status-bar done';
+    document.getElementById('qstrip').textContent='„Пак жертва! Град да бе паднал, не би тъй убил сърцата…"';
   } else {
-    sbar.textContent=`${filled.length} от 5 ценности наредени`;
-    sbar.className='status-bar';
+    document.getElementById('sbar').textContent=filled.length>0?`${filled.length} от 5 ценности наредени`:'';
+    const words=filled.map(id=>{const c=document.getElementById(id)?.querySelector('.word-chip');return c?.dataset.word;}).filter(Boolean);
+    const q=words.map(w=>ex.quotes[w]).filter(Boolean);
+    if(q.length)document.getElementById('qstrip').textContent=q[Math.floor(Math.random()*q.length)];
   }
 }
 
-window.resetAll = function() {
-  const pool=document.getElementById('pool');
-  ['s0','s1','s2','s3','s4'].forEach(id=>{
-    const slot=document.getElementById(id), chip=slot.querySelector('.word-chip');
-    if(chip) pool.appendChild(chip);
-    slot.classList.remove('filled');
-  });
-  document.getElementById('sbar').textContent='';
-  document.getElementById('qstrip').textContent='';
-  document.getElementById('sbar').className='status-bar';
-  drawConn(); saveToFirebase();
-};
+// Touch for diamond
+function initTouchDiamond() {
+  let tEl=null,tSrc=null,tClone=null;
+  document.addEventListener('touchstart',e=>{
+    const chip=e.target.closest('.word-chip');
+    if(!chip)return;
+    e.preventDefault();
+    tEl=chip;tSrc=chip.parentElement;
+    chip.classList.add('dragging');
+    const r=chip.getBoundingClientRect();
+    tClone=chip.cloneNode(true);
+    tClone.style.cssText=`position:fixed;z-index:9999;opacity:.85;pointer-events:none;width:${r.width}px;left:${r.left}px;top:${r.top}px;margin:0;`;
+    document.body.appendChild(tClone);
+  },{passive:false});
+  document.addEventListener('touchmove',e=>{
+    if(!tEl)return;e.preventDefault();
+    const t=e.touches[0],r=tEl.getBoundingClientRect();
+    tClone.style.left=(t.clientX-r.width/2)+'px';tClone.style.top=(t.clientY-r.height/2)+'px';
+    document.querySelectorAll('.drop-slot').forEach(s=>s.classList.remove('drag-over'));
+    if(tClone)tClone.style.display='none';
+    const under=document.elementFromPoint(t.clientX,t.clientY);
+    if(tClone)tClone.style.display='';
+    const slot=under?.closest('.drop-slot');
+    if(slot)slot.classList.add('drag-over');
+  },{passive:false});
+  document.addEventListener('touchend',e=>{
+    if(!tEl)return;
+    tEl.classList.remove('dragging');
+    if(tClone){tClone.remove();tClone=null;}
+    document.querySelectorAll('.drop-slot').forEach(s=>s.classList.remove('drag-over'));
+    const t=e.changedTouches[0];
+    const under=document.elementFromPoint(t.clientX,t.clientY);
+    const slot=under?.closest('.drop-slot');
+    const pool=under?.closest('#pool');
+    dragged=tEl;dragSrc=tSrc;
+    if(slot)dropToSlot(slot);
+    else if(pool||(tSrc&&tSrc.classList.contains('drop-slot')))dropToPool();
+    tEl=null;tSrc=null;
+  },{passive:false});
+}
 
-window.addEventListener('resize', drawConn);
+// ──────────── THERMOMETER ────────────
+function buildThermometer(container, ex) {
+  let selectedHero=null, thermoVal=50;
+  container.innerHTML=`
+    <p class="ex-title">Термометър на емоциите</p>
+    <p class="ex-instr">Избери герой и плъзни скалата</p>
+    <div class="thermo-heroes" id="hero-btns"></div>
+    <div class="thermo-wrap" id="thermo-wrap" style="display:none">
+      <div class="thermo-labels">
+        <span class="thermo-lbl">❄ Студ / Безнадеждност</span>
+        <span class="thermo-lbl">🔥 Огън / Живот</span>
+      </div>
+      <div class="thermo-track" id="thermo-track">
+        <div class="thermo-thumb" id="thermo-thumb">50</div>
+      </div>
+      <div class="thermo-val" id="thermo-val">50</div>
+      <div class="thermo-desc" id="thermo-desc"></div>
+    </div>`;
+
+  const heroContainer=document.getElementById('hero-btns');
+  ex.heroes.forEach(h=>{
+    const btn=document.createElement('button');
+    btn.className='hero-btn';btn.textContent=h;
+    btn.onclick=()=>{
+      document.querySelectorAll('.hero-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');selectedHero=h;
+      document.getElementById('thermo-wrap').style.display='block';
+      loadHeroThermo(h);
+    };
+    heroContainer.appendChild(btn);
+  });
+
+  function loadHeroThermo(hero) {
+    db.ref('sessions/session1/students/'+studentKey+'/exercises/thermometer/'+hero.replace(/\s/g,'_')).once('value',snap=>{
+      const v=snap.val();
+      thermoVal=v?v.value:50;
+      updateThumb(thermoVal);
+    });
+  }
+
+  function getDesc(v){
+    if(v<=20)return'Дълбока мъка и безнадеждност';
+    if(v<=40)return'Тъга и умора';
+    if(v<=60)return'Смесени чувства';
+    if(v<=80)return'Надежда и сила';
+    return'Радост и триумф';
+  }
+  function updateThumb(v){
+    const thumb=document.getElementById('thermo-thumb');
+    const val=document.getElementById('thermo-val');
+    const desc=document.getElementById('thermo-desc');
+    if(!thumb)return;
+    thumb.style.left=v+'%';thumb.textContent=v;
+    val.textContent=v;desc.textContent=getDesc(v);
+  }
+
+  const track=document.getElementById('thermo-track');
+  function setFromX(clientX){
+    const r=track.getBoundingClientRect();
+    let pct=Math.round(((clientX-r.left)/r.width)*100);
+    pct=Math.max(0,Math.min(100,pct));
+    thermoVal=pct;updateThumb(pct);saveThermo();
+  }
+  track.addEventListener('mousedown',e=>{
+    setFromX(e.clientX);
+    const move=e2=>setFromX(e2.clientX);
+    const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);};
+    document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);
+  });
+  track.addEventListener('touchstart',e=>{
+    e.preventDefault();setFromX(e.touches[0].clientX);
+    const move=e2=>{e2.preventDefault();setFromX(e2.touches[0].clientX);};
+    const up=()=>{document.removeEventListener('touchmove',move);document.removeEventListener('touchend',up);};
+    document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',up);
+  },{passive:false});
+
+  function saveThermo(){
+    if(!selectedHero)return;
+    const key=selectedHero.replace(/\s/g,'_');
+    db.ref('sessions/session1/students/'+studentKey+'/exercises/thermometer/'+key)
+      .set({hero:selectedHero,value:thermoVal,updatedAt:Date.now()})
+      .then(()=>setSynced(true)).catch(()=>setSynced(false));
+    document.getElementById('sbar').textContent=`${selectedHero}: ${thermoVal}/100 — ${getDesc(thermoVal)}`;
+    document.getElementById('sbar').className='status-bar done';
+  }
+}
+
+// ──────────── WALL ────────────
+function buildWall(container) {
+  container.innerHTML=`
+    <p class="ex-title">Стена на емпатията</p>
+    <p class="ex-instr">Напиши едно изречение — послание към Никола</p>
+    <textarea class="wall-textarea" id="wall-text" maxlength="200" placeholder="Какво бих извикал на Никола..."></textarea>
+    <div class="char-count"><span id="char-n">0</span>/200</div>
+    <div style="text-align:center;margin-top:.8rem">
+      <button class="lit-btn" id="wall-send-btn" onclick="sendWall()">Изпрати →</button>
+    </div>
+    <div class="wall-sent" id="wall-sent">✓ Посланието е изпратено!</div>`;
+
+  document.getElementById('wall-text').addEventListener('input',function(){
+    document.getElementById('char-n').textContent=this.value.length;
+  });
+
+  // Load existing
+  db.ref('sessions/session1/students/'+studentKey+'/exercises/wall').once('value',snap=>{
+    const v=snap.val();
+    if(v&&v.text){
+      document.getElementById('wall-text').value=v.text;
+      document.getElementById('char-n').textContent=v.text.length;
+      showWallSent();
+    }
+  });
+
+  window.sendWall=function(){
+    const text=document.getElementById('wall-text').value.trim();
+    if(!text)return;
+    db.ref('sessions/session1/students/'+studentKey+'/exercises/wall')
+      .set({text,name:studentName,updatedAt:Date.now()})
+      .then(()=>{setSynced(true);showWallSent();}).catch(()=>setSynced(false));
+  };
+  function showWallSent(){
+    document.getElementById('wall-send-btn').style.display='none';
+    document.getElementById('wall-sent').style.display='block';
+    document.getElementById('wall-text').disabled=true;
+    document.getElementById('sbar').textContent='Посланието е записано.';
+    document.getElementById('sbar').className='status-bar done';
+  }
+}
+
+// ──────────── WORD CLOUD ────────────
+function buildWordCloud(container) {
+  let sentWords=[];
+  container.innerHTML=`
+    <p class="ex-title">Облак от думи</p>
+    <p class="ex-instr">Изпрати до 5 думи — по една наведнъж</p>
+    <div class="cloud-input-wrap">
+      <input class="cloud-input" id="cloud-input" type="text" maxlength="30" placeholder="Напиши дума..."/>
+      <button class="cloud-send" id="cloud-btn" onclick="sendWord()">Изпрати</button>
+    </div>
+    <div class="cloud-sent-words" id="cloud-sent"></div>
+    <div class="cloud-limit" id="cloud-limit"></div>`;
+
+  document.getElementById('cloud-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter')sendWord();
+  });
+
+  // Load existing
+  db.ref('sessions/session1/students/'+studentKey+'/exercises/wordcloud').once('value',snap=>{
+    const v=snap.val();
+    if(v&&v.words){sentWords=[...v.words];renderSentWords();}
+  });
+
+  window.sendWord=function(){
+    if(sentWords.length>=5)return;
+    const input=document.getElementById('cloud-input');
+    const word=input.value.trim();
+    if(!word)return;
+    sentWords.push(word);
+    input.value='';
+    db.ref('sessions/session1/students/'+studentKey+'/exercises/wordcloud')
+      .set({words:sentWords,name:studentName,updatedAt:Date.now()})
+      .then(()=>setSynced(true)).catch(()=>setSynced(false));
+    renderSentWords();
+  };
+
+  function renderSentWords(){
+    const cont=document.getElementById('cloud-sent');
+    const lim=document.getElementById('cloud-limit');
+    const btn=document.getElementById('cloud-btn');
+    if(!cont)return;
+    cont.innerHTML='';
+    sentWords.forEach(w=>{
+      const tag=document.createElement('div');
+      tag.className='cloud-tag';tag.textContent=w;
+      cont.appendChild(tag);
+    });
+    const rem=5-sentWords.length;
+    lim.textContent=rem>0?`Можеш да изпратиш още ${rem} дума${rem===1?'':''}...`:'Достигнат лимит от 5 думи.';
+    if(sentWords.length>=5){btn.disabled=true;document.getElementById('cloud-input').disabled=true;}
+    document.getElementById('sbar').textContent=sentWords.length>0?`${sentWords.length} дума${sentWords.length===1?'':'} изпратена`:'';
+    document.getElementById('sbar').className=sentWords.length>0?'status-bar done':'status-bar';
+  }
+}
+
+window.addEventListener('resize',()=>{ if(currentEx==='diamond') drawConn(); });
 </script>
 </body>
 </html>
