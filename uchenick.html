@@ -185,12 +185,15 @@ window.startActivity = function() {
   const val = document.getElementById('name-input').value.trim();
   if (!val) { document.getElementById('name-input').focus(); return; }
   studentName = val;
-  studentKey = val.toLowerCase().replace(/\s+/g,'_').replace(/[^a-zа-яёА-ЯЁ0-9_]/gu,'');
+  const bg2lat = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sht','ъ':'a','ь':'','ю':'yu','я':'ya'};
+  studentKey = val.toLowerCase().replace(/\s+/g,'_').split('').map(c=>bg2lat[c]!==undefined?bg2lat[c]:c).join('').replace(/[^a-z0-9_]/g,'');
+  if (!studentKey) studentKey = 'student_' + Date.now();
   document.getElementById('name-screen').style.display='none';
   document.getElementById('wait-screen').style.display='block';
 
   // Register student
-  db.ref('sessions/session1/students/'+studentKey+'/name').set(studentName);
+  db.ref('sessions/session1/students/'+studentKey+'/name').set(studentName)
+    .catch(err => console.error('Register error:', err));
 
   // Listen for connection
   db.ref('.info/connected').on('value', snap => {
