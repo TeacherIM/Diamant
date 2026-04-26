@@ -240,6 +240,14 @@ window.startActivity = function() {
   document.getElementById('main-screen').style.display = 'block';
   setTimeout(drawConn, 120);
   setSynced(false);
+
+  // Слушай за връзка и запиши веднага
+  firebase.database().ref('.info/connected').on('value', snap => {
+    if (snap.val() === true) {
+      setSynced(false);
+      saveToFirebase();
+    }
+  });
 };
 
 document.getElementById('name-input').addEventListener('keydown', e => {
