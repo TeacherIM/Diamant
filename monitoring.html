@@ -124,7 +124,7 @@ function renderMonSummary(exId) {
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:17px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -157,7 +157,7 @@ function renderMonSummary(exId) {
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:17px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -343,7 +343,7 @@ function renderMonSummary(exId) {
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:17px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});

@@ -93,7 +93,7 @@ body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 .big-thermo-val{font-size:11px;color:#8B7355;font-style:italic}
 
 /* Big wall */
-.big-wall-text{font-size:15px;font-style:italic;color:#2C1F12;line-height:1.8;text-align:center;padding:.8rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px;background:rgba(196,168,130,.04)}
+.big-wall-text{font-size:17px;font-style:italic;color:#2C1F12;line-height:1.8;text-align:center;padding:.8rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px;background:rgba(196,168,130,.04)}
 
 /* Big cloud */
 .big-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
@@ -253,7 +253,7 @@ function renderSummaryContent(exId){
   if(exId==='wall'){
     const entries=all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if(!entries.length){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>';}
-    else{c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:14px;font-style:italic;color:#2C1F12;line-height:1.7">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>';}
+    else{c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:17px;font-style:italic;color:#2C1F12;line-height:1.7">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>';}
   } else if(exId==='wordcloud'){
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
