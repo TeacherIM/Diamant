@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мониторинг — По жътва</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant Garamond',Georgia,serif}
+
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid rgba(196,168,130,.3)}
+.header h1{font-size:20px;font-style:italic;font-weight:600;color:#FBF6EF}
+.header p{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-top:2px}
+.hright{display:flex;align-items:center;gap:12px}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5A7A4A;padding:3px 10px;border:1px solid rgba(90,122,74,.4);border-radius:2px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#5A7A4A;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cnt{font-size:11px;color:#8B7355}
+.ex-lbl{font-size:12px;font-style:italic;color:#C4A882;letter-spacing:.06em}
+
+.orn{display:flex;align-items:center;gap:8px;margin:.6rem 0 1rem}
+.ol{height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(196,168,130,.4),transparent)}
+.od{width:5px;height:5px;background:#8B7355;transform:rotate(45deg);flex-shrink:0}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;transition:opacity .3s}
+.grid.hidden{opacity:0;pointer-events:none}
+.card{background:#FFFDF9;border:1px solid #D9C9B0;border-radius:3px;padding:.9rem;transition:border-color .3s,transform .2s}
+.card.complete{border-color:#8B7355}
+.card.partial{border-color:#C4A882}
+.card.waiting{opacity:.55}
+.card.spotlight{border-color:#8B7355;transform:scale(1.03);box-shadow:0 0 0 2px rgba(139,115,85,.3)}
+.s-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid rgba(196,168,130,.3)}
+.s-name{font-size:13px;font-weight:600;color:#2C1F12}
+.s-status{font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.s-status.done{color:#5A7A4A}
+.s-status.partial{color:#8B7355}
+.s-status.wait{color:#C4A882}
+
+/* Mini views */
+.mini-d{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mini-row{display:flex;gap:4px;justify-content:center}
+.mini-conn{width:1px;height:5px;background:rgba(196,168,130,.4)}
+.mini-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 5px;min-height:22px;min-width:60px;border:.5px solid rgba(196,168,130,.3);color:#C4A882;background:rgba(196,168,130,.06);font-family:'Cormorant Garamond',serif}
+.mini-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
+.mini-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.mini-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
+.mini-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:7px}
+.mini-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
+.mini-thermo{font-size:11px;color:#2C1F12;font-style:italic;line-height:1.6}
+.mini-wall{font-size:11px;font-style:italic;color:#2C1F12;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.mini-cloud{display:flex;flex-wrap:wrap;gap:4px}
+.mini-tag{padding:2px 7px;border:.5px solid #C4A882;border-radius:2px;font-size:9px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif}
+
+/* Spotlight overlay */
+.spotlight-overlay{display:none;position:fixed;inset:0;background:rgba(20,14,8,.92);z-index:100;align-items:center;justify-content:center;padding:2rem}
+.spotlight-overlay.open{display:flex}
+.spotlight-card{background:#FFFDF9;border:1px solid #C4A882;border-radius:3px;padding:2rem 2.5rem;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;animation:fin .2s ease}
+@keyframes fin{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.sp-name{text-align:center;font-size:22px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.2rem}
+.sp-sub{text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:1.5rem}
+
+/* Big diamond */
+.big-d{display:flex;flex-direction:column;align-items:center;gap:8px}
+.big-row{display:flex;gap:10px;justify-content:center}
+.big-conn{width:1px;height:14px;background:rgba(196,168,130,.5)}
+.big-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;min-height:52px;min-width:140px;border:1px solid rgba(196,168,130,.3);color:#C4A882;background:rgba(196,168,130,.06);font-family:'Cormorant Garamond',serif}
+.big-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
+.big-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.big-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
+.big-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:11px}
+.big-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
+
+/* Big thermo */
+.big-thermo-item{margin-bottom:.8rem;padding:.6rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px}
+.big-thermo-hero{font-size:13px;font-weight:600;color:#2C1F12;margin-bottom:.4rem}
+.big-thermo-bar{height:14px;border-radius:7px;background:linear-gradient(to right,#6B9FD4,#C4A882,#D85A30);position:relative;margin-bottom:.3rem}
+.big-thermo-marker{position:absolute;top:-4px;width:22px;height:22px;border-radius:50%;background:#FFFDF9;border:2px solid #8B7355;transform:translateX(-50%)}
+.big-thermo-val{font-size:12px;color:#8B7355;font-style:italic}
+.big-wall-text{font-size:17px;font-style:italic;color:#2C1F12;line-height:1.9;text-align:center;padding:1rem;border:.5px solid rgba(196,168,130,.3);border-radius:2px;background:rgba(196,168,130,.04)}
+.big-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.big-tag{padding:7px 18px;border:1px solid #C4A882;border-radius:2px;font-size:15px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
+
+.empty-msg{text-align:center;padding:3rem;font-style:italic;font-size:15px;color:#8B7355;grid-column:1/-1}
+.wait-msg{text-align:center;padding:3rem;font-style:italic;font-size:15px;color:#8B7355}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Мониторинг на класа</h1>
+    <p>По жътва · Елин Пелин</p>
+  </div>
+  <div class="hright">
+    <span class="ex-lbl" id="ex-lbl">Няма активно упражнение</span>
+    <span class="cnt" id="cnt">0 ученика</span>
+    <span class="live"><span class="live-dot"></span>На живо</span>
+  </div>
+</div>
+
+<div class="orn"><div class="ol"></div><div class="od"></div><div class="ol"></div></div>
+
+<div class="grid" id="grid">
+  <div class="empty-msg">Чакаме учениците да се включат...</div>
+</div>
+
+<!-- Spotlight -->
+<div class="spotlight-overlay" id="spotlight">
+  <div class="spotlight-card">
+    <div class="sp-name" id="sp-name"></div>
+    <div class="sp-sub" id="sp-sub"></div>
+    <div id="sp-content"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+function openSummarySpotlight(exId) {
+  const all = Object.values(studentsData);
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  const c = document.getElementById('sp-content');
+  if (exId==='wall') {
+    const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
+    if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+  } else if (exId==='wordcloud') {
+    const wordMap={};
+    all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
+    const sorted=Object.entries(wordMap).sort(([,a],[,b])=>b-a);
+    if (!sorted.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени думи все още.</p>'; }
+    else {
+      const mx=sorted[0][1];
+      c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
+        const sz=14+Math.round((n/mx)*14);
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+      }).join('')+'</div>';
+    }
+  }
+  document.getElementById('spotlight').classList.add('open');
+}
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
+function openSummarySpotlight(exId) {
+  const all = Object.values(studentsData);
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  const c = document.getElementById('sp-content');
+  if (exId==='wall') {
+    const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
+    if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+  } else if (exId==='wordcloud') {
+    const wordMap={};
+    all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
+    const sorted=Object.entries(wordMap).sort(([,a],[,b])=>b-a);
+    if (!sorted.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени думи все още.</p>'; }
+    else {
+      const mx=sorted[0][1];
+      c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
+        const sz=14+Math.round((n/mx)*14);
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+      }).join('')+'</div>';
+    }
+  }
+  document.getElementById('spotlight').classList.add('open');
+}
+</script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
+  authDomain:"diamant-703f1.firebaseapp.com",
+  projectId:"diamant-703f1",
+  storageBucket:"diamant-703f1.firebasestorage.app",
+  messagingSenderId:"5172210587",
+  appId:"1:5172210587:web:64f40c40ffb4c7c00e8f3e",
+  databaseURL:"https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+});
+const db = firebase.database();
+
+const EX_LABELS = {
+  diamond:'Диамант на ценностите',
+  thermometer:'Термометър на емоциите',
+  wall:'Стена на емпатията',
+  wordcloud:'Облак от думи'
+};
+
+let currentEx = null, studentsData = {}, spotlightKey = null;
+
+// Listen exercise
+db.ref('sessions/session1/currentExercise').on('value', snap => {
+  currentEx = snap.val();
+  document.getElementById('ex-lbl').textContent = currentEx ? EX_LABELS[currentEx]||currentEx : 'Няма активно упражнение';
+  renderGrid();
+});
+
+// Listen students
+db.ref('sessions/session1/students').on('value', snap => {
+  studentsData = snap.val()||{};
+  document.getElementById('cnt').textContent = Object.keys(studentsData).length + ' ученика';
+  renderGrid();
+  // Refresh spotlight if open
+  if (spotlightKey && studentsData[spotlightKey]) {
+    const s = studentsData[spotlightKey];
+    renderSpotlightContent(s, currentEx);
+  }
+});
+
+// Listen spotlight selection from teacher panel
+db.ref('sessions/session1/spotlight').on('value', snap => {
+  const key = snap.val();
+  if (key === '__summary__') {
+    spotlightKey = '__summary__';
+    db.ref('sessions/session1/spotlightSummary').once('value', s2 => {
+      const info = s2.val();
+      if (info) openSummarySpotlight(info.exId);
+    });
+  } else if (key && studentsData[key]) {
+    spotlightKey = key;
+    openSpotlight(key);
+  } else {
+    spotlightKey = null;
+    document.getElementById('spotlight').classList.remove('open');
+    renderGrid();
+  }
+});
+
+function getStatus(exData, exId) {
+  if (!exId || !exData) return {cls:'waiting', txt:'чака...'};
+  if (exId==='diamond') {
+    const n = Object.values(exData.slots||{}).filter(Boolean).length;
+    if (n===5) return {cls:'complete', txt:'✓ завършен'};
+    if (n>0) return {cls:'partial', txt: n+'/5'};
+    return {cls:'waiting', txt:'не е започнал'};
+  }
+  if (exId==='thermometer') {
+    const n = Object.keys(exData||{}).filter(k=>k!=='updatedAt').length;
+    return n>0 ? {cls:'partial', txt: n+' героя'} : {cls:'waiting', txt:'не е започнал'};
+  }
+  if (exId==='wall') return exData.text ? {cls:'complete', txt:'✓ изпратено'} : {cls:'waiting', txt:'не е написал'};
+  if (exId==='wordcloud') {
+    const n=(exData.words||[]).length;
+    return n>0 ? {cls: n>=5?'complete':'partial', txt: n+'/5 думи'} : {cls:'waiting', txt:'не е изпратил'};
+  }
+  return {cls:'waiting', txt:'чака...'};
+}
+
+function miniView(exData, exId) {
+  if (!exId || !exData) return '<div style="font-size:11px;font-style:italic;color:#C4A882;text-align:center;padding:.5rem">Изчаква упражнение</div>';
+  if (exId==='diamond') {
+    const slots=exData.slots||{};
+    const layout=[['s0'],['s1','s2'],['s3'],['s4']];
+    let h='<div class="mini-d">';
+    layout.forEach((row,ri) => {
+      if(ri>0) h+='<div class="mini-conn"></div>';
+      h+='<div class="mini-row">';
+      row.forEach(id => { const w=slots[id]; h+='<div class="mini-slot'+(w?' '+w:'')+'">'+( w||'—')+'</div>'; });
+      h+='</div>';
+    });
+    return h+'</div>';
+  }
+  if (exId==='thermometer') {
+    let h='<div class="mini-thermo">';
+    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([,v]) => {
+      if(v&&v.hero) h+='<div>'+v.hero+': <strong>'+v.value+'/100</strong></div>';
+    });
+    h+='</div>'; return h;
+  }
+  if (exId==='wall') return '<div class="mini-wall">'+(exData.text||'—')+'</div>';
+  if (exId==='wordcloud') {
+    const words=exData.words||[];
+    return '<div class="mini-cloud">'+words.map(w=>'<div class="mini-tag">'+w+'</div>').join('')+'</div>';
+  }
+  return '';
+}
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  const entries = Object.entries(studentsData).sort(([,a],[,b]) => (a.name||'').localeCompare(b.name||''));
+  if (!entries.length) { grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>'; return; }
+  grid.innerHTML='';
+  entries.forEach(([key, student]) => {
+    const exData = currentEx && student.exercises ? student.exercises[currentEx] : null;
+    const {cls, txt} = getStatus(exData, currentEx);
+    const card = document.createElement('div');
+    card.className = 'card ' + cls + (key===spotlightKey?' spotlight':'');
+    card.innerHTML = '<div class="s-hdr"><span class="s-name">'+(student.name||'?')+'</span><span class="s-status '+(cls==='complete'?'done':cls==='partial'?'partial':'wait')+'">'+txt+'</span></div>'+miniView(exData, currentEx);
+    grid.appendChild(card);
+  });
+}
+
+function openSpotlight(key) {
+  const student = studentsData[key];
+  if (!student) return;
+  document.getElementById('sp-name').textContent = student.name||'?';
+  document.getElementById('sp-sub').textContent = currentEx ? EX_LABELS[currentEx]||currentEx : '';
+  renderSpotlightContent(student, currentEx);
+  document.getElementById('spotlight').classList.add('open');
+  renderGrid();
+}
+
+function renderSpotlightContent(student, exId) {
+  const c = document.getElementById('sp-content');
+  const exData = exId && student.exercises ? student.exercises[exId] : null;
+  if (!exId || !exData) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Ученикът изчаква упражнение.</p>'; return; }
+  if (exId==='diamond') {
+    const slots=exData.slots||{};
+    const layout=[['s0'],['s1','s2'],['s3'],['s4']];
+    let h='<div class="big-d">';
+    layout.forEach((row,ri) => {
+      if(ri>0) h+='<div class="big-conn"></div>';
+      h+='<div class="big-row">';
+      row.forEach(id => { const w=slots[id]; h+='<div class="big-slot'+(w?' '+w:'')+'">'+( w||'—')+'</div>'; });
+      h+='</div>';
+    });
+    c.innerHTML=h+'</div>';
+  } else if (exId==='thermometer') {
+    let h='';
+    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([,v]) => {
+      if(v&&v.hero) h+='<div class="big-thermo-item"><div class="big-thermo-hero">'+v.hero+'</div><div class="big-thermo-bar"><div class="big-thermo-marker" style="left:'+v.value+'%"></div></div><div class="big-thermo-val">'+v.value+'/100 — '+getThermoDesc(v.value)+'</div></div>';
+    });
+    c.innerHTML = h||'<p style="text-align:center;font-style:italic;color:#8B7355">Няма оценки все още.</p>';
+  } else if (exId==='wall') {
+    c.innerHTML='<div class="big-wall-text">'+(exData.text||'—')+'</div>';
+  } else if (exId==='wordcloud') {
+    const words=exData.words||[];
+    c.innerHTML='<div class="big-cloud">'+words.map(w=>'<div class="big-tag">'+w+'</div>').join('')+'</div>';
+  }
+}
+
+function getThermoDesc(v) {
+  if(v<=20) return'Дълбока мъка';
+  if(v<=40) return'Тъга и умора';
+  if(v<=60) return'Смесени чувства';
+  if(v<=80) return'Надежда и сила';
+  return'Радост и триумф';
+}
+
+function openSummarySpotlight(exId) {
+  const all = Object.values(studentsData);
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  const c = document.getElementById('sp-content');
+  if (exId==='wall') {
+    const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
+    if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+  } else if (exId==='wordcloud') {
+    const wordMap={};
+    all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
+    const sorted=Object.entries(wordMap).sort(([,a],[,b])=>b-a);
+    if (!sorted.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени думи все още.</p>'; }
+    else {
+      const mx=sorted[0][1];
+      c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
+        const sz=14+Math.round((n/mx)*14);
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+      }).join('')+'</div>';
+    }
+  }
+  document.getElementById('spotlight').classList.add('open');
+}
+</script>
+</body>
+</html>

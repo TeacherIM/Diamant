@@ -201,19 +201,72 @@ db.ref('sessions/session1/students').on('value', snap=>{
 function renderGrid(){
   const grid=document.getElementById('grid');
   const students=Object.entries(studentsData).sort(([,a],[,b])=>(a.name||'').localeCompare(b.name||''));
-  document.getElementById('cnt').textContent=`${students.length} ученик${students.length===1?'':'а'}`;
-  if(!students.length){grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>';return;}
+  const n=students.length;
+  document.getElementById('cnt').textContent=n+' ученик'+(n===1?'':'а');
+  if(!n){grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>';return;}
   grid.innerHTML='';
+
+  if(currentEx==='wall'||currentEx==='wordcloud'){
+    const summaryCard=document.createElement('div');
+    summaryCard.className='card complete';
+    summaryCard.style.cssText='border-color:#8B7355;background:#FFFDF9;cursor:pointer';
+    const sd=buildSummaryData(currentEx);
+    summaryCard.innerHTML='<div class="s-hdr"><span class="s-name" style="color:#8B7355;font-style:italic">Обобщение</span><span class="s-status done">'+sd.count+' отговора</span></div>'+sd.mini;
+    summaryCard.onclick=()=>openSummaryModal(currentEx);
+    grid.appendChild(summaryCard);
+  }
+
   students.forEach(([key,student])=>{
     const card=document.createElement('div');
     const exData=currentEx&&student.exercises?student.exercises[currentEx]:null;
     const {cls,statusText}=getStatus(exData,currentEx);
     card.className='card '+cls;
-    card.innerHTML=`<div class="s-hdr"><span class="s-name">${student.name||'?'}</span><span class="s-status ${cls==='complete'?'done':cls==='partial'?'partial':'wait'}">${statusText}</span></div>`+miniView(exData,currentEx);
+    card.innerHTML='<div class="s-hdr"><span class="s-name">'+(student.name||'?')+'</span><span class="s-status '+(cls==='complete'?'done':cls==='partial'?'partial':'wait')+'">'+statusText+'</span></div>'+miniView(exData,currentEx);
     card.onclick=()=>openModal(student,exData,currentEx);
     grid.appendChild(card);
   });
 }
+
+function buildSummaryData(exId){
+  const all=Object.values(studentsData);
+  if(exId==='wall'){
+    const entries=all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
+    const mini=entries.length
+      ? '<div style="font-size:10px;font-style:italic;color:#8B7355;line-height:1.6">'+entries.slice(0,2).map(s=>'\u201e'+s.exercises.wall.text.substring(0,40)+(s.exercises.wall.text.length>40?'\u2026':'')+'\u201c').join('<br>')+(entries.length>2?'<br>\u2026':'')+'</div>'
+      : '<div style="font-size:11px;font-style:italic;color:#C4A882;text-align:center;padding:.4rem">Няма изречения все още</div>';
+    return{count:entries.length,mini};
+  }
+  if(exId==='wordcloud'){
+    const allWords=[];
+    all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)allWords.push(...s.exercises.wordcloud.words);});
+    const mini=allWords.length
+      ? '<div class="mini-cloud">'+[...new Set(allWords)].slice(0,8).map(w=>'<div class="mini-tag">'+w+'</div>').join('')+'</div>'
+      : '<div style="font-size:11px;font-style:italic;color:#C4A882;text-align:center;padding:.4rem">Няма думи все още</div>';
+    return{count:allWords.length,mini};
+  }
+  return{count:0,mini:''};
+}
+
+window.openSummaryModal=function(exId){
+  const all=Object.values(studentsData);
+  document.getElementById('m-name').textContent='Обобщение';
+  document.getElementById('m-sub').textContent=EX_LABELS[exId]||exId;
+  const c=document.getElementById('m-content');
+  if(exId==='wall'){
+    const entries=all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
+    if(!entries.length){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>';}
+    else{c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div style="font-size:14px;font-style:italic;color:#2C1F12;line-height:1.7">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>';}
+  } else if(exId==='wordcloud'){
+    const wordMap={};
+    all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
+    const sorted=Object.entries(wordMap).sort(([,a],[,b])=>b-a);
+    if(!sorted.length){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени думи все още.</p>';}
+    else{const mx=sorted[0][1];c.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:.5rem">'+sorted.map(([w,n])=>{const sz=12+Math.round((n/mx)*12);return'<div style="padding:6px 14px;border:1px solid #C4A882;border-radius:2px;background:#FBF6EF;font-family:\'Cormorant Garamond\',serif;font-size:'+sz+'px;color:#4A3728;letter-spacing:.06em">'+w+(n>1?'<span style="font-size:9px;color:#8B7355;margin-left:4px">\xd7'+n+'</span>':'')+'</div>';}).join('')+'</div>';}
+  }
+  db.ref('sessions/session1/spotlight').set('__summary__');
+  db.ref('sessions/session1/spotlightSummary').set({exId,ts:Date.now()});
+  document.getElementById('modal').classList.add('open');
+};
 
 function getStatus(exData,exId){
   if(!exId||!exData)return{cls:'waiting',statusText:'чака...'};
@@ -267,12 +320,20 @@ function miniView(exData,exId){
 let modalStudent=null;
 window.openModal=function(student,exData,exId){
   modalStudent={student,exData,exId};
+  // Find student key
+  const key=Object.keys(studentsData).find(k=>studentsData[k].name===student.name)||null;
+  // Broadcast spotlight to monitoring screen
+  db.ref('sessions/session1/spotlight').set(key);
   document.getElementById('m-name').textContent=student.name||'?';
   document.getElementById('m-sub').textContent=exId?EX_LABELS[exId]||exId:'Няма активно упражнение';
   renderModalContent(exData,exId);
   document.getElementById('modal').classList.add('open');
 };
-window.closeModal=function(){document.getElementById('modal').classList.remove('open');};
+window.closeModal=function(){
+  document.getElementById('modal').classList.remove('open');
+  // Clear spotlight on monitoring screen
+  db.ref('sessions/session1/spotlight').set(null);
+};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 function renderModalContent(exData,exId){
