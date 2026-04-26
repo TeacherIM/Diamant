@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Диамантът на ценностите</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #2C2318;
+  min-height: 100vh;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 2rem 1.5rem 3rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+.card {
+  background: #FFFDF9; border: 1px solid #D9C9B0; border-radius: 3px;
+  padding: 2.8rem 3rem 2.4rem; max-width: 1100px; width: 100%;
+}
+.ornament-top { display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:0.3rem; }
+.ornament-line { height:1px;flex:1;background:linear-gradient(to right,transparent,#8B7355,transparent); }
+.ornament-diamond { width:8px;height:8px;background:#8B7355;transform:rotate(45deg);flex-shrink:0; }
+.app-title { text-align:center;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#8B7355;font-weight:400;margin-bottom:0.1rem; }
+.app-subtitle { text-align:center;font-size:24px;font-weight:600;color:#2C1F12;font-style:italic;letter-spacing:0.04em;margin-bottom:1.6rem; }
+
+#name-screen { text-align:center; padding: 2rem 0; }
+#name-screen h2 { font-size:20px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:0.5rem; }
+#name-screen p { font-size:13px;color:#8B7355;letter-spacing:0.08em;margin-bottom:1.5rem; }
+#name-input {
+  font-family:'Cormorant Garamond',serif;font-size:18px;
+  border:none;border-bottom:1px solid #C4A882;background:transparent;
+  color:#2C1F12;padding:8px 4px;width:280px;text-align:center;outline:none;
+}
+#name-input:focus { border-bottom-color:#8B7355; }
+#name-btn {
+  display:block;margin:1.5rem auto 0;
+  padding:9px 32px;font-family:'Cormorant Garamond',serif;
+  font-size:14px;letter-spacing:0.15em;text-transform:uppercase;
+  border:1px solid #C4A882;border-radius:2px;
+  background:transparent;color:#8B7355;cursor:pointer;transition:background .15s;
+}
+#name-btn:hover { background:rgba(196,168,130,0.14); }
+
+#main-screen { display:none; }
+.student-label { text-align:center;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#8B7355;margin-bottom:1.4rem; }
+
+.main-layout {
+  display:grid;grid-template-columns:1fr 1px 1.5fr;gap:0;
+  align-items:center;min-height:400px;
+}
+.divider {
+  background:linear-gradient(to bottom,transparent,#C4A882,transparent);
+  width:1px;justify-self:center;align-self:stretch;min-height:360px;margin:0 0.5rem;
+}
+.pool-side { padding-right:2rem;display:flex;flex-direction:column; }
+.pool-label { font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#8B7355;margin-bottom:0.8rem;text-align:center; }
+.words-pool {
+  display:flex;flex-direction:column;gap:10px;align-items:stretch;
+  padding:14px 16px;border:1px solid #C4A882;border-radius:2px;
+  background:rgba(196,168,130,0.05);transition:background .2s;position:relative;flex:1;
+}
+.words-pool::before,.words-pool::after {
+  content:'';position:absolute;width:6px;height:6px;
+  border:1px solid #C4A882;background:#FFFDF9;transform:rotate(45deg);
+}
+.words-pool::before { top:-4px;left:50%;margin-left:-3px; }
+.words-pool::after  { bottom:-4px;left:50%;margin-left:-3px; }
+.words-pool.drag-over { background:rgba(196,168,130,0.14); }
+.word-chip {
+  padding:10px 18px;border:1px solid #C4A882;border-radius:2px;
+  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;
+  letter-spacing:0.12em;color:#4A3728;background:#FBF6EF;
+  cursor:grab;transition:transform .12s;touch-action:none;
+  text-transform:uppercase;position:relative;user-select:none;text-align:center;
+}
+.word-chip::before {
+  content:'';position:absolute;inset:3px;
+  border:0.5px solid rgba(196,168,130,0.4);pointer-events:none;border-radius:1px;
+}
+.word-chip:active { cursor:grabbing;transform:scale(1.04); }
+.word-chip.dragging { opacity:0.25; }
+
+.diamond-side { padding-left:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center; }
+.diamond-label { font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#8B7355;margin-bottom:0.8rem;text-align:center; }
+.diamond-wrap { position:relative;width:100%;max-width:480px; }
+.conn-svg { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible; }
+.d-row { display:flex;justify-content:center;gap:12px;margin-bottom:12px; }
+.drop-slot {
+  width:190px;height:76px;border:1px dashed #C4A882;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(196,168,130,0.04);transition:border-color .15s,background .15s;position:relative;
+}
+.slot-number {
+  font-size:26px;color:#C4A882;font-family:'Cormorant Garamond',serif;
+  font-style:italic;pointer-events:none;transition:opacity .15s;
+}
+.drop-slot.filled .slot-number { opacity:0; }
+.drop-slot.drag-over { border-color:#8B7355;border-style:solid;background:rgba(139,115,85,0.1); }
+.drop-slot.filled { border-style:solid;border-color:#8B7355;background:#D9C5A8; }
+.drop-slot .word-chip {
+  border:none;border-radius:0;padding:5px 10px;font-size:15px;
+  background:transparent!important;color:#1A110A!important;font-weight:600;
+  position:relative;z-index:1;
+}
+.drop-slot.filled .word-chip { color:#1A110A!important;background:transparent!important; }
+.drop-slot .word-chip::before { display:none; }
+
+.bottom-strip { margin-top:1.4rem;border-top:1px solid rgba(196,168,130,0.3);padding-top:1rem; }
+.quote-strip { text-align:center;font-style:italic;font-size:14px;color:#8B7355;line-height:1.8;min-height:26px;letter-spacing:0.02em;margin-bottom:0.4rem; }
+.status-bar { text-align:center;font-size:13px;letter-spacing:0.08em;color:#888;min-height:22px; }
+.status-bar.done { color:#5A7A4A;font-style:italic;font-size:15px; }
+.bottom-row { display:flex;justify-content:center;gap:16px;margin-top:0.7rem; }
+.lit-btn {
+  padding:7px 24px;font-family:'Cormorant Garamond',serif;font-size:13px;
+  letter-spacing:0.12em;text-transform:uppercase;border:1px solid #C4A882;
+  border-radius:2px;background:transparent;color:#8B7355;cursor:pointer;transition:background .15s;
+}
+.lit-btn:hover { background:rgba(196,168,130,0.14); }
+.ornament-footer { display:flex;align-items:center;gap:12px;margin-top:1.6rem; }
+
+.sync-dot {
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:#C4A882;margin-right:6px;vertical-align:middle;
+}
+.sync-dot.synced { background:#5A7A4A; }
+
+@media(max-width:600px){
+  .main-layout{grid-template-columns:1fr;}
+  .divider{display:none;}
+  .pool-side{padding-right:0;margin-bottom:1.5rem;}
+  .words-pool{flex-direction:row;flex-wrap:wrap;justify-content:center;}
+  .diamond-side{padding-left:0;}
+  .drop-slot{width:130px;height:60px;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="ornament-top">
+    <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
+  </div>
+  <p class="app-title">Дейност 1 · Визуално мислене</p>
+  <p class="app-subtitle">Диамантът на ценностите</p>
+
+  <div id="name-screen">
+    <h2>Добре дошъл!</h2>
+    <p>Въведи името си, за да започнеш</p>
+    <input id="name-input" type="text" placeholder="Твоето име..." autocomplete="off" />
+    <button id="name-btn" onclick="startActivity()">Започни →</button>
+  </div>
+
+  <div id="main-screen">
+    <p class="student-label">Ученик: <strong id="display-name"></strong> &nbsp;·&nbsp; <span class="sync-dot" id="sync-dot"></span><span id="sync-label" style="font-size:11px;color:#8B7355;letter-spacing:0.08em;">свързване...</span></p>
+
+    <div class="main-layout">
+      <div class="pool-side">
+        <p class="pool-label">Ценности</p>
+        <div class="words-pool" id="pool"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="dropToPool(event)">
+          <div class="word-chip" data-word="ЛЮБОВ"         draggable="true" ondragstart="ds(event)" ondragend="de(event)">Любов</div>
+          <div class="word-chip" data-word="НАДЕЖДА"       draggable="true" ondragstart="ds(event)" ondragend="de(event)">Надежда</div>
+          <div class="word-chip" data-word="ПЕСЕН"         draggable="true" ondragstart="ds(event)" ondragend="de(event)">Песен</div>
+          <div class="word-chip" data-word="СЪПРИЧАСТНОСТ" draggable="true" ondragstart="ds(event)" ondragend="de(event)">Съпричастност</div>
+          <div class="word-chip" data-word="ТРУД"          draggable="true" ondragstart="ds(event)" ondragend="de(event)">Труд</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="diamond-side">
+        <p class="diamond-label">Наредете ценностите</p>
+        <div class="diamond-wrap" id="dwrap">
+          <svg class="conn-svg" id="csvg"></svg>
+          <div class="d-row">
+            <div class="drop-slot" id="s0" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">I</span></div>
+          </div>
+          <div class="d-row">
+            <div class="drop-slot" id="s1" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">II</span></div>
+            <div class="drop-slot" id="s2" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">III</span></div>
+          </div>
+          <div class="d-row">
+            <div class="drop-slot" id="s3" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">IV</span></div>
+          </div>
+          <div class="d-row">
+            <div class="drop-slot" id="s4" ondragover="so(event,this)" ondragleave="sl(this)" ondrop="dt(event,this)"><span class="slot-number">V</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-strip">
+      <div class="quote-strip" id="qstrip"></div>
+      <div class="status-bar" id="sbar"></div>
+      <div class="bottom-row">
+        <button class="lit-btn" onclick="resetAll()">Започни отново</button>
+      </div>
+    </div>
+    <div class="ornament-footer">
+      <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
+  authDomain: "diamant-703f1.firebaseapp.com",
+  projectId: "diamant-703f1",
+  storageBucket: "diamant-703f1.firebasestorage.app",
+  messagingSenderId: "5172210587",
+  appId: "1:5172210587:web:64f40c40ffb4c7c00e8f3e",
+  databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const quotes = {
+  'ЛЮБОВ':         '„…тя вървеше и пееше, и той чувствуваше, как нещо топло и радостно се разлива в душата му…"',
+  'НАДЕЖДА':       '„Пенка беше млада, бяла, хубава."',
+  'ПЕСЕН':         '„…из задушния въздух се носеше нейната песен…"',
+  'СЪПРИЧАСТНОСТ': '„…Иван Барата гледаше и сърцето му се свиваше от мъка…"',
+  'ТРУД':          '„Жетварите жънеха. Сърповете блестяха…"'
+};
+const connPairs = [['s0','s1'],['s0','s2'],['s1','s3'],['s2','s3'],['s3','s4']];
+let dragged = null, dragSrc = null, studentName = '', studentKey = '';
+
+window.startActivity = function() {
+  const val = document.getElementById('name-input').value.trim();
+  if (!val) { document.getElementById('name-input').focus(); return; }
+  studentName = val;
+  studentKey = val.toLowerCase().replace(/\s+/g, '_').replace(/[^a-zа-яёА-ЯЁ0-9_]/gu, '');
+  document.getElementById('display-name').textContent = studentName;
+  document.getElementById('name-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+  setTimeout(drawConn, 120);
+  setSynced(false);
+};
+
+document.getElementById('name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') window.startActivity();
+});
+
+function setSynced(ok) {
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot' + (ok ? ' synced' : '');
+  lbl.textContent = ok ? 'записано' : 'свързване...';
+}
+
+function saveToFirebase() {
+  if (!studentKey) return;
+  const slots = ['s0','s1','s2','s3','s4'];
+  const data = { name: studentName, slots: {}, updatedAt: Date.now() };
+  slots.forEach(id => {
+    const chip = document.getElementById(id).querySelector('.word-chip');
+    data.slots[id] = chip ? chip.dataset.word : null;
+  });
+  set(ref(db, 'sessions/session1/students/' + studentKey), data)
+    .then(() => setSynced(true))
+    .catch(() => setSynced(false));
+}
+
+window.ds = function(e) { dragged=e.currentTarget; dragSrc=dragged.parentElement; setTimeout(()=>dragged.classList.add('dragging'),0); e.dataTransfer.effectAllowed='move'; };
+window.de = function() { if(dragged) dragged.classList.remove('dragging'); };
+window.so = function(e,s) { e.preventDefault(); s.classList.add('drag-over'); };
+window.sl = function(s) { s.classList.remove('drag-over'); };
+
+window.dt = function(e, slot) {
+  e.preventDefault(); sl(slot); if(!dragged) return;
+  const ex = slot.querySelector('.word-chip');
+  if(ex) { dragSrc.appendChild(ex); ex.draggable=true; ex.ondragstart=e2=>ds(e2); ex.ondragend=de; }
+  slot.appendChild(dragged); slot.classList.add('filled');
+  dragged=null; drawConn(); check(); saveToFirebase();
+};
+
+window.dropToPool = function(e) {
+  e.preventDefault(); document.getElementById('pool').classList.remove('drag-over');
+  if(!dragged) return;
+  const slot = dragged.parentElement;
+  document.getElementById('pool').appendChild(dragged);
+  if(slot.id && slot.id.startsWith('s') && !slot.querySelector('.word-chip')) slot.classList.remove('filled');
+  dragged=null; drawConn(); check(); saveToFirebase();
+};
+
+function ctr(id) {
+  const wrap=document.getElementById('dwrap'), el=document.getElementById(id);
+  const wr=wrap.getBoundingClientRect(), sr=el.getBoundingClientRect();
+  return { x: sr.left-wr.left+sr.width/2, y: sr.top-wr.top+sr.height/2 };
+}
+
+function drawConn() {
+  const svg=document.getElementById('csvg'), wrap=document.getElementById('dwrap');
+  svg.setAttribute('viewBox',`0 0 ${wrap.offsetWidth} ${wrap.offsetHeight}`);
+  svg.innerHTML='';
+  connPairs.forEach(([a,b]) => {
+    const pa=ctr(a), pb=ctr(b), l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',pa.x); l.setAttribute('y1',pa.y);
+    l.setAttribute('x2',pb.x); l.setAttribute('y2',pb.y);
+    l.setAttribute('stroke','#C4A882'); l.setAttribute('stroke-width','1');
+    l.setAttribute('stroke-dasharray','3 4'); l.setAttribute('opacity','0.6');
+    svg.appendChild(l);
+  });
+}
+
+function check() {
+  const slots=['s0','s1','s2','s3','s4'];
+  const filled=slots.filter(id=>document.getElementById(id).querySelector('.word-chip'));
+  const sbar=document.getElementById('sbar'), qstrip=document.getElementById('qstrip');
+  if(!filled.length){sbar.textContent='';qstrip.textContent='';sbar.className='status-bar';return;}
+  const words=filled.map(id=>{const c=document.getElementById(id).querySelector('.word-chip');return c?c.dataset.word:null;}).filter(Boolean);
+  const q=words.map(w=>quotes[w]).filter(Boolean);
+  qstrip.textContent=q.length?q[Math.floor(Math.random()*q.length)]:'';
+  if(filled.length===5){
+    sbar.textContent='Диамантът е завършен!';
+    sbar.className='status-bar done';
+    qstrip.textContent='„Трудът дава хляба, но Любовта дава причината да го поискаш."';
+  } else {
+    sbar.textContent=`${filled.length} от 5 ценности наредени`;
+    sbar.className='status-bar';
+  }
+}
+
+window.resetAll = function() {
+  const pool=document.getElementById('pool');
+  ['s0','s1','s2','s3','s4'].forEach(id=>{
+    const slot=document.getElementById(id), chip=slot.querySelector('.word-chip');
+    if(chip) pool.appendChild(chip);
+    slot.classList.remove('filled');
+  });
+  document.getElementById('sbar').textContent='';
+  document.getElementById('qstrip').textContent='';
+  document.getElementById('sbar').className='status-bar';
+  drawConn(); saveToFirebase();
+};
+
+window.addEventListener('resize', drawConn);
+</script>
+</body>
+</html>

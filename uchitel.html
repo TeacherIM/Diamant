@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Учителски панел — Диамантът на ценностите</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #2C2318;
+  min-height: 100vh;
+  padding: 1.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(196,168,130,0.3);
+}
+.header-left h1 { font-size: 22px; font-style: italic; font-weight: 600; color: #FBF6EF; letter-spacing: 0.03em; }
+.header-left p { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #8B7355; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.live-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #5A7A4A; padding: 4px 12px;
+  border: 1px solid rgba(90,122,74,0.4); border-radius: 2px;
+}
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #5A7A4A; animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.count-badge { font-size: 12px; color: #8B7355; letter-spacing: 0.08em; }
+.session-btn {
+  padding: 6px 18px; font-family: 'Cormorant Garamond', serif;
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid rgba(196,168,130,0.4); border-radius: 2px;
+  background: transparent; color: #8B7355; cursor: pointer; transition: background .15s;
+}
+.session-btn:hover { background: rgba(196,168,130,0.1); }
+.session-btn.danger { border-color: rgba(180,80,60,0.4); color: #B4503C; }
+.session-btn.danger:hover { background: rgba(180,80,60,0.08); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.student-card {
+  background: #FFFDF9; border: 1px solid #D9C9B0; border-radius: 3px;
+  padding: 1rem; transition: border-color .2s;
+}
+.student-card.complete { border-color: #8B7355; }
+.student-card.incomplete { opacity: 0.7; }
+
+.s-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 0.5px solid rgba(196,168,130,0.3);
+}
+.s-name { font-size: 14px; font-weight: 600; color: #2C1F12; letter-spacing: 0.03em; }
+.s-status { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+.s-status.done { color: #5A7A4A; }
+.s-status.partial { color: #8B7355; }
+.s-status.empty { color: #C4A882; }
+
+.mini-diamond { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.mini-row { display: flex; gap: 5px; justify-content: center; }
+.mini-connector { width: 1px; height: 6px; background: rgba(196,168,130,0.4); }
+
+.mini-slot {
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 6px; min-height: 26px; min-width: 68px;
+  border: 0.5px solid rgba(196,168,130,0.3);
+  color: #C4A882; background: rgba(196,168,130,0.06);
+  font-family: 'Cormorant Garamond', serif;
+}
+.mini-slot.ЛЮБОВ        { background: #EDE0CC; border-color: #8B7355; color: #2C1F12; }
+.mini-slot.НАДЕЖДА      { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
+.mini-slot.ПЕСЕН        { background: #FAEEDA; border-color: #EF9F27; color: #412402; }
+.mini-slot.СЪПРИЧАСТНОСТ{ background: #FAECE7; border-color: #D85A30; color: #4A1B0C; }
+.mini-slot.ТРУД         { background: #F1EFE8; border-color: #888780; color: #2C2C2A; }
+
+.empty-msg {
+  text-align: center; padding: 3rem 0;
+  font-style: italic; font-size: 14px; color: #8B7355; letter-spacing: 0.06em;
+}
+
+.ornament { display:flex;align-items:center;gap:10px;margin-bottom:1rem; }
+.ornament-line { height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(196,168,130,0.4),transparent); }
+.ornament-diamond { width:6px;height:6px;background:#8B7355;transform:rotate(45deg);flex-shrink:0; }
+
+.legend {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  margin-bottom: 1.2rem; padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(196,168,130,0.2); border-radius: 2px;
+  background: rgba(196,168,130,0.04);
+}
+.leg-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #8B7355; margin-right: 4px; }
+.leg-item { display:flex;align-items:center;gap:5px;font-size:11px; }
+.leg-dot { width:10px;height:10px;border-radius:1px; }
+.leg-txt { color: #FBF6EF; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Диамантът на ценностите</h1>
+    <p>Учителски панел · „Двуликото поле" · Й. Йовков</p>
+  </div>
+  <div class="header-right">
+    <span class="count-badge" id="count-badge">0 ученика</span>
+    <span class="live-badge"><span class="live-dot"></span>На живо</span>
+    <button class="session-btn danger" onclick="clearSession()">Изчисти сесията</button>
+  </div>
+</div>
+
+<div class="ornament">
+  <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line"></div>
+</div>
+
+<div class="legend">
+  <span class="leg-label">Ценности:</span>
+  <span class="leg-item"><span class="leg-dot" style="background:#EDE0CC;border:0.5px solid #8B7355"></span><span class="leg-txt">Любов</span></span>
+  <span class="leg-item"><span class="leg-dot" style="background:#E1F5EE;border:0.5px solid #1D9E75"></span><span class="leg-txt">Надежда</span></span>
+  <span class="leg-item"><span class="leg-dot" style="background:#FAEEDA;border:0.5px solid #EF9F27"></span><span class="leg-txt">Песен</span></span>
+  <span class="leg-item"><span class="leg-dot" style="background:#FAECE7;border:0.5px solid #D85A30"></span><span class="leg-txt">Съпричастност</span></span>
+  <span class="leg-item"><span class="leg-dot" style="background:#F1EFE8;border:0.5px solid #888780"></span><span class="leg-txt">Труд</span></span>
+</div>
+
+<div class="grid" id="grid">
+  <div class="empty-msg" id="empty-msg">Чакаме учениците да се включат...</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
+  authDomain: "diamant-703f1.firebaseapp.com",
+  projectId: "diamant-703f1",
+  storageBucket: "diamant-703f1.firebasestorage.app",
+  messagingSenderId: "5172210587",
+  appId: "1:5172210587:web:64f40c40ffb4c7c00e8f3e",
+  databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const sessionRef = ref(db, 'sessions/session1/students');
+
+onValue(sessionRef, (snapshot) => {
+  const grid = document.getElementById('grid');
+  const emptyMsg = document.getElementById('empty-msg');
+  const countBadge = document.getElementById('count-badge');
+  const data = snapshot.val();
+
+  if (!data) {
+    grid.innerHTML = '';
+    grid.appendChild(emptyMsg);
+    emptyMsg.style.display = 'block';
+    countBadge.textContent = '0 ученика';
+    return;
+  }
+
+  emptyMsg.style.display = 'none';
+  const students = Object.values(data).sort((a,b) => (a.name||'').localeCompare(b.name||''));
+  countBadge.textContent = `${students.length} ученик${students.length === 1 ? '' : 'а'}`;
+
+  grid.innerHTML = '';
+  students.forEach(student => {
+    const slots = student.slots || {};
+    const filled = Object.values(slots).filter(Boolean);
+    const complete = filled.length === 5;
+    const partial = filled.length > 0 && !complete;
+
+    const card = document.createElement('div');
+    card.className = 'student-card' + (complete ? ' complete' : partial ? '' : ' incomplete');
+
+    const statusText = complete ? '✓ завършен' : partial ? `${filled.length}/5` : 'чака...';
+    const statusClass = complete ? 'done' : partial ? 'partial' : 'empty';
+
+    const slotIds = ['s0','s1','s2','s3','s4'];
+    const slotLayout = [
+      ['s0'],
+      ['s1','s2'],
+      ['s3'],
+      ['s4']
+    ];
+
+    let diamondHTML = '<div class="mini-diamond">';
+    slotLayout.forEach((row, ri) => {
+      if (ri > 0) diamondHTML += '<div class="mini-connector"></div>';
+      diamondHTML += '<div class="mini-row">';
+      row.forEach(id => {
+        const word = slots[id] || null;
+        const cls = word ? ` ${word}` : '';
+        diamondHTML += `<div class="mini-slot${cls}">${word ? word : '—'}</div>`;
+      });
+      diamondHTML += '</div>';
+    });
+    diamondHTML += '</div>';
+
+    card.innerHTML = `
+      <div class="s-header">
+        <span class="s-name">${student.name || 'Неизвестен'}</span>
+        <span class="s-status ${statusClass}">${statusText}</span>
+      </div>
+      ${diamondHTML}
+    `;
+    grid.appendChild(card);
+  });
+});
+
+window.clearSession = function() {
+  if (confirm('Изтриване на всички отговори от тази сесия?')) {
+    remove(ref(db, 'sessions/session1/students'));
+  }
+};
+</script>
+</body>
+</html>
