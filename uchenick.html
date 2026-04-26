@@ -203,9 +203,9 @@ body {
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
@@ -217,8 +217,8 @@ const firebaseConfig = {
   databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
 const quotes = {
   'ЛЮБОВ':         '„…Никола се усмихваше. Пот се сипеше от челото му, душата без сила оставаше…"',
@@ -261,11 +261,12 @@ function saveToFirebase() {
     const chip = document.getElementById(id).querySelector('.word-chip');
     data.slots[id] = chip ? chip.dataset.word : null;
   });
-  set(ref(db, 'sessions/session1/students/' + studentKey), data)
+  db.ref('sessions/session1/students/' + studentKey).set(data)
     .then(() => setSynced(true))
     .catch(() => setSynced(false));
 }
 
+// ── Mouse drag ──
 window.ds = function(e) { dragged=e.currentTarget; dragSrc=dragged.parentElement; setTimeout(()=>dragged.classList.add('dragging'),0); e.dataTransfer.effectAllowed='move'; };
 window.de = function() { if(dragged) dragged.classList.remove('dragging'); };
 window.so = function(e,s) { e.preventDefault(); s.classList.add('drag-over'); };
@@ -287,6 +288,89 @@ window.dropToPool = function(e) {
   if(slot.id && slot.id.startsWith('s') && !slot.querySelector('.word-chip')) slot.classList.remove('filled');
   dragged=null; drawConn(); check(); saveToFirebase();
 };
+
+// ── Touch drag (mobile) ──
+let touchClone = null, touchEl = null, touchSrc = null;
+
+function placeChipInSlot(chip, slot) {
+  const ex = slot.querySelector('.word-chip');
+  if (ex) {
+    const src = chip.parentElement;
+    (src && src.id === 'pool' ? src : document.getElementById('pool')).appendChild(ex);
+    if (!slot.querySelector('.word-chip')) slot.classList.remove('filled');
+  }
+  slot.appendChild(chip);
+  slot.classList.add('filled');
+  drawConn(); check(); saveToFirebase();
+}
+
+function placeChipInPool(chip) {
+  const slot = chip.parentElement;
+  document.getElementById('pool').appendChild(chip);
+  if (slot && slot.classList.contains('drop-slot') && !slot.querySelector('.word-chip'))
+    slot.classList.remove('filled');
+  drawConn(); check(); saveToFirebase();
+}
+
+function getElementUnderTouch(e) {
+  const t = e.changedTouches[0];
+  if (touchClone) touchClone.style.display = 'none';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  if (touchClone) touchClone.style.display = '';
+  return el;
+}
+
+function closestSlot(el) {
+  if (!el) return null;
+  return el.closest('.drop-slot') || null;
+}
+function closestPool(el) {
+  if (!el) return null;
+  return el.closest('#pool') || null;
+}
+
+document.addEventListener('touchstart', function(e) {
+  const chip = e.target.closest('.word-chip');
+  if (!chip) return;
+  e.preventDefault();
+  touchEl = chip;
+  touchSrc = chip.parentElement;
+  chip.classList.add('dragging');
+  const r = chip.getBoundingClientRect();
+  touchClone = chip.cloneNode(true);
+  touchClone.style.cssText = `position:fixed;z-index:9999;opacity:0.85;pointer-events:none;
+    width:${r.width}px;left:${r.left}px;top:${r.top}px;margin:0;`;
+  document.body.appendChild(touchClone);
+}, {passive: false});
+
+document.addEventListener('touchmove', function(e) {
+  if (!touchEl) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const r = touchEl.getBoundingClientRect();
+  touchClone.style.left = (t.clientX - r.width/2) + 'px';
+  touchClone.style.top  = (t.clientY - r.height/2) + 'px';
+  document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
+  const under = getElementUnderTouch(e);
+  const slot = closestSlot(under);
+  if (slot) slot.classList.add('drag-over');
+}, {passive: false});
+
+document.addEventListener('touchend', function(e) {
+  if (!touchEl) return;
+  touchEl.classList.remove('dragging');
+  if (touchClone) { touchClone.remove(); touchClone = null; }
+  document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
+  const under = getElementUnderTouch(e);
+  const slot = closestSlot(under);
+  const pool = closestPool(under);
+  if (slot) {
+    placeChipInSlot(touchEl, slot);
+  } else if (pool || !touchEl.parentElement?.classList.contains('drop-slot')) {
+    if (touchEl.parentElement?.classList.contains('drop-slot')) placeChipInPool(touchEl);
+  }
+  touchEl = null; touchSrc = null;
+}, {passive: false});
 
 function ctr(id) {
   const wrap=document.getElementById('dwrap'), el=document.getElementById(id);

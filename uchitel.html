@@ -103,6 +103,51 @@ body {
 .leg-item { display:flex;align-items:center;gap:5px;font-size:11px; }
 .leg-dot { width:10px;height:10px;border-radius:1px; }
 .leg-txt { color: #FBF6EF; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.06em; }
+
+.student-card { cursor: pointer; }
+.student-card:hover { border-color: #8B7355; box-shadow: 0 0 0 1px rgba(139,115,85,0.3); }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(20,14,8,0.88); z-index: 100;
+  align-items: center; justify-content: center; padding: 2rem;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: #FFFDF9; border: 1px solid #C4A882; border-radius: 3px;
+  padding: 2.5rem 3rem; max-width: 560px; width: 100%;
+  position: relative; animation: fadeIn .18s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:scale(0.96)} to{opacity:1;transform:scale(1)} }
+.modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  font-size: 22px; color: #C4A882; cursor: pointer;
+  background: none; border: none; line-height: 1;
+  font-family: 'Cormorant Garamond', serif;
+}
+.modal-close:hover { color: #8B7355; }
+.modal-name { text-align: center; font-size: 22px; font-weight: 600; font-style: italic; color: #2C1F12; margin-bottom: 0.3rem; }
+.modal-subtitle { text-align: center; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #8B7355; margin-bottom: 2rem; }
+
+.big-diamond { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.big-row { display: flex; gap: 12px; justify-content: center; }
+.big-connector { width: 1px; height: 16px; background: rgba(196,168,130,0.5); }
+.big-slot {
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 14px 20px; min-height: 56px; min-width: 150px;
+  border: 1px solid rgba(196,168,130,0.3);
+  color: #C4A882; background: rgba(196,168,130,0.06);
+  font-family: 'Cormorant Garamond', serif;
+}
+.big-slot.ЛЮБОВ        { background: #EDE0CC; border-color: #8B7355; color: #2C1F12; }
+.big-slot.НАДЕЖДА      { background: #E1F5EE; border-color: #1D9E75; color: #085041; }
+.big-slot.ПЕСЕН        { background: #FAEEDA; border-color: #EF9F27; color: #412402; }
+.big-slot.СЪПРИЧАСТНОСТ{ background: #FAECE7; border-color: #D85A30; color: #4A1B0C; font-size:12px; }
+.big-slot.ТРУД         { background: #F1EFE8; border-color: #888780; color: #2C2C2A; }
+.modal-ornament { display:flex;align-items:center;gap:10px;margin:1.5rem 0 0; }
+.modal-ornament .ml { height:1px;flex:1;background:linear-gradient(to right,transparent,#C4A882,transparent); }
+.modal-ornament .md { width:6px;height:6px;background:#C4A882;transform:rotate(45deg);flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -136,9 +181,9 @@ body {
   <div class="empty-msg" id="empty-msg">Чакаме учениците да се включат...</div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
@@ -150,11 +195,11 @@ const firebaseConfig = {
   databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const sessionRef = ref(db, 'sessions/session1/students');
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const sessionRef = db.ref('sessions/session1/students');
 
-onValue(sessionRef, (snapshot) => {
+sessionRef.on('value', (snapshot) => {
   const grid = document.getElementById('grid');
   const emptyMsg = document.getElementById('empty-msg');
   const countBadge = document.getElementById('count-badge');
@@ -213,15 +258,63 @@ onValue(sessionRef, (snapshot) => {
       </div>
       ${diamondHTML}
     `;
+    card.addEventListener('click', () => openModal(student));
     grid.appendChild(card);
   });
 });
 
+window.openModal = function(student) {
+  const slots = student.slots || {};
+  const slotLayout = [['s0'],['s1','s2'],['s3'],['s4']];
+  document.getElementById('modal-name').textContent = student.name || 'Неизвестен';
+  const diamond = document.getElementById('modal-diamond');
+  diamond.innerHTML = '';
+  slotLayout.forEach((row, ri) => {
+    if (ri > 0) {
+      const conn = document.createElement('div');
+      conn.className = 'big-connector';
+      diamond.appendChild(conn);
+    }
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'big-row';
+    row.forEach(id => {
+      const word = slots[id] || null;
+      const slot = document.createElement('div');
+      slot.className = 'big-slot' + (word ? ' ' + word : '');
+      slot.textContent = word || '—';
+      rowDiv.appendChild(slot);
+    });
+    diamond.appendChild(rowDiv);
+  });
+  document.getElementById('modal').classList.add('open');
+};
+
+window.closeModal = function(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
+});
+
 window.clearSession = function() {
   if (confirm('Изтриване на всички отговори от тази сесия?')) {
-    remove(ref(db, 'sessions/session1/students'));
+    remove(db.ref('sessions/session1/students'));
   }
 };
 </script>
+
+<!-- Modal overlay -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">&#x2715;</button>
+    <div class="modal-name" id="modal-name"></div>
+    <div class="modal-subtitle">Диамант на ценностите · „По жътва"</div>
+    <div class="big-diamond" id="modal-diamond"></div>
+    <div class="modal-ornament"><div class="ml"></div><div class="md"></div><div class="ml"></div></div>
+  </div>
+</div>
 </body>
 </html>
