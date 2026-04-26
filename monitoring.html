@@ -116,15 +116,15 @@ body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
-function openSummarySpotlight(exId) {
+let monSummaryExId = null;
+function renderMonSummary(exId) {
   const all = Object.values(studentsData);
-  document.getElementById('sp-name').textContent = 'Обобщение';
-  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
   const c = document.getElementById('sp-content');
+  if (!c) return;
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -134,23 +134,30 @@ function openSummarySpotlight(exId) {
       const mx=sorted[0][1];
       c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
         const sz=14+Math.round((n/mx)*14);
-        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">\xd7'+n+'</span>':'')+'</div>';
       }).join('')+'</div>';
     }
   }
+}
+function openSummarySpotlight(exId) {
+  monSummaryExId = exId;
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  renderMonSummary(exId);
   document.getElementById('spotlight').classList.add('open');
+
 }
 </script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
-function openSummarySpotlight(exId) {
+let monSummaryExId = null;
+function renderMonSummary(exId) {
   const all = Object.values(studentsData);
-  document.getElementById('sp-name').textContent = 'Обобщение';
-  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
   const c = document.getElementById('sp-content');
+  if (!c) return;
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -160,11 +167,18 @@ function openSummarySpotlight(exId) {
       const mx=sorted[0][1];
       c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
         const sz=14+Math.round((n/mx)*14);
-        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">\xd7'+n+'</span>':'')+'</div>';
       }).join('')+'</div>';
     }
   }
+}
+function openSummarySpotlight(exId) {
+  monSummaryExId = exId;
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  renderMonSummary(exId);
   document.getElementById('spotlight').classList.add('open');
+
 }
 </script>
 <script>
@@ -181,7 +195,6 @@ const db = firebase.database();
 
 const EX_LABELS = {
   diamond:'Диамант на ценностите',
-  thermometer:'Термометър на емоциите',
   wall:'Стена на емпатията',
   wordcloud:'Облак от думи'
 };
@@ -200,10 +213,10 @@ db.ref('sessions/session1/students').on('value', snap => {
   studentsData = snap.val()||{};
   document.getElementById('cnt').textContent = Object.keys(studentsData).length + ' ученика';
   renderGrid();
-  // Refresh spotlight if open
-  if (spotlightKey && studentsData[spotlightKey]) {
-    const s = studentsData[spotlightKey];
-    renderSpotlightContent(s, currentEx);
+  if (spotlightKey === '__summary__' && monSummaryExId) {
+    renderMonSummary(monSummaryExId);
+  } else if (spotlightKey && studentsData[spotlightKey]) {
+    renderSpotlightContent(studentsData[spotlightKey], currentEx);
   }
 });
 
@@ -233,10 +246,6 @@ function getStatus(exData, exId) {
     if (n===5) return {cls:'complete', txt:'✓ завършен'};
     if (n>0) return {cls:'partial', txt: n+'/5'};
     return {cls:'waiting', txt:'не е започнал'};
-  }
-  if (exId==='thermometer') {
-    const n = Object.keys(exData||{}).filter(k=>k!=='updatedAt').length;
-    return n>0 ? {cls:'partial', txt: n+' героя'} : {cls:'waiting', txt:'не е започнал'};
   }
   if (exId==='wall') return exData.text ? {cls:'complete', txt:'✓ изпратено'} : {cls:'waiting', txt:'не е написал'};
   if (exId==='wordcloud') {
@@ -315,12 +324,7 @@ function renderSpotlightContent(student, exId) {
       h+='</div>';
     });
     c.innerHTML=h+'</div>';
-  } else if (exId==='thermometer') {
-    let h='';
-    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([,v]) => {
-      if(v&&v.hero) h+='<div class="big-thermo-item"><div class="big-thermo-hero">'+v.hero+'</div><div class="big-thermo-bar"><div class="big-thermo-marker" style="left:'+v.value+'%"></div></div><div class="big-thermo-val">'+v.value+'/100 — '+getThermoDesc(v.value)+'</div></div>';
-    });
-    c.innerHTML = h||'<p style="text-align:center;font-style:italic;color:#8B7355">Няма оценки все още.</p>';
+
   } else if (exId==='wall') {
     c.innerHTML='<div class="big-wall-text">'+(exData.text||'—')+'</div>';
   } else if (exId==='wordcloud') {
@@ -329,23 +333,17 @@ function renderSpotlightContent(student, exId) {
   }
 }
 
-function getThermoDesc(v) {
-  if(v<=20) return'Дълбока мъка';
-  if(v<=40) return'Тъга и умора';
-  if(v<=60) return'Смесени чувства';
-  if(v<=80) return'Надежда и сила';
-  return'Радост и триумф';
-}
 
-function openSummarySpotlight(exId) {
+
+let monSummaryExId = null;
+function renderMonSummary(exId) {
   const all = Object.values(studentsData);
-  document.getElementById('sp-name').textContent = 'Обобщение';
-  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
   const c = document.getElementById('sp-content');
+  if (!c) return;
   if (exId==='wall') {
     const entries = all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if (!entries.length) { c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>'; }
-    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div class="big-wall-text" style="font-size:14px">„'+s.exercises.wall.text+'“</div></div>').join('')+'</div>'; }
+    else { c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div class="big-wall-text" style="font-size:14px">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>'; }
   } else if (exId==='wordcloud') {
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -355,11 +353,18 @@ function openSummarySpotlight(exId) {
       const mx=sorted[0][1];
       c.innerHTML='<div class="big-cloud">'+sorted.map(([w,n])=>{
         const sz=14+Math.round((n/mx)*14);
-        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">×'+n+'</span>':'')+'</div>';
+        return '<div class="big-tag" style="font-size:'+sz+'px">'+w+(n>1?'<span style="font-size:10px;color:#8B7355;margin-left:5px">\xd7'+n+'</span>':'')+'</div>';
       }).join('')+'</div>';
     }
   }
+}
+function openSummarySpotlight(exId) {
+  monSummaryExId = exId;
+  document.getElementById('sp-name').textContent = 'Обобщение';
+  document.getElementById('sp-sub').textContent = EX_LABELS[exId]||exId;
+  renderMonSummary(exId);
   document.getElementById('spotlight').classList.add('open');
+
 }
 </script>
 </body>

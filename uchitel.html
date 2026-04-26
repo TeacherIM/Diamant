@@ -21,8 +21,8 @@ body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 /* Exercise controls */
 .ex-panel{background:rgba(196,168,130,.06);border:1px solid rgba(196,168,130,.2);border-radius:3px;padding:1rem 1.2rem;margin-bottom:1rem}
 .ex-panel-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:.8rem}
-.ex-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.8rem}
-.ex-btn{padding:8px 20px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.08em;border:1px solid rgba(196,168,130,.4);border-radius:2px;background:transparent;color:#C4A882;cursor:pointer;transition:all .15s}
+.ex-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:.8rem}
+.ex-btn{padding:14px 28px;font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.08em;border:1px solid rgba(196,168,130,.4);border-radius:2px;background:transparent;color:#C4A882;cursor:pointer;transition:all .15s}
 .ex-btn:hover{border-color:#8B7355;color:#FBF6EF}
 .ex-btn.active{background:#8B7355;color:#FFFDF9;border-color:#8B7355}
 .ex-active-lbl{font-size:12px;font-style:italic;color:#8B7355}
@@ -123,7 +123,6 @@ body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
   <div class="ex-panel-title">Избери упражнение за учениците</div>
   <div class="ex-buttons">
     <button class="ex-btn" onclick="setEx('diamond')">1. Диамант</button>
-    <button class="ex-btn" onclick="setEx('thermometer')">2. Термометър</button>
     <button class="ex-btn" onclick="setEx('wall')">3. Стена на емпатията</button>
     <button class="ex-btn" onclick="setEx('wordcloud')">4. Облак от думи</button>
     <button class="ex-btn" onclick="setEx(null)" style="border-color:rgba(180,80,60,.4);color:#B4503C">Пауза</button>
@@ -163,7 +162,6 @@ const db = firebase.database();
 
 const EX_LABELS = {
   diamond:'Диамант на ценностите',
-  thermometer:'Термометър на емоциите',
   wall:'Стена на емпатията',
   wordcloud:'Облак от думи'
 };
@@ -247,15 +245,15 @@ function buildSummaryData(exId){
   return{count:0,mini:''};
 }
 
-window.openSummaryModal=function(exId){
+let summaryExId=null;
+function renderSummaryContent(exId){
   const all=Object.values(studentsData);
-  document.getElementById('m-name').textContent='Обобщение';
-  document.getElementById('m-sub').textContent=EX_LABELS[exId]||exId;
   const c=document.getElementById('m-content');
+  if(!c||document.getElementById('m-name').textContent!=='Обобщение')return;
   if(exId==='wall'){
     const entries=all.filter(s=>s.exercises&&s.exercises.wall&&s.exercises.wall.text);
     if(!entries.length){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени изречения все още.</p>';}
-    else{c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:11px;font-weight:600;color:#8B7355;letter-spacing:.06em;margin-bottom:.3rem">'+s.name+'</div><div style="font-size:14px;font-style:italic;color:#2C1F12;line-height:1.7">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>';}
+    else{c.innerHTML='<div style="display:flex;flex-direction:column;gap:10px">'+entries.map(s=>'<div style="padding:.8rem;border:.5px solid rgba(196,168,130,.4);border-radius:2px;background:rgba(196,168,130,.04)"><div style="font-size:14px;font-style:italic;color:#2C1F12;line-height:1.7">\u201e'+s.exercises.wall.text+'\u201c</div></div>').join('')+'</div>';}
   } else if(exId==='wordcloud'){
     const wordMap={};
     all.forEach(s=>{if(s.exercises&&s.exercises.wordcloud&&s.exercises.wordcloud.words)s.exercises.wordcloud.words.forEach(w=>{wordMap[w]=(wordMap[w]||0)+1;});});
@@ -263,6 +261,12 @@ window.openSummaryModal=function(exId){
     if(!sorted.length){c.innerHTML='<p style="text-align:center;font-style:italic;color:#8B7355;margin-top:1rem">Няма изпратени думи все още.</p>';}
     else{const mx=sorted[0][1];c.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:.5rem">'+sorted.map(([w,n])=>{const sz=12+Math.round((n/mx)*12);return'<div style="padding:6px 14px;border:1px solid #C4A882;border-radius:2px;background:#FBF6EF;font-family:\'Cormorant Garamond\',serif;font-size:'+sz+'px;color:#4A3728;letter-spacing:.06em">'+w+(n>1?'<span style="font-size:9px;color:#8B7355;margin-left:4px">\xd7'+n+'</span>':'')+'</div>';}).join('')+'</div>';}
   }
+}
+window.openSummaryModal=function(exId){
+  document.getElementById('m-name').textContent='Обобщение';
+  document.getElementById('m-sub').textContent=EX_LABELS[exId]||exId;
+  summaryExId=exId;
+  renderSummaryContent(exId);
   db.ref('sessions/session1/spotlight').set('__summary__');
   db.ref('sessions/session1/spotlightSummary').set({exId,ts:Date.now()});
   document.getElementById('modal').classList.add('open');
@@ -274,11 +278,6 @@ function getStatus(exData,exId){
     const filled=Object.values(exData.slots||{}).filter(Boolean).length;
     if(filled===5)return{cls:'complete',statusText:'✓ завършен'};
     if(filled>0)return{cls:'partial',statusText:`${filled}/5`};
-    return{cls:'waiting',statusText:'не е започнал'};
-  }
-  if(exId==='thermometer'){
-    const entries=Object.keys(exData||{}).length;
-    if(entries>0)return{cls:'partial',statusText:`${entries} героя`};
     return{cls:'waiting',statusText:'не е започнал'};
   }
   if(exId==='wall')return exData.text?{cls:'complete',statusText:'✓ изпратено'}:{cls:'waiting',statusText:'не е написал'};
@@ -299,14 +298,6 @@ function miniView(exData,exId){
       h+='</div>';
     });
     return h+'</div>';
-  }
-  if(exId==='thermometer'){
-    let h='<div class="mini-thermo">';
-    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([k,v])=>{
-      if(v&&v.hero)h+=`<div>${v.hero}: <strong>${v.value}/100</strong></div>`;
-    });
-    return h||'<div style="color:#C4A882;font-size:11px;font-style:italic">Няма оценки</div>';
-    h+='</div>';return h;
   }
   if(exId==='wall')return`<div class="mini-wall">${exData.text||'—'}</div>`;
   if(exId==='wordcloud'){
@@ -350,18 +341,7 @@ function renderModalContent(exData,exId){
       h+='</div>';
     });
     c.innerHTML=h+'</div>';
-  } else if(exId==='thermometer'){
-    let h='';
-    Object.entries(exData).filter(([k])=>k!=='updatedAt').forEach(([k,v])=>{
-      if(v&&v.hero){
-        h+=`<div class="big-thermo-item">
-          <div class="big-thermo-hero">${v.hero}</div>
-          <div class="big-thermo-bar"><div class="big-thermo-marker" style="left:${v.value}%"></div></div>
-          <div class="big-thermo-val">${v.value}/100 — ${getThermoDesc(v.value)}</div>
-        </div>`;
-      }
-    });
-    c.innerHTML=h||'<p style="text-align:center;font-style:italic;color:#8B7355">Няма оценки все още.</p>';
+
   } else if(exId==='wall'){
     c.innerHTML=`<div class="big-wall-text">${exData.text||'—'}</div>`;
   } else if(exId==='wordcloud'){
@@ -370,10 +350,6 @@ function renderModalContent(exData,exId){
   }
 }
 
-function getThermoDesc(v){
-  if(v<=20)return'Дълбока мъка';if(v<=40)return'Тъга и умора';
-  if(v<=60)return'Смесени чувства';if(v<=80)return'Надежда и сила';return'Радост и триумф';
-}
 
 // Auto-refresh modal when data changes
 db.ref('sessions/session1/students').on('value',snap=>{
@@ -385,6 +361,10 @@ db.ref('sessions/session1/students').on('value',snap=>{
       const exData=currentEx&&updated.exercises?updated.exercises[currentEx]:null;
       renderModalContent(exData,currentEx);
     }
+  }
+  // Auto-refresh summary modal if open
+  if(summaryExId && document.getElementById('modal').classList.contains('open')){
+    renderSummaryContent(summaryExId);
   }
 });
 
