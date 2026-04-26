@@ -332,7 +332,7 @@ function saveDiamond() {
     document.getElementById('sbar').className='status-bar done';
     document.getElementById('qstrip').textContent='„Пак жертва! Град да бе паднал, не би тъй убил сърцата…"';
   } else {
-    document.getElementById('sbar').textContent=filled.length>0?`${filled.length} от 5 ценности наредени`:'';
+    document.getElementById('sbar').textContent=filled.length>0?filled.length + ' от 5 ценности наредени':'';
     const words=filled.map(id=>{const c=document.getElementById(id)?.querySelector('.word-chip');return c?.dataset.word;}).filter(Boolean);
     const q=words.map(w=>ex.quotes[w]).filter(Boolean);
     if(q.length)document.getElementById('qstrip').textContent=q[Math.floor(Math.random()*q.length)];
@@ -462,7 +462,7 @@ function buildThermometer(container, ex) {
     db.ref('sessions/session1/students/'+studentKey+'/exercises/thermometer/'+key)
       .set({hero:selectedHero,value:thermoVal,updatedAt:Date.now()})
       .then(()=>setSynced(true)).catch(()=>setSynced(false));
-    document.getElementById('sbar').textContent=`${selectedHero}: ${thermoVal}/100 — ${getDesc(thermoVal)}`;
+    document.getElementById('sbar').textContent=selectedHero + ': ' + thermoVal + '/100 — ' + getDesc(thermoVal);
     document.getElementById('sbar').className='status-bar done';
   }
 }
@@ -557,9 +557,9 @@ function buildWordCloud(container) {
       cont.appendChild(tag);
     });
     const rem=5-sentWords.length;
-    lim.textContent=rem>0?`Можеш да изпратиш още ${rem} дума${rem===1?'':''}...`:'Достигнат лимит от 5 думи.';
+    lim.textContent=rem>0?'Можеш да изпратиш още ' + rem + ' дума' + (rem===1?'':'') + '...':'Достигнат лимит от 5 думи.';
     if(sentWords.length>=5){btn.disabled=true;document.getElementById('cloud-input').disabled=true;}
-    document.getElementById('sbar').textContent=sentWords.length>0?`${sentWords.length} дума${sentWords.length===1?'':'} изпратена`:'';
+    document.getElementById('sbar').textContent=sentWords.length>0?sentWords.length + ' дума' + (sentWords.length===1?'':'') + ' изпратена':'';
     document.getElementById('sbar').className=sentWords.length>0?'status-bar done':'status-bar';
   }
 }
