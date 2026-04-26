@@ -301,7 +301,7 @@ document.addEventListener('keydown', e => {
 
 window.clearSession = function() {
   if (confirm('Изтриване на всички отговори от тази сесия?')) {
-    remove(db.ref('sessions/session1/students'));
+    db.ref('sessions/session1/students').remove();
   }
 };
 </script>
