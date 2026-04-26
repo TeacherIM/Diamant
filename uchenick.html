@@ -41,10 +41,11 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
 .sync-dot{width:7px;height:7px;border-radius:50%;background:#C4A882}
 .sync-dot.ok{background:#5A7A4A}
 .sync-lbl{font-size:10px;color:#8B7355;letter-spacing:.08em}
+.lesson-tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#C4A882;border:.5px solid rgba(196,168,130,.4);padding:2px 8px;border-radius:2px}
 .ex-title{text-align:center;font-size:16px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.3rem}
 .ex-instr{text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-bottom:1.4rem;line-height:1.6}
 
-/* ── DIAMOND ── */
+/* DIAMOND */
 .pool-label,.diamond-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8B7355;margin-bottom:.6rem;text-align:center}
 .words-pool{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #C4A882;border-radius:2px;background:rgba(196,168,130,.05);position:relative;margin-bottom:1.2rem}
 .words-pool.drag-over{background:rgba(196,168,130,.14)}
@@ -61,25 +62,13 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
 .drop-slot.filled{border-style:solid;border-color:#8B7355;background:#D9C5A8}
 .drop-slot .word-chip{border:none;background:transparent!important;color:#1A110A!important;font-size:13px;padding:4px 8px}
 
-/* ── THERMOMETER ── */
-.thermo-heroes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
-.hero-btn{padding:7px 18px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.08em;border:1px solid #C4A882;border-radius:2px;background:transparent;color:#8B7355;cursor:pointer;transition:all .15s}
-.hero-btn.active{background:#8B7355;color:#FFFDF9;border-color:#8B7355}
-.thermo-wrap{margin:1rem 0}
-.thermo-labels{display:flex;justify-content:space-between;margin-bottom:.4rem}
-.thermo-lbl{font-size:11px;font-style:italic;color:#8B7355}
-.thermo-track{position:relative;height:48px;background:linear-gradient(to right,#6B9FD4,#C4A882,#D85A30);border-radius:24px;cursor:pointer;margin-bottom:.8rem}
-.thermo-thumb{position:absolute;top:50%;width:32px;height:32px;border-radius:50%;background:#FFFDF9;border:2px solid #8B7355;transform:translate(-50%,-50%);cursor:grab;transition:left .1s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#8B7355;user-select:none;touch-action:none}
-.thermo-val{text-align:center;font-size:22px;font-weight:600;color:#2C1F12;margin-bottom:.3rem}
-.thermo-desc{text-align:center;font-size:12px;font-style:italic;color:#8B7355;min-height:18px}
-
-/* ── WALL ── */
+/* WALL */
 .wall-textarea{width:100%;font-family:'Cormorant Garamond',serif;font-size:16px;color:#2C1F12;border:1px solid #C4A882;border-radius:2px;padding:12px;background:#FFFDF9;outline:none;resize:none;min-height:100px;line-height:1.6}
 .wall-textarea:focus{border-color:#8B7355}
 .char-count{text-align:right;font-size:11px;color:#C4A882;margin-top:.3rem}
 .wall-sent{text-align:center;padding:1.5rem;font-style:italic;color:#5A7A4A;font-size:15px;display:none}
 
-/* ── WORD CLOUD ── */
+/* WORD CLOUD */
 .cloud-input-wrap{display:flex;gap:8px;margin-bottom:1rem}
 .cloud-input{flex:1;font-family:'Cormorant Garamond',serif;font-size:16px;border:none;border-bottom:1px solid #C4A882;background:transparent;color:#2C1F12;padding:6px 4px;outline:none}
 .cloud-input:focus{border-bottom-color:#8B7355}
@@ -87,7 +76,6 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
 .cloud-send:hover{background:rgba(196,168,130,.14)}
 .cloud-sent-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:.8rem;min-height:40px}
 .cloud-tag{padding:5px 12px;border:1px solid #C4A882;border-radius:2px;font-size:13px;color:#4A3728;background:#FBF6EF;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
-.cloud-limit{text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-top:.5rem}
 
 /* Bottom */
 .ex-bottom{margin-top:1.2rem;border-top:.5px solid rgba(196,168,130,.3);padding-top:.8rem}
@@ -102,7 +90,6 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
   <p class="app-title">По жътва · Елин Пелин</p>
   <p class="app-sub">Литературни дейности</p>
 
-  <!-- NAME -->
   <div id="name-screen">
     <h2>Добре дошъл!</h2>
     <p>Въведи името си, за да започнеш</p>
@@ -111,20 +98,19 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
     <button class="lit-btn" onclick="startActivity()">Започни →</button>
   </div>
 
-  <!-- WAIT -->
   <div id="wait-screen">
     <p>Изчакай учителя да стартира упражнение</p>
     <div class="wait-dots">
-      <div class="wait-dot"></div>
-      <div class="wait-dot"></div>
-      <div class="wait-dot"></div>
+      <div class="wait-dot"></div><div class="wait-dot"></div><div class="wait-dot"></div>
     </div>
   </div>
 
-  <!-- EXERCISE -->
   <div id="ex-screen">
     <div class="ex-header">
-      <span class="ex-name" id="ex-name-lbl"></span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="lesson-tag" id="lesson-tag">Урок 1</span>
+        <span class="ex-name" id="ex-name-lbl"></span>
+      </div>
       <div class="sync-row">
         <div class="sync-dot" id="sync-dot"></div>
         <span class="sync-lbl" id="sync-lbl">свързване...</span>
@@ -141,46 +127,48 @@ body{background:#2C2318;min-height:100vh;display:flex;align-items:flex-start;jus
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
-  authDomain: "diamant-703f1.firebaseapp.com",
-  projectId: "diamant-703f1",
-  storageBucket: "diamant-703f1.firebasestorage.app",
-  messagingSenderId: "5172210587",
-  appId: "1:5172210587:web:64f40c40ffb4c7c00e8f3e",
-  databaseURL: "https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
-};
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+  apiKey:"AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
+  authDomain:"diamant-703f1.firebaseapp.com",
+  projectId:"diamant-703f1",
+  storageBucket:"diamant-703f1.firebasestorage.app",
+  messagingSenderId:"5172210587",
+  appId:"1:5172210587:web:64f40c40ffb4c7c00e8f3e",
+  databaseURL:"https://diamant-703f1-default-rtdb.europe-west1.firebasedatabase.app"
+});
 const db = firebase.database();
 
-let studentName='', studentKey='', currentEx=null;
+let studentName='', studentKey='', currentLesson=null, currentEx=null;
 
-// ── Exercises definition ──
-const EXERCISES = {
-  diamond: {
-    label: 'Диамант на ценностите',
-    words: ['ЛЮБОВ','НАДЕЖДА','ПЕСЕН','СЪПРИЧАСТНОСТ','ТРУД'],
-    quotes: {
-      'ЛЮБОВ':'„…Никола се усмихваше. Пот се сипеше от челото му…"',
-      'НАДЕЖДА':'„…не иска да им отнеме лелеяната в душа надежда…"',
-      'ПЕСЕН':'„…над златното поле ехтят песни като благодарствени молитви…"',
-      'СЪПРИЧАСТНОСТ':'„…И булки и моми, и майки се стекоха на Пенкината нива ужасени…"',
-      'ТРУД':'„…Усилна жътва кипи из равното Софийско поле…"'
+const LESSONS = {
+  lesson1: {
+    label: 'Урок 1',
+    title: 'Свещенодействието жътва',
+    exercises: {
+      wordcloud: { label: 'Облак от думи' }
     }
   },
-  thermometer: {
-    label: 'Термометър на емоциите',
-    heroes: ['Никола','Пенка','Семейството','Жетварите']
-  },
-  wall: {
-    label: 'Стена на емпатията'
-  },
-  wordcloud: {
-    label: 'Облак от думи'
+  lesson2: {
+    label: 'Урок 2',
+    title: 'Пътят на хляба',
+    exercises: {
+      diamond: {
+        label: 'Диамант на ценностите',
+        words: ['ЛЮБОВ','НАДЕЖДА','ПЕСЕН','СЪПРИЧАСТНОСТ','ТРУД'],
+        quotes: {
+          'ЛЮБОВ':'„…Никола се усмихваше. Пот се сипеше от челото му…"',
+          'НАДЕЖДА':'„…не иска да им отнеме лелеяната в душа надежда…"',
+          'ПЕСЕН':'„…над златното поле ехтят песни като благодарствени молитви…"',
+          'СЪПРИЧАСТНОСТ':'„…И булки и моми, и майки се стекоха на Пенкината нива ужасени…"',
+          'ТРУД':'„…Усилна жътва кипи из равното Софийско поле…"'
+        }
+      },
+      wall: { label: 'Стена на емпатията' },
+      wordcloud: { label: 'Облак от думи' }
+    }
   }
 };
 
-// ── Start ──
 window.startActivity = function() {
   const val = document.getElementById('name-input').value.trim();
   if (!val) { document.getElementById('name-input').focus(); return; }
@@ -191,23 +179,31 @@ window.startActivity = function() {
   document.getElementById('name-screen').style.display='none';
   document.getElementById('wait-screen').style.display='block';
 
-  // Register student
-  db.ref('sessions/session1/students/'+studentKey+'/name').set(studentName)
-    .catch(err => console.error('Register error:', err));
+  db.ref('.info/connected').on('value', snap => setSynced(snap.val()===true));
 
-  // Listen for connection
-  db.ref('.info/connected').on('value', snap => {
-    setSynced(snap.val()===true);
-  });
-
-  // Listen for current exercise from teacher
-  db.ref('sessions/session1/currentExercise').on('value', snap => {
-    const exId = snap.val();
-    if (!exId) return;
-    if (exId !== currentEx) {
-      currentEx = exId;
-      loadExercise(exId);
-    }
+  // Listen current lesson
+  db.ref('currentLesson').on('value', snap => {
+    const lesson = snap.val();
+    if (!lesson) return;
+    currentLesson = lesson;
+    document.getElementById('lesson-tag').textContent = LESSONS[lesson]?.label || lesson;
+    // Register under correct lesson
+    db.ref(lesson + '/students/' + studentKey + '/name').set(studentName)
+      .catch(err => console.error('Register error:', err));
+    // Listen exercise for this lesson
+    db.ref(lesson + '/currentExercise').on('value', snap2 => {
+      const exId = snap2.val();
+      if (!exId) {
+        currentEx = null;
+        document.getElementById('wait-screen').style.display = 'block';
+        document.getElementById('ex-screen').style.display = 'none';
+        return;
+      }
+      if (exId !== currentEx) {
+        currentEx = exId;
+        loadExercise(lesson, exId);
+      }
+    });
   });
 };
 
@@ -220,25 +216,32 @@ function setSynced(ok) {
   document.getElementById('sync-lbl').textContent = ok?'записано':'свързване...';
 }
 
-function loadExercise(exId) {
+function saveData(path, data) {
+  db.ref(currentLesson+'/students/'+studentKey+'/exercises/'+path)
+    .set({...data, updatedAt: Date.now()})
+    .then(()=>setSynced(true)).catch(()=>setSynced(false));
+}
+
+function loadExercise(lesson, exId) {
   document.getElementById('wait-screen').style.display='none';
   document.getElementById('ex-screen').style.display='block';
-  const ex = EXERCISES[exId];
-  document.getElementById('ex-name-lbl').textContent = ex ? ex.label : exId;
+  const lessonDef = LESSONS[lesson];
+  const ex = lessonDef?.exercises[exId];
+  document.getElementById('ex-name-lbl').textContent = ex?.label || exId;
   document.getElementById('qstrip').textContent='';
   document.getElementById('sbar').textContent='';
   document.getElementById('sbar').className='status-bar';
   const content = document.getElementById('ex-content');
   content.innerHTML='';
   if (exId==='diamond') buildDiamond(content, ex);
-  else if (exId==='thermometer') buildThermometer(content, ex);
   else if (exId==='wall') buildWall(content);
   else if (exId==='wordcloud') buildWordCloud(content);
 }
 
-// ──────────── DIAMOND ────────────
+// ── DIAMOND ──
+let dragged=null, dragSrc=null;
 function buildDiamond(container, ex) {
-  container.innerHTML = `
+  container.innerHTML=`
     <p class="ex-title">Диамантът на ценностите</p>
     <p class="ex-instr">Провлачи думите в клетките на диаманта</p>
     <p class="pool-label">Ценности</p>
@@ -254,32 +257,23 @@ function buildDiamond(container, ex) {
       <div class="d-row"><div class="drop-slot" id="s3"><span class="slot-num">IV</span></div></div>
       <div class="d-row"><div class="drop-slot" id="s4"><span class="slot-num">V</span></div></div>
     </div>`;
-
   const pool = document.getElementById('pool');
-  ex.words.forEach(w => {
-    const chip = makeChip(w);
-    pool.appendChild(chip);
+  ex.words.forEach(w => pool.appendChild(makeChip(w)));
+  pool.ondragover=e=>{e.preventDefault();pool.classList.add('drag-over');};
+  pool.ondragleave=()=>pool.classList.remove('drag-over');
+  pool.ondrop=e=>{e.preventDefault();pool.classList.remove('drag-over');dropToPool();};
+  ['s0','s1','s2','s3','s4'].forEach(id=>{
+    const slot=document.getElementById(id);
+    slot.ondragover=e=>{e.preventDefault();slot.classList.add('drag-over');};
+    slot.ondragleave=()=>slot.classList.remove('drag-over');
+    slot.ondrop=e=>{e.preventDefault();dropToSlot(slot);};
   });
-
-  pool.ondragover = e => { e.preventDefault(); pool.classList.add('drag-over'); };
-  pool.ondragleave = () => pool.classList.remove('drag-over');
-  pool.ondrop = e => { e.preventDefault(); pool.classList.remove('drag-over'); dropToPool(); };
-
-  ['s0','s1','s2','s3','s4'].forEach(id => {
-    const slot = document.getElementById(id);
-    slot.ondragover = e => { e.preventDefault(); slot.classList.add('drag-over'); };
-    slot.ondragleave = () => slot.classList.remove('drag-over');
-    slot.ondrop = e => { e.preventDefault(); dropToSlot(slot); };
-  });
-
-  setTimeout(() => drawConn(), 100);
+  setTimeout(()=>drawConn(),100);
   initTouchDiamond();
 }
-
-let dragged=null, dragSrc=null;
 function makeChip(word) {
-  const chip = document.createElement('div');
-  chip.className='word-chip'; chip.dataset.word=word;
+  const chip=document.createElement('div');
+  chip.className='word-chip';chip.dataset.word=word;
   chip.textContent=word.charAt(0)+word.slice(1).toLowerCase();
   chip.draggable=true;
   chip.ondragstart=e=>{dragged=chip;dragSrc=chip.parentElement;setTimeout(()=>chip.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';};
@@ -287,14 +281,14 @@ function makeChip(word) {
   return chip;
 }
 function dropToSlot(slot) {
-  if(!dragged) return;
+  if(!dragged)return;
   const ex=slot.querySelector('.word-chip');
   if(ex){(dragSrc||document.getElementById('pool')).appendChild(ex);if(!slot.querySelector('.word-chip'))slot.classList.remove('filled');}
   slot.appendChild(dragged);slot.classList.add('filled');
   dragged=null;drawConn();saveDiamond();
 }
 function dropToPool() {
-  if(!dragged) return;
+  if(!dragged)return;
   document.getElementById('pool').appendChild(dragged);
   if(dragSrc&&dragSrc.classList.contains('drop-slot')&&!dragSrc.querySelector('.word-chip'))dragSrc.classList.remove('filled');
   dragged=null;drawConn();saveDiamond();
@@ -302,13 +296,12 @@ function dropToPool() {
 function drawConn() {
   const svg=document.getElementById('csvg'),wrap=document.getElementById('dwrap');
   if(!svg||!wrap)return;
-  svg.setAttribute('viewBox',`0 0 ${wrap.offsetWidth} ${wrap.offsetHeight}`);
+  svg.setAttribute('viewBox','0 0 '+wrap.offsetWidth+' '+wrap.offsetHeight);
   svg.innerHTML='';
   [['s0','s1'],['s0','s2'],['s1','s3'],['s2','s3'],['s3','s4']].forEach(([a,b])=>{
     const sa=document.getElementById(a),sb=document.getElementById(b);
     if(!sa||!sb)return;
-    const wr=wrap.getBoundingClientRect();
-    const ra=sa.getBoundingClientRect(),rb=sb.getBoundingClientRect();
+    const wr=wrap.getBoundingClientRect(),ra=sa.getBoundingClientRect(),rb=sb.getBoundingClientRect();
     const l=document.createElementNS('http://www.w3.org/2000/svg','line');
     l.setAttribute('x1',ra.left-wr.left+ra.width/2);l.setAttribute('y1',ra.top-wr.top+ra.height/2);
     l.setAttribute('x2',rb.left-wr.left+rb.width/2);l.setAttribute('y2',rb.top-wr.top+rb.height/2);
@@ -324,33 +317,25 @@ function saveDiamond() {
     slots[id]=c?c.dataset.word:null;
   });
   const filled=Object.values(slots).filter(Boolean);
-  db.ref('sessions/session1/students/'+studentKey+'/exercises/diamond').set({slots,updatedAt:Date.now()})
-    .then(()=>setSynced(true)).catch(()=>setSynced(false));
-  const ex=EXERCISES.diamond;
+  saveData('diamond',{slots});
+  const ex=LESSONS[currentLesson]?.exercises?.diamond;
   if(filled.length===5){
     document.getElementById('sbar').textContent='Диамантът е завършен!';
     document.getElementById('sbar').className='status-bar done';
     document.getElementById('qstrip').textContent='„Пак жертва! Град да бе паднал, не би тъй убил сърцата…"';
   } else {
-    document.getElementById('sbar').textContent=filled.length>0?filled.length + ' от 5 ценности наредени':'';
-    const words=filled.map(id=>{const c=document.getElementById(id)?.querySelector('.word-chip');return c?.dataset.word;}).filter(Boolean);
-    const q=words.map(w=>ex.quotes[w]).filter(Boolean);
-    if(q.length)document.getElementById('qstrip').textContent=q[Math.floor(Math.random()*q.length)];
+    document.getElementById('sbar').textContent=filled.length>0?filled.length+' от 5 ценности наредени':'';
+    if(ex){const words=filled;const q=words.map(w=>ex.quotes&&ex.quotes[w]).filter(Boolean);if(q.length)document.getElementById('qstrip').textContent=q[Math.floor(Math.random()*q.length)];}
   }
 }
-
-// Touch for diamond
 function initTouchDiamond() {
   let tEl=null,tSrc=null,tClone=null;
   document.addEventListener('touchstart',e=>{
-    const chip=e.target.closest('.word-chip');
-    if(!chip)return;
-    e.preventDefault();
-    tEl=chip;tSrc=chip.parentElement;
-    chip.classList.add('dragging');
+    const chip=e.target.closest('.word-chip');if(!chip)return;e.preventDefault();
+    tEl=chip;tSrc=chip.parentElement;chip.classList.add('dragging');
     const r=chip.getBoundingClientRect();
     tClone=chip.cloneNode(true);
-    tClone.style.cssText=`position:fixed;z-index:9999;opacity:.85;pointer-events:none;width:${r.width}px;left:${r.left}px;top:${r.top}px;margin:0;`;
+    tClone.style.cssText='position:fixed;z-index:9999;opacity:.85;pointer-events:none;width:'+r.width+'px;left:'+r.left+'px;top:'+r.top+'px;margin:0;';
     document.body.appendChild(tClone);
   },{passive:false});
   document.addEventListener('touchmove',e=>{
@@ -361,144 +346,40 @@ function initTouchDiamond() {
     if(tClone)tClone.style.display='none';
     const under=document.elementFromPoint(t.clientX,t.clientY);
     if(tClone)tClone.style.display='';
-    const slot=under?.closest('.drop-slot');
-    if(slot)slot.classList.add('drag-over');
+    const slot=under?.closest('.drop-slot');if(slot)slot.classList.add('drag-over');
   },{passive:false});
   document.addEventListener('touchend',e=>{
-    if(!tEl)return;
-    tEl.classList.remove('dragging');
+    if(!tEl)return;tEl.classList.remove('dragging');
     if(tClone){tClone.remove();tClone=null;}
     document.querySelectorAll('.drop-slot').forEach(s=>s.classList.remove('drag-over'));
     const t=e.changedTouches[0];
     const under=document.elementFromPoint(t.clientX,t.clientY);
-    const slot=under?.closest('.drop-slot');
-    const pool=under?.closest('#pool');
+    const slot=under?.closest('.drop-slot');const pool=under?.closest('#pool');
     dragged=tEl;dragSrc=tSrc;
-    if(slot)dropToSlot(slot);
-    else if(pool||(tSrc&&tSrc.classList.contains('drop-slot')))dropToPool();
+    if(slot)dropToSlot(slot);else if(pool||(tSrc&&tSrc.classList.contains('drop-slot')))dropToPool();
     tEl=null;tSrc=null;
   },{passive:false});
 }
 
-// ──────────── THERMOMETER ────────────
-function buildThermometer(container, ex) {
-  let selectedHero=null, thermoVal=50;
-  container.innerHTML=`
-    <p class="ex-title">Термометър на емоциите</p>
-    <p class="ex-instr">Избери герой и плъзни скалата</p>
-    <div class="thermo-heroes" id="hero-btns"></div>
-    <div class="thermo-wrap" id="thermo-wrap" style="display:none">
-      <div class="thermo-labels">
-        <span class="thermo-lbl">❄ Студ / Безнадеждност</span>
-        <span class="thermo-lbl">🔥 Огън / Живот</span>
-      </div>
-      <div class="thermo-track" id="thermo-track">
-        <div class="thermo-thumb" id="thermo-thumb">50</div>
-      </div>
-      <div class="thermo-val" id="thermo-val">50</div>
-      <div class="thermo-desc" id="thermo-desc"></div>
-    </div>`;
-
-  const heroContainer=document.getElementById('hero-btns');
-  ex.heroes.forEach(h=>{
-    const btn=document.createElement('button');
-    btn.className='hero-btn';btn.textContent=h;
-    btn.onclick=()=>{
-      document.querySelectorAll('.hero-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');selectedHero=h;
-      document.getElementById('thermo-wrap').style.display='block';
-      loadHeroThermo(h);
-    };
-    heroContainer.appendChild(btn);
-  });
-
-  function loadHeroThermo(hero) {
-    db.ref('sessions/session1/students/'+studentKey+'/exercises/thermometer/'+hero.replace(/\s/g,'_')).once('value',snap=>{
-      const v=snap.val();
-      thermoVal=v?v.value:50;
-      updateThumb(thermoVal);
-    });
-  }
-
-  function getDesc(v){
-    if(v<=20)return'Дълбока мъка и безнадеждност';
-    if(v<=40)return'Тъга и умора';
-    if(v<=60)return'Смесени чувства';
-    if(v<=80)return'Надежда и сила';
-    return'Радост и триумф';
-  }
-  function updateThumb(v){
-    const thumb=document.getElementById('thermo-thumb');
-    const val=document.getElementById('thermo-val');
-    const desc=document.getElementById('thermo-desc');
-    if(!thumb)return;
-    thumb.style.left=v+'%';thumb.textContent=v;
-    val.textContent=v;desc.textContent=getDesc(v);
-  }
-
-  const track=document.getElementById('thermo-track');
-  function setFromX(clientX){
-    const r=track.getBoundingClientRect();
-    let pct=Math.round(((clientX-r.left)/r.width)*100);
-    pct=Math.max(0,Math.min(100,pct));
-    thermoVal=pct;updateThumb(pct);saveThermo();
-  }
-  track.addEventListener('mousedown',e=>{
-    setFromX(e.clientX);
-    const move=e2=>setFromX(e2.clientX);
-    const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);};
-    document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);
-  });
-  track.addEventListener('touchstart',e=>{
-    e.preventDefault();setFromX(e.touches[0].clientX);
-    const move=e2=>{e2.preventDefault();setFromX(e2.touches[0].clientX);};
-    const up=()=>{document.removeEventListener('touchmove',move);document.removeEventListener('touchend',up);};
-    document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',up);
-  },{passive:false});
-
-  function saveThermo(){
-    if(!selectedHero)return;
-    const key=selectedHero.replace(/\s/g,'_');
-    db.ref('sessions/session1/students/'+studentKey+'/exercises/thermometer/'+key)
-      .set({hero:selectedHero,value:thermoVal,updatedAt:Date.now()})
-      .then(()=>setSynced(true)).catch(()=>setSynced(false));
-    document.getElementById('sbar').textContent=selectedHero + ': ' + thermoVal + '/100 — ' + getDesc(thermoVal);
-    document.getElementById('sbar').className='status-bar done';
-  }
-}
-
-// ──────────── WALL ────────────
+// ── WALL ──
 function buildWall(container) {
   container.innerHTML=`
     <p class="ex-title">Стена на емпатията</p>
     <p class="ex-instr">Напиши едно изречение — послание към Никола</p>
-    <textarea class="wall-textarea" id="wall-text" maxlength="200" placeholder="Какво бих извикал на Никола..."></textarea>
+    <textarea class="wall-textarea" id="wall-text" maxlength="200" placeholder="Какво бих казал на Никола..."></textarea>
     <div class="char-count"><span id="char-n">0</span>/200</div>
     <div style="text-align:center;margin-top:.8rem">
       <button class="lit-btn" id="wall-send-btn" onclick="sendWall()">Изпрати →</button>
     </div>
     <div class="wall-sent" id="wall-sent">✓ Посланието е изпратено!</div>`;
-
-  document.getElementById('wall-text').addEventListener('input',function(){
-    document.getElementById('char-n').textContent=this.value.length;
+  document.getElementById('wall-text').addEventListener('input',function(){document.getElementById('char-n').textContent=this.value.length;});
+  db.ref(currentLesson+'/students/'+studentKey+'/exercises/wall').once('value',snap=>{
+    const v=snap.val();if(v&&v.text){document.getElementById('wall-text').value=v.text;document.getElementById('char-n').textContent=v.text.length;showWallSent();}
   });
-
-  // Load existing
-  db.ref('sessions/session1/students/'+studentKey+'/exercises/wall').once('value',snap=>{
-    const v=snap.val();
-    if(v&&v.text){
-      document.getElementById('wall-text').value=v.text;
-      document.getElementById('char-n').textContent=v.text.length;
-      showWallSent();
-    }
-  });
-
   window.sendWall=function(){
-    const text=document.getElementById('wall-text').value.trim();
-    if(!text)return;
-    db.ref('sessions/session1/students/'+studentKey+'/exercises/wall')
-      .set({text,name:studentName,updatedAt:Date.now()})
-      .then(()=>{setSynced(true);showWallSent();}).catch(()=>setSynced(false));
+    const text=document.getElementById('wall-text').value.trim();if(!text)return;
+    saveData('wall',{text,name:studentName});
+    showWallSent();
   };
   function showWallSent(){
     document.getElementById('wall-send-btn').style.display='none';
@@ -509,7 +390,7 @@ function buildWall(container) {
   }
 }
 
-// ──────────── WORD CLOUD ────────────
+// ── WORD CLOUD ──
 function buildWordCloud(container) {
   let sentWords=[];
   container.innerHTML=`
@@ -520,51 +401,33 @@ function buildWordCloud(container) {
       <button class="cloud-send" id="cloud-btn" onclick="sendWord()">Изпрати</button>
     </div>
     <div class="cloud-sent-words" id="cloud-sent"></div>
-    <div class="cloud-limit" id="cloud-limit"></div>`;
-
-  document.getElementById('cloud-input').addEventListener('keydown',e=>{
-    if(e.key==='Enter')sendWord();
+    <div style="text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-top:.5rem" id="cloud-limit"></div>`;
+  document.getElementById('cloud-input').addEventListener('keydown',e=>{if(e.key==='Enter')sendWord();});
+  db.ref(currentLesson+'/students/'+studentKey+'/exercises/wordcloud').once('value',snap=>{
+    const v=snap.val();if(v&&v.words){sentWords=[...v.words];renderSentWords();}
   });
-
-  // Load existing
-  db.ref('sessions/session1/students/'+studentKey+'/exercises/wordcloud').once('value',snap=>{
-    const v=snap.val();
-    if(v&&v.words){sentWords=[...v.words];renderSentWords();}
-  });
-
   window.sendWord=function(){
     if(sentWords.length>=5)return;
     const input=document.getElementById('cloud-input');
-    const word=input.value.trim();
-    if(!word)return;
-    sentWords.push(word);
-    input.value='';
-    db.ref('sessions/session1/students/'+studentKey+'/exercises/wordcloud')
-      .set({words:sentWords,name:studentName,updatedAt:Date.now()})
-      .then(()=>setSynced(true)).catch(()=>setSynced(false));
+    const word=input.value.trim();if(!word)return;
+    sentWords.push(word);input.value='';
+    saveData('wordcloud',{words:sentWords,name:studentName});
     renderSentWords();
   };
-
   function renderSentWords(){
-    const cont=document.getElementById('cloud-sent');
-    const lim=document.getElementById('cloud-limit');
-    const btn=document.getElementById('cloud-btn');
+    const cont=document.getElementById('cloud-sent'),lim=document.getElementById('cloud-limit'),btn=document.getElementById('cloud-btn');
     if(!cont)return;
     cont.innerHTML='';
-    sentWords.forEach(w=>{
-      const tag=document.createElement('div');
-      tag.className='cloud-tag';tag.textContent=w;
-      cont.appendChild(tag);
-    });
+    sentWords.forEach(w=>{const tag=document.createElement('div');tag.className='cloud-tag';tag.textContent=w;cont.appendChild(tag);});
     const rem=5-sentWords.length;
-    lim.textContent=rem>0?'Можеш да изпратиш още ' + rem + ' дума' + (rem===1?'':'') + '...':'Достигнат лимит от 5 думи.';
+    lim.textContent=rem>0?'Можеш да изпратиш още '+rem+' дума'+(rem===1?'':'')+'...':'Достигнат лимит от 5 думи.';
     if(sentWords.length>=5){btn.disabled=true;document.getElementById('cloud-input').disabled=true;}
-    document.getElementById('sbar').textContent=sentWords.length>0?sentWords.length + ' дума' + (sentWords.length===1?'':'') + ' изпратена':'';
+    document.getElementById('sbar').textContent=sentWords.length>0?sentWords.length+' дума'+(sentWords.length===1?'':'')+'  изпратена':'';
     document.getElementById('sbar').className=sentWords.length>0?'status-bar done':'status-bar';
   }
 }
 
-window.addEventListener('resize',()=>{ if(currentEx==='diamond') drawConn(); });
+window.addEventListener('resize',()=>{if(currentEx==='diamond')drawConn();});
 </script>
 </body>
 </html>
