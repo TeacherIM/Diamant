@@ -9,43 +9,43 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:#fff;min-height:100vh;padding:1.2rem;font-family:'Cormorant Garamond',Georgia,serif}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #ddd}
-.header h1{font-size:20px;font-style:italic;font-weight:600;color:#1a1a1a}
-.header p{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#888;margin-top:2px}
+.header h1{font-size:26px;font-style:italic;font-weight:600;color:#000}
+.header p{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-top:2px}
 .hright{display:flex;align-items:center;gap:12px}
-.live{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2e7d32;padding:3px 10px;border:1px solid rgba(46,125,50,.4);border-radius:2px}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1b5e20;padding:4px 12px;border:1px solid rgba(27,94,32,.5);border-radius:2px}
 .live-dot{width:6px;height:6px;border-radius:50%;background:#2e7d32;animation:pulse 1.4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.cnt{font-size:11px;color:#555}
-.lesson-badge{font-size:12px;font-style:italic;font-weight:600;color:#555;border:.5px solid #ccc;padding:3px 12px;border-radius:2px}
-.ex-lbl{font-size:12px;font-style:italic;color:#555}
+.cnt{font-size:14px;color:#222}
+.lesson-badge{font-size:15px;font-style:italic;font-weight:600;color:#222;border:1px solid #aaa;padding:4px 14px;border-radius:2px}
+.ex-lbl{font-size:15px;font-style:italic;color:#222}
 .orn{display:flex;align-items:center;gap:8px;margin:.6rem 0 1rem}
 .ol{height:1px;flex:1;background:linear-gradient(to right,transparent,#aaa,transparent)}
 .od{width:5px;height:5px;background:#888;transform:rotate(45deg);flex-shrink:0}
 
 /* Student grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .card{background:#fff;border:1px solid #ddd;border-radius:3px;padding:1.1rem;transition:border-color .3s,transform .2s}
-.card.complete{border-color:#2e7d32}
-.card.partial{border-color:#888}
+.card.complete{border-color:#1b5e20;border-width:2px}
+.card.partial{border-color:#555;border-width:2px}
 .card.waiting{opacity:.55}
 .card.spotlight{border-color:#1a1a1a;transform:scale(1.03);box-shadow:0 0 0 2px rgba(0,0,0,.15)}
 .s-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid #eee}
-.s-name{font-size:16px;font-weight:600;color:#1a1a1a}
-.s-status{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.s-status.done{color:#2e7d32}.s-status.partial{color:#555}.s-status.wait{color:#aaa}
+.s-name{font-size:20px;font-weight:700;color:#000}
+.s-status{font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.s-status.done{color:#1b5e20;font-weight:600}.s-status.partial{color:#333}.s-status.wait{color:#888}
 .mini-d{display:flex;flex-direction:column;align-items:center;gap:4px}
 .mini-row{display:flex;gap:4px;justify-content:center}
 .mini-conn{width:1px;height:7px;background:#ccc}
-.mini-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;min-height:28px;min-width:72px;border:.5px solid #ddd;color:#aaa;background:#f8f8f8;font-family:'Cormorant Garamond',serif}
+.mini-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:6px 10px;min-height:32px;min-width:80px;border:1px solid #ccc;color:#888;background:#f0f0f0;font-family:'Cormorant Garamond',serif}
 .mini-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
 .mini-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
 .mini-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
-.mini-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:9px}
+.mini-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:11px}
 .mini-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
-.mini-wall{font-size:13px;font-style:italic;color:#1a1a1a;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.mini-wall{font-size:15px;font-style:italic;color:#000;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 .mini-cloud{display:flex;flex-wrap:wrap;gap:4px}
-.mini-tag{padding:4px 10px;border:.5px solid #ccc;border-radius:2px;font-size:12px;color:#1a1a1a;background:#f5f5f5;font-family:'Cormorant Garamond',serif}
-.empty-msg{text-align:center;padding:3rem;font-style:italic;font-size:15px;color:#888;grid-column:1/-1}
+.mini-tag{padding:5px 12px;border:1px solid #bbb;border-radius:2px;font-size:14px;color:#000;background:#f0f0f0;font-family:'Cormorant Garamond',serif}
+.empty-msg{text-align:center;padding:3rem;font-style:italic;font-size:18px;color:#555;grid-column:1/-1}
 
 /* Teams grid */
 .teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
@@ -63,8 +63,8 @@ body{background:#fff;min-height:100vh;padding:1.2rem;font-family:'Cormorant Gara
 .team-name.ЛОВЦИ{color:#D35400}
 .team-name.ПСИХОЛОЗИ{color:#8E44AD}
 .team-name.ETNOGRAFI2{color:#2E7D52}
-.team-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;margin-bottom:.4rem}
-.team-name{font-size:20px;font-weight:700;font-family:'Cormorant Garamond',serif}
+.team-label{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#777;margin-bottom:.4rem}
+.team-name{font-size:24px;font-weight:700;font-family:'Cormorant Garamond',serif}
 .team-name.БИОГРАФИ{color:#3A6DB5}
 .team-name.ЕТНОГРАФИ{color:#2E7D52}
 .team-name.АРТ{color:#C05A18}
@@ -75,21 +75,21 @@ body{background:#fff;min-height:100vh;padding:1.2rem;font-family:'Cormorant Gara
 .sp-overlay.open{display:flex}
 .sp-card{background:#fff;border:1px solid #ccc;border-radius:3px;padding:2rem 2.5rem;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;animation:fin .2s ease}
 @keyframes fin{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.sp-name{text-align:center;font-size:22px;font-weight:600;font-style:italic;color:#1a1a1a;margin-bottom:.2rem}
-.sp-sub{text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:1.5rem}
+.sp-name{text-align:center;font-size:28px;font-weight:700;font-style:italic;color:#000;margin-bottom:.2rem}
+.sp-sub{text-align:center;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:1.5rem}
 .big-d{display:flex;flex-direction:column;align-items:center;gap:8px}
 .big-row{display:flex;gap:10px;justify-content:center}
 .big-conn{width:1px;height:14px;background:#ccc}
-.big-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;min-height:52px;min-width:140px;border:1px solid #ddd;color:#aaa;background:#f8f8f8;font-family:'Cormorant Garamond',serif}
+.big-slot{border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;min-height:60px;min-width:155px;border:1px solid #ccc;color:#888;background:#f0f0f0;font-family:'Cormorant Garamond',serif}
 .big-slot.ЛЮБОВ{background:#EDE0CC;border-color:#8B7355;color:#2C1F12}
 .big-slot.НАДЕЖДА{background:#E1F5EE;border-color:#1D9E75;color:#085041}
 .big-slot.ПЕСЕН{background:#FAEEDA;border-color:#EF9F27;color:#412402}
 .big-slot.СЪПРИЧАСТНОСТ{background:#FAECE7;border-color:#D85A30;color:#4A1B0C;font-size:11px}
 .big-slot.ТРУД{background:#F1EFE8;border-color:#888780;color:#2C2C2A}
-.big-wall{font-size:17px;font-style:italic;color:#1a1a1a;line-height:1.9;text-align:center;padding:1rem;border:.5px solid #eee;border-radius:2px;background:#fafafa}
+.big-wall{font-size:20px;font-style:italic;color:#000;line-height:1.9;text-align:center;padding:1rem;border:1px solid #ddd;border-radius:2px;background:#fafafa}
 .big-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.big-tag{padding:7px 18px;border:1px solid #ccc;border-radius:2px;font-size:15px;color:#1a1a1a;background:#f5f5f5;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
-.team-task{font-size:17px;font-style:italic;color:#1a1a1a;line-height:1.9;font-family:'Cormorant Garamond',serif;margin-top:.5rem}
+.big-tag{padding:9px 22px;border:1.5px solid #bbb;border-radius:2px;font-size:18px;color:#000;background:#f0f0f0;font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
+.team-task{font-size:20px;font-style:italic;color:#000;line-height:1.9;font-family:'Cormorant Garamond',serif;margin-top:.5rem}
 .painting-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.2rem;padding:8px 20px;border:1px solid #E07B39;border-radius:3px;background:transparent;color:#C05A18;font-family:'Cormorant Garamond',serif;font-size:14px;cursor:pointer}
 .painting-btn:hover{background:rgba(224,123,57,.08)}
 .painting-img{width:100%;border-radius:3px;margin-top:.8rem;display:none;border:1px solid #eee}
