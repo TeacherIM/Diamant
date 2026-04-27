@@ -176,6 +176,7 @@ const LESSONS = {
   lesson2: {
     label: 'Урок 2',
     exercises: {
+      teams: 'Екипни задачи',
       diamond: 'Диамант на ценностите',
       wall: 'Стена на емпатията',
       wordcloud: 'Облак от думи'
@@ -308,10 +309,17 @@ function renderGrid() {
   const students = Object.entries(studentsData).sort(([,a],[,b])=>(a.name||'').localeCompare(b.name||''));
   grid.innerHTML = '';
   if (currentEx==='teams') {
+    const teamNames = currentLesson==='lesson1'
+      ? ['БИОГРАФИ И ЛЕКСИКОЛОЗИ','ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ','МУЗИКАЛНИ РЕДАКТОРИ']
+      : ['МЕДИИ','ЛОВЦИ НА КОНТРАСТИ','ПСИХОЛОЗИ','ЕТНОГРАФИ'];
+    const colors = currentLesson==='lesson1'
+      ? ['#3A6DB5','#2E7D52','#C05A18','#7B3FA6']
+      : ['#C0392B','#E67E22','#8E44AD','#2E7D52'];
+    const borders = currentLesson==='lesson1'
+      ? ['#5B8DD9','#4CAF7D','#E07B39','#9B59B6']
+      : ['#E74C3C','#F39C12','#9B59B6','#4CAF7D'];
     grid.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">' +
-      ['БИОГРАФИ И ЛЕКСИКОЛОЗИ','ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ','МУЗИКАЛНИ РЕДАКТОРИ'].map((name,i) => {
-        const colors = ['#3A6DB5','#2E7D52','#C05A18','#7B3FA6'];
-        const borders = ['#5B8DD9','#4CAF7D','#E07B39','#9B59B6'];
+      teamNames.map((name,i) => {
         return '<div style="background:#FFFDF9;border:2px solid '+borders[i]+';border-radius:4px;padding:1.2rem 1.4rem;cursor:pointer" onclick="openTeamModal(this.dataset.name)" data-name="'+name+'">' +
           '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAA;margin-bottom:.3rem">Екип</div>' +
           '<div style="font-size:17px;font-weight:700;color:'+colors[i]+';font-family:serif">'+name+'</div>' +
@@ -387,14 +395,15 @@ const PAINTING_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
 window.openTeamModal = function(name) {
   summaryExId = null;
   document.getElementById('m-name').textContent = name;
-  document.getElementById('m-sub').textContent = 'Урок 1 · Екипна задача';
+  const isL1 = currentLesson === 'lesson1';
+  document.getElementById('m-sub').textContent = (isL1 ? 'Урок 1' : 'Урок 2') + ' · Екипна задача';
   const c = document.getElementById('m-content');
-  const task = TEAM_TASKS[name] || '';
+  const task = isL1 ? (TEAM_TASKS[name] || '') : (TEAMS_L2[name] || '');
   let html = '<p style="font-size:16px;font-style:italic;color:#2C1F12;line-height:1.9;font-family:\'Cormorant Garamond\',serif">' + task + '</p>';
   if (name === 'АРТ-ИЗСЛЕДОВАТЕЛИ') {
     html += '<div style="text-align:center;margin-top:1rem"><button onclick="toggleTeamPainting()" style="padding:8px 22px;font-family:\'Cormorant Garamond\',serif;font-size:14px;letter-spacing:.08em;border:1px solid #E07B39;border-radius:2px;background:transparent;color:#C05A18;cursor:pointer">Виж картината</button></div>';
     html += '<img id="team-painting" src="' + PAINTING_B64 + '" style="width:100%;border-radius:3px;margin-top:1rem;border:1px solid #D9C9B0;display:none">';
-    html += '<div id="team-painting-cap" style="font-size:11px;color:#8B7355;text-align:center;margin-top:.4rem;font-style:italic;display:none">Жътва — Владимир Димитров-Майстора</div>';
+    html += '<div id="team-painting-cap" style="font-size:11px;color:#8B7355;text-align:center;margin-top:.4rem;font-style:italic;display:none">Жатва — Владимир Димитров-Майстора</div>';
   }
   c.innerHTML = html;
   // Map name to id for broadcast
@@ -403,6 +412,13 @@ window.openTeamModal = function(name) {
   db.ref(currentLesson+'/spotlight').set('__team__'+teamId);
   db.ref(currentLesson+'/spotlightSummary').set(null);
   document.getElementById('modal').classList.add('open');
+};
+
+const TEAMS_L2 = {
+  "МЕДИИ": "<strong>Задача 1 — Информационна бележка:</strong> Напишете 3 изречения: Кои са Никола и Пенка според разказа и защо са на полето? Използвайте думите: жътва, левент, снаха. Спазвайте изискванията за медийния жанр.<br><br><strong>Задача 2 — Радиорепортаж:</strong> Намерете на стр. 222 описанието на гласа на Пенка. Как бихте го прочели пред микрофон, за да усетят слушателите радостта?<br><br><strong>Задача 3 — Breaking News:</strong> Измислете кратко заглавие за момента, в който песента залива полето.",
+  "ЛОВЦИ НА КОНТРАСТИ": "<strong>Мисия:</strong> Разделете един лист на две колони: Огън и Извор.<br><br><strong>Задача:</strong> Извадете от текста (стр. 221–222) по 3 израза за всяка колона.<br><br>Пример за Огън: адска мараня.<br>Пример за Извор: благодарствена молитва.",
+  "ПСИХОЛОЗИ": "<strong>Мисия:</strong> Проучете отношенията в семейството на Никола (стр. 221).<br><br><strong>Задача:</strong> Подгответе отговор: Защо Никола се усмихва, въпреки че пот се сипе от челото му? Как песента на Пенка променя неговия свят?",
+  "ЕТНОГРАФИ": "<strong>Мисия:</strong> Открийте значението на детайлите.<br><br><strong>Задача:</strong> Защо Пенка е с бяла пребрадка и защо Никола се провиква Еее-ех!? Какво ни казват тези жестове за тяхната любов?"
 };
 
 window.toggleTeamPainting = function() {

@@ -408,8 +408,16 @@ function buildWordCloud(container) {
     <div class="cloud-sent-words" id="cloud-sent"></div>
     <div style="text-align:center;font-size:12px;font-style:italic;color:#8B7355;margin-top:.5rem" id="cloud-limit"></div>`;
   document.getElementById('cloud-input').addEventListener('keydown',e=>{if(e.key==='Enter')sendWord();});
-  db.ref(currentLesson+'/students/'+studentKey+'/exercises/wordcloud').once('value',snap=>{
-    const v=snap.val();if(v&&v.words){sentWords=[...v.words];renderSentWords();}
+
+  // Listen for changes — handles both initial load and reset by teacher
+  db.ref(currentLesson+'/students/'+studentKey+'/exercises/wordcloud').on('value', snap=>{
+    const v=snap.val();
+    if(v&&v.words){
+      sentWords=[...v.words];
+    } else {
+      sentWords=[];
+    }
+    renderSentWords();
   });
   window.sendWord=function(){
     if(sentWords.length>=5)return;
