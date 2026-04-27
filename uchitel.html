@@ -169,6 +169,7 @@ const LESSONS = {
   lesson1: {
     label: 'Урок 1',
     exercises: {
+      teams: 'Екипни задачи',
       wordcloud: 'Облак от думи'
     }
   },
@@ -306,6 +307,19 @@ function renderGrid() {
   const students = Object.entries(studentsData).sort(([,a],[,b])=>(a.name||'').localeCompare(b.name||''));
   if (!students.length) { grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>'; return; }
   grid.innerHTML = '';
+  if (currentEx==='teams') {
+    grid.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">' +
+      ['БИОГРАФИ И ЛЕКСИКОЛОЗИ','ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ','МУЗИКАЛНИ РЕДАКТОРИ'].map((name,i) => {
+        const colors = ['#3A6DB5','#2E7D52','#C05A18','#7B3FA6'];
+        const borders = ['#5B8DD9','#4CAF7D','#E07B39','#9B59B6'];
+        return '<div style="background:#FFFDF9;border:2px solid '+borders[i]+';border-radius:4px;padding:1.2rem 1.4rem;cursor:pointer" onclick="openTeamModal(''+name+'')">' +
+          '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAA;margin-bottom:.3rem">Екип</div>' +
+          '<div style="font-size:17px;font-weight:700;color:'+colors[i]+';font-family:'Cormorant Garamond',serif">'+name+'</div>' +
+        '</div>';
+      }).join('') +
+    '</div>';
+    return;
+  }
   if (currentEx==='wall'||currentEx==='wordcloud') {
     const sd = buildSummaryData(currentEx);
     const sc = document.createElement('div');
@@ -358,6 +372,24 @@ function renderSummaryContent(exId) {
     else { const mx=sorted[0][1]; c.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:.5rem">'+sorted.map(([w,n])=>{const sz=12+Math.round((n/mx)*12);return'<div style="padding:6px 14px;border:1px solid #C4A882;border-radius:2px;background:#FBF6EF;font-family:\'Cormorant Garamond\',serif;font-size:'+sz+'px;color:#4A3728">'+w+(n>1?'<span style="font-size:9px;color:#8B7355;margin-left:4px">×'+n+'</span>':'')+'</div>';}).join('')+'</div>'; }
   }
 }
+
+
+const TEAM_TASKS = {\'БИОГРАФИ И ЛЕКСИКОЛОЗИ\': \'Проучете защо Димитър Стоянов избира псевдонима Елин Пелин. Какво символизира билката пелин и как това се свързва с неговите разкази? Обяснете значението на думите мараня, усилна, прижурено.\', \'ЕТНОГРАФИ\': \'Проучете защо Елин Пелин описва жътвата като празник – защо се пее, защо се обличат бели ризи? Потърсете и други жътварски ритуали.\', \'АРТ-ИЗСЛЕДОВАТЕЛИ\': \'Намерете картината „Жътва" на Владимир Димитров-Майстора. Сравнете нейните цветове с описанието на Елин Пелин в началото на разказа.\', \'МУЗИКАЛНИ РЕДАКТОРИ\': \'Намерете автентична жетварска песен, като не забравяте да отбележите кой я изпълнява.\'};
+
+window.openTeamModal = function(name) {
+  summaryExId = null;
+  document.getElementById('m-name').textContent = name;
+  document.getElementById('m-sub').textContent = 'Урок 1 · Екипна задача';
+  const c = document.getElementById('m-content');
+  const task = TEAM_TASKS[name] || '';
+  c.innerHTML = '<p style="font-size:16px;font-style:italic;color:#2C1F12;line-height:1.9;font-family:\'Cormorant Garamond\',serif">' + task + '</p>';
+  // Map name to id for broadcast
+  const idMap = {'БИОГРАФИ И ЛЕКСИКОЛОЗИ':'БИОГРАФИ','ЕТНОГРАФИ':'ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ':'АРТ','МУЗИКАЛНИ РЕДАКТОРИ':'МУЗИКАЛНИ'};
+  const teamId = idMap[name] || name;
+  db.ref(currentLesson+'/spotlight').set('__team__'+teamId);
+  db.ref(currentLesson+'/spotlightSummary').set(null);
+  document.getElementById('modal').classList.add('open');
+};
 
 window.openSummaryModal = function(exId) {
   summaryExId = exId;
