@@ -149,7 +149,7 @@ const db = firebase.database();
 
 const LESSONS = {
   lesson1: { label:"Урок 1", exercises:{ teams:"Екипни задачи", wordcloud:"Облак от думи" } },
-  lesson2: { label:"Урок 2", exercises:{ diamond:"Диамант на ценностите", wall:"Стена на емпатията", wordcloud:"Облак от думи" } }
+  lesson2: { label:"Урок 2", exercises:{ teams:"Екипни задачи", diamond:"Диамант на ценностите", wall:"Стена на емпатията", wordcloud:"Облак от думи" } }
 };
 
 const TEAMS = [
@@ -287,9 +287,10 @@ function renderGrid() {
   grid.innerHTML = "";
 
   if (currentEx === "teams") {
+    const teamList = (currentLesson === "lesson1") ? TEAMS : TEAMS_L2;
     const tg = document.createElement("div");
     tg.className = "teams-grid";
-    TEAMS.forEach(t => {
+    teamList.forEach(t => {
       const card = document.createElement("div");
       card.className = "team-card " + t.cls;
       card.innerHTML = "<div class='team-label'>Екип</div><div class='team-name " + t.cls + "'>" + t.name + "</div>";
