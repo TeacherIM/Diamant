@@ -309,6 +309,16 @@ function openTeamSpotlight(teamId) {
   c.innerHTML = html;
   document.getElementById("sp-overlay").classList.add("open");
   renderGrid();
+  // Read current showPainting state after DOM is updated
+  if (team.hasPainting && currentLesson) {
+    db.ref(currentLesson + "/showPainting").once("value", s => {
+      const show = s.val() === true;
+      const img = document.getElementById("mon-painting");
+      const cap = document.getElementById("mon-painting-cap");
+      if (img) img.style.display = show ? "block" : "none";
+      if (cap) cap.style.display = show ? "block" : "none";
+    });
+  }
 }
 
 window.togglePainting = function() {
