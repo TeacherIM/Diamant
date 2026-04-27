@@ -269,54 +269,6 @@ function listenLesson(lesson) {
   });
 }
 
-function renderTeams() {
-  const grid = document.getElementById("grid");
-  grid.innerHTML = "<div class=\"teams-grid\">" +
-    TEAMS.map(t =>
-      "<div class=\"team-card " + t.colorClass + "\" onclick=\"openTeamSpotlight('" + t.id + "')\">" +
-        "<div class=\"team-label\">Екип</div>" +
-        "<div class=\"team-name " + t.colorClass + "\">" + t.name + "</div>" +
-      "</div>"
-    ).join("") +
-  "</div>";
-}
-
-function openTeamSpotlight(teamId) {
-  const team = TEAMS.find(t => t.id===teamId);
-  if (!team) return;
-  paintingVisible = false;
-  document.getElementById("sp-name").textContent = team.name;
-  document.getElementById("sp-sub").textContent = "Урок 1 · Екипна задача";
-  const c = document.getElementById("sp-content");
-  c.innerHTML = "<div class=\"team-task\">" + team.task + "</div>" +
-    (team.hasPainting
-      ? "<div style=\"text-align:center\"><button class=\"painting-btn\" onclick=\"togglePainting()\">? Виж картината</button></div>" +
-        "<div class=\"painting-wrap\" id=\"painting-wrap\" style=\"display:none\"><img src=\"" + PAINTING_B64 + "\" alt=\"Жътва\"><div class=\"painting-cap\">Жътва — Владимир Димитров-Майстора</div></div>"
-      : "");
-  document.getElementById("spotlight").classList.add("open");
-}
-
-window.togglePainting = function() {
-  paintingVisible = !paintingVisible;
-  const wrap = document.getElementById("painting-wrap");
-  if (wrap) wrap.style.display = paintingVisible ? "block" : "none";
-};
-
-function getStatus(exData,exId) {
-  if(!exId||!exData) return {cls:"waiting",txt:"чака..."};
-  if(exId==="diamond"){const n=Object.values(exData.slots||{}).filter(Boolean).length;if(n===5)return{cls:"complete",txt:"✓ завършен"};if(n>0)return{cls:"partial",txt:n+"/5"};return{cls:"waiting",txt:"не е започнал"};}
-  if(exId==="wall") return exData.text?{cls:"complete",txt:"✓ изпратено"}:{cls:"waiting",txt:"не е написал"};
-  if(exId==="wordcloud"){const n=(exData.words||[]).length;return n>0?{cls:n>=5?"complete":"partial",txt:n+"/5 думи"}:{cls:"waiting",txt:"не е изпратил"};}
-  return{cls:"waiting",txt:"чака..."};
-}
-
-function miniView(exData,exId) {
-  if(!exId||!exData) return "<div style=\"font-size:11px;font-style:italic;color:#AAAAAA;text-align:center;padding:.5rem\">Изчаква упражнение</div>";
-  if(exId==="diamond"){const slots=exData.slots||{};const layout=[["s0"],["s1","s2"],["s3"],["s4"]];let h="<div class=\"mini-d\">";layout.forEach((row,ri)=>{if(ri>0)h+="<div class=\"mini-conn\"></div>";h+="<div class=\"mini-row\">";row.forEach(id=>{const w=slots[id];h+="<div class=\"mini-slot"+(w?" "+w:"")+"\">"+( w||"—")+"</div>";});h+="</div>";});return h+"</div>";}
-  if(exId==="wall") return "<div class=\"mini-wall\">"+(exData.text||"—")+"</div>";
-  if(exId==="wordcloud"){const words=exData.words||[];return"<div class=\"mini-cloud\">"+words.map(w=>"<div class=\"mini-tag\">"+w+"</div>").join("")+"</div>";}
-  return"";
-}
 
 function renderGrid() {
   const grid = document.getElementById("grid");
