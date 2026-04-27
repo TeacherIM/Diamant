@@ -202,6 +202,7 @@ window.selectLesson = function(lessonId) {
     if (v) highlightExBtn(v);
     currentEx = v;
     document.getElementById('ex-active-lbl').innerHTML = v ? 'Активно: <strong>' + LESSONS[lessonId].exercises[v] + '</strong>' : 'Няма активно упражнение';
+    renderGrid();
   });
 };
 
@@ -305,21 +306,21 @@ function miniView(exData, exId) {
 function renderGrid() {
   const grid = document.getElementById('grid');
   const students = Object.entries(studentsData).sort(([,a],[,b])=>(a.name||'').localeCompare(b.name||''));
-  if (!students.length) { grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>'; return; }
   grid.innerHTML = '';
   if (currentEx==='teams') {
     grid.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">' +
       ['БИОГРАФИ И ЛЕКСИКОЛОЗИ','ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ','МУЗИКАЛНИ РЕДАКТОРИ'].map((name,i) => {
         const colors = ['#3A6DB5','#2E7D52','#C05A18','#7B3FA6'];
         const borders = ['#5B8DD9','#4CAF7D','#E07B39','#9B59B6'];
-        return '<div style="background:#FFFDF9;border:2px solid '+borders[i]+';border-radius:4px;padding:1.2rem 1.4rem;cursor:pointer" onclick="openTeamModal(''+name+'')">' +
+        return '<div style="background:#FFFDF9;border:2px solid '+borders[i]+';border-radius:4px;padding:1.2rem 1.4rem;cursor:pointer" onclick="openTeamModal(this.dataset.name)" data-name="'+name+'">' +
           '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAA;margin-bottom:.3rem">Екип</div>' +
-          '<div style="font-size:17px;font-weight:700;color:'+colors[i]+';font-family:'Cormorant Garamond',serif">'+name+'</div>' +
+          '<div style="font-size:17px;font-weight:700;color:'+colors[i]+';font-family:serif">'+name+'</div>' +
         '</div>';
       }).join('') +
     '</div>';
     return;
   }
+  if (!students.length) { grid.innerHTML='<div class="empty-msg">Чакаме учениците да се включат...</div>'; return; }
   if (currentEx==='wall'||currentEx==='wordcloud') {
     const sd = buildSummaryData(currentEx);
     const sc = document.createElement('div');
