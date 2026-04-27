@@ -295,9 +295,8 @@ function openTeamSpotlight(teamId) {
   const c = document.getElementById("sp-content");
   let html = "<div class='team-task'>" + team.task + "</div>";
   if (team.hasPainting) {
-    html += "<div style='text-align:center;margin-top:1rem'><button class='painting-btn' onclick='togglePainting()'>? Виж картината</button></div>";
-    html += "<img class='painting-img' id='painting-img' src='" + PAINTING + "' alt='Жътва'>";
-    html += "<div class='painting-cap' id='painting-cap'>Жътва — Владимир Димитров-Майстора</div>";
+    html += "<img class='painting-img' id='painting-img' src='" + PAINTING + "' alt='Жатва' style='width:100%;border-radius:3px;margin-top:1rem;border:1px solid #eee'>";
+    html += "<div style='font-size:11px;color:#888;text-align:center;margin-top:.4rem;font-style:italic'>Жатва — Владимир Димитров-Майстора</div>";
   }
   c.innerHTML = html;
   document.getElementById("sp-overlay").classList.add("open");
