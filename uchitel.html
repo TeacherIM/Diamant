@@ -412,6 +412,7 @@ window.toggleTeamPainting = function() {
   const show = img.style.display !== 'block';
   img.style.display = show ? 'block' : 'none';
   if (cap) cap.style.display = show ? 'block' : 'none';
+  db.ref(currentLesson + '/showPainting').set(show);
 };
 
 window.openSummaryModal = function(exId) {

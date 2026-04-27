@@ -214,6 +214,14 @@ function listenLesson(lesson) {
   db.ref(lesson + "/showQR").on("value", snap => {
     document.getElementById("qr-overlay").className = "qr-overlay" + (snap.val() ? " open" : "");
   });
+
+  db.ref(lesson + "/showPainting").on("value", snap => {
+    const show = snap.val() === true;
+    const img = document.getElementById("mon-painting");
+    const cap = document.getElementById("mon-painting-cap");
+    if (img) img.style.display = show ? "block" : "none";
+    if (cap) cap.style.display = show ? "block" : "none";
+  });
 }
 
 // ── Grid rendering ──
@@ -295,8 +303,9 @@ function openTeamSpotlight(teamId) {
   const c = document.getElementById("sp-content");
   let html = "<div class='team-task'>" + team.task + "</div>";
   if (team.hasPainting) {
-    html += "<img class='painting-img' id='painting-img' src='" + PAINTING + "' alt='Жатва' style='width:100%;border-radius:3px;margin-top:1rem;border:1px solid #eee'>";
-    html += "<div style='font-size:11px;color:#888;text-align:center;margin-top:.4rem;font-style:italic'>Жатва — Владимир Димитров-Майстора</div>";
+    const showP = snap && snap.showPainting;
+    html += "<img src='" + PAINTING + "' alt='Жатва' style='width:100%;border-radius:3px;margin-top:1rem;border:1px solid #eee;display:" + (showP ? "block" : "none") + "' id='mon-painting'>";
+    html += "<div style='font-size:11px;color:#888;text-align:center;margin-top:.4rem;font-style:italic;display:" + (showP ? "block" : "none") + "' id='mon-painting-cap'>Жатва — Владимир Димитров-Майстора</div>";
   }
   c.innerHTML = html;
   document.getElementById("sp-overlay").classList.add("open");
