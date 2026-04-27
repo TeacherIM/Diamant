@@ -407,7 +407,7 @@ window.openTeamModal = function(name) {
   }
   c.innerHTML = html;
   // Map name to id for broadcast
-  const idMap = {'БИОГРАФИ И ЛЕКСИКОЛОЗИ':'БИОГРАФИ','ЕТНОГРАФИ':'ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ':'АРТ','МУЗИКАЛНИ РЕДАКТОРИ':'МУЗИКАЛНИ'};
+  const idMap = {'БИОГРАФИ И ЛЕКСИКОЛОЗИ':'БИОГРАФИ','ЕТНОГРАФИ':'ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ':'АРТ','МУЗИКАЛНИ РЕДАКТОРИ':'МУЗИКАЛНИ','ЛОВЦИ НА КОНТРАСТИ':'ЛОВЦИ','ПСИХОЛОЗИ':'ПСИХОЛОЗИ','МЕДИИ':'МЕДИИ'};
   const teamId = idMap[name] || name;
   db.ref(currentLesson+'/spotlight').set('__team__'+teamId);
   db.ref(currentLesson+'/spotlightSummary').set(null);
