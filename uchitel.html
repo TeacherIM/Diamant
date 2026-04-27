@@ -11,33 +11,33 @@ body{background:#FFFFFF;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 
 /* Lesson picker */
 .lesson-picker{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:2rem}
-.picker-title{font-size:24px;font-style:italic;font-weight:600;color:#FBF6EF;text-align:center}
-.picker-sub{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;text-align:center}
+.picker-title{font-size:28px;font-style:italic;font-weight:600;color:#1A1A1A;text-align:center}
+.picker-sub{font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#555;text-align:center}
 .picker-btns{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
-.picker-btn{padding:24px 48px;font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:600;letter-spacing:.06em;border:1px solid #C4A882;border-radius:3px;background:rgba(196,168,130,.06);color:#FBF6EF;cursor:pointer;transition:all .2s;text-align:center}
-.picker-btn:hover{background:rgba(196,168,130,.16);border-color:#8B7355}
+.picker-btn{padding:28px 56px;font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;font-weight:600;letter-spacing:.06em;border:1px solid #ccc;border-radius:3px;background:#f9f9f9;color:#1A1A1A;cursor:pointer;transition:all .2s;text-align:center}
+.picker-btn:hover{background:#f0f0f0;border-color:#888}
 .picker-btn span{display:block;font-size:11px;font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:#8B7355;margin-top:6px}
 
 /* Main panel */
 #main-panel{display:none}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid rgba(196,168,130,.3)}
-.header h1{font-size:20px;font-style:italic;font-weight:600;color:#FBF6EF}
-.header p{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-top:2px}
+.header h1{font-size:24px;font-style:italic;font-weight:600;color:#1A1A1A}
+.header p{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#555555;margin-top:2px}
 .hright{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.live{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5A7A4A;padding:3px 10px;border:1px solid rgba(90,122,74,.4);border-radius:2px}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#2e7d32;padding:4px 12px;border:1px solid rgba(46,125,50,.4);border-radius:2px}
 .live-dot{width:6px;height:6px;border-radius:50%;background:#5A7A4A;animation:pulse 1.4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.cnt{font-size:11px;color:#8B7355}
-.lesson-badge{font-size:12px;font-style:italic;font-weight:600;color:#C4A882;border:.5px solid rgba(196,168,130,.4);padding:3px 12px;border-radius:2px;cursor:pointer}
-.lesson-badge:hover{background:rgba(196,168,130,.1)}
+.cnt{font-size:13px;color:#555}
+.lesson-badge{font-size:14px;font-style:italic;font-weight:600;color:#555;border:.5px solid #ccc;padding:4px 14px;border-radius:2px;cursor:pointer}
+.lesson-badge:hover{background:#f5f5f5}
 
-.ex-panel{background:rgba(196,168,130,.06);border:1px solid rgba(196,168,130,.2);border-radius:3px;padding:1rem 1.2rem;margin-bottom:1rem}
-.ex-panel-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:.8rem}
+.ex-panel{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:3px;padding:1rem 1.2rem;margin-bottom:1rem}
+.ex-panel-title{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#555;margin-bottom:.8rem}
 .ex-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:.8rem}
-.ex-btn{padding:14px 28px;font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.08em;border:1px solid rgba(196,168,130,.4);border-radius:2px;background:transparent;color:#C4A882;cursor:pointer;transition:all .15s}
-.ex-btn:hover{border-color:#8B7355;color:#FBF6EF}
-.ex-btn.active{background:#8B7355;color:#FFFDF9;border-color:#8B7355}
-.ex-active-lbl{font-size:12px;font-style:italic;color:#8B7355}
+.ex-btn{padding:14px 28px;font-family:'Cormorant Garamond',serif;font-size:28px;letter-spacing:.08em;border:1px solid #ccc;border-radius:2px;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.ex-btn:hover{border-color:#333;color:#1A1A1A}
+.ex-btn.active{background:#333;color:#fff;border-color:#333}
+.ex-active-lbl{font-size:15px;font-style:italic;color:#555}
 .ex-active-lbl strong{color:#FBF6EF}
 .danger-btn{padding:5px 14px;font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(180,80,60,.4);border-radius:2px;background:transparent;color:#B4503C;cursor:pointer;transition:background .15s}
 .danger-btn:hover{background:rgba(180,80,60,.08)}
@@ -45,14 +45,14 @@ body{background:#FFFFFF;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 .qr-btn:hover{background:rgba(196,168,130,.1)}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
-.card{background:#FFFDF9;border:1px solid #D9C9B0;border-radius:3px;padding:.9rem;cursor:pointer;transition:border-color .2s}
+.card{background:#FFFFFF;border:1px solid #D9C9B0;border-radius:3px;padding:.9rem;cursor:pointer;transition:border-color .2s}
 .card:hover{border-color:#8B7355}
 .card.complete{border-color:#8B7355}
 .card.partial{border-color:#C4A882}
 .card.waiting{opacity:.6}
 .s-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px;border-bottom:.5px solid rgba(196,168,130,.3)}
-.s-name{font-size:13px;font-weight:600;color:#2C1F12}
-.s-status{font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.s-name{font-size:16px;font-weight:600;color:#1A1A1A}
+.s-status{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .s-status.done{color:#5A7A4A}
 .s-status.partial{color:#8B7355}
 .s-status.wait{color:#C4A882}
@@ -72,11 +72,11 @@ body{background:#FFFFFF;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,14,8,.88);z-index:100;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.open{display:flex}
-.modal-card{background:#FFFDF9;border:1px solid #C4A882;border-radius:3px;padding:2rem 2.5rem;max-width:520px;width:100%;position:relative;max-height:90vh;overflow-y:auto;animation:fin .18s ease}
+.modal-card{background:#FFFFFF;border:1px solid #C4A882;border-radius:3px;padding:2rem 2.5rem;max-width:520px;width:100%;position:relative;max-height:90vh;overflow-y:auto;animation:fin .18s ease}
 @keyframes fin{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .modal-close{position:absolute;top:.8rem;right:1rem;font-size:20px;color:#C4A882;cursor:pointer;background:none;border:none;font-family:'Cormorant Garamond',serif}
-.modal-name{text-align:center;font-size:20px;font-weight:600;font-style:italic;color:#2C1F12;margin-bottom:.2rem}
-.modal-sub{text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8B7355;margin-bottom:1.5rem}
+.modal-name{text-align:center;font-size:24px;font-weight:600;font-style:italic;color:#1A1A1A;margin-bottom:.2rem}
+.modal-sub{text-align:center;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:1.5rem}
 
 .big-d{display:flex;flex-direction:column;align-items:center;gap:8px}
 .big-row{display:flex;gap:10px;justify-content:center}
@@ -94,7 +94,7 @@ body{background:#FFFFFF;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
 .orn{display:flex;align-items:center;gap:8px;margin:.8rem 0}
 .ol{height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(196,168,130,.4),transparent)}
 .od{width:5px;height:5px;background:#8B7355;transform:rotate(45deg);flex-shrink:0}
-.empty-msg{text-align:center;padding:2.5rem;font-style:italic;font-size:14px;color:#8B7355;grid-column:1/-1}
+.empty-msg{text-align:center;padding:2.5rem;font-style:italic;font-size:16px;color:#888;grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -322,7 +322,7 @@ function renderGrid() {
       teamNames.map((name,i) => {
         return '<div style="background:#FFFDF9;border:2px solid '+borders[i]+';border-radius:4px;padding:1.2rem 1.4rem;cursor:pointer" onclick="openTeamModal(this.dataset.name)" data-name="'+name+'">' +
           '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAA;margin-bottom:.3rem">Екип</div>' +
-          '<div style="font-size:17px;font-weight:700;color:'+colors[i]+';font-family:serif">'+name+'</div>' +
+          '<div style="font-size:21px;font-weight:700;color:'+colors[i]+';font-family:serif">'+name+'</div>' +
         '</div>';
       }).join('') +
     '</div>';
@@ -407,7 +407,7 @@ window.openTeamModal = function(name) {
   }
   c.innerHTML = html;
   // Map name to id for broadcast
-  const idMap = {'БИОГРАФИ И ЛЕКСИКОЛОЗИ':'БИОГРАФИ','ЕТНОГРАФИ':'ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ':'АРТ','МУЗИКАЛНИ РЕДАКТОРИ':'МУЗИКАЛНИ','ЛОВЦИ НА КОНТРАСТИ':'ЛОВЦИ','ПСИХОЛОЗИ':'ПСИХОЛОЗИ','МЕДИИ':'МЕДИИ'};
+  const idMap = {'БИОГРАФИ И ЛЕКСИКОЛОЗИ':'БИОГРАФИ','ЕТНОГРАФИ':'ЕТНОГРАФИ','АРТ-ИЗСЛЕДОВАТЕЛИ':'АРТ','МУЗИКАЛНИ РЕДАКТОРИ':'МУЗИКАЛНИ'};
   const teamId = idMap[name] || name;
   db.ref(currentLesson+'/spotlight').set('__team__'+teamId);
   db.ref(currentLesson+'/spotlightSummary').set(null);
