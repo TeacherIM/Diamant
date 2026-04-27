@@ -180,6 +180,11 @@ window.startActivity = function() {
   document.getElementById('wait-screen').style.display='block';
 
   db.ref('.info/connected').on('value', snap => setSynced(snap.val()===true));
+  // Listen for session reset
+  db.ref('reset').on('value', snap => {
+    if (snap.val() === true) window.location.reload();
+  });
+
 
   // Listen current lesson
   db.ref('currentLesson').on('value', snap => {

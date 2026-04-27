@@ -98,8 +98,18 @@ body{background:#2C2318;min-height:100vh;padding:1.2rem;font-family:'Cormorant G
   <p style="font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:#8B7355">teacherim.github.io/Diamant/uchenick.html</p>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+// Listen for session reset
+db.ref('reset').on('value', snap => {
+  if (snap.val() === true) window.location.reload();
+});
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
+// Listen for session reset
+db.ref('reset').on('value', snap => {
+  if (snap.val() === true) window.location.reload();
+});
+</script>
 <script>
 firebase.initializeApp({
   apiKey:"AIzaSyAKOl0KE94gHgNNac1qpEth7BtKFfOQkpo",
@@ -237,6 +247,11 @@ function openSummarySpotlight(exId) {
   renderMonSummary(exId);
   document.getElementById('spotlight').classList.add('open');
 }
+
+// Listen for session reset
+db.ref('reset').on('value', snap => {
+  if (snap.val() === true) window.location.reload();
+});
 </script>
 </body>
 </html>
