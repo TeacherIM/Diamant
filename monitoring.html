@@ -303,9 +303,8 @@ function openTeamSpotlight(teamId) {
   const c = document.getElementById("sp-content");
   let html = "<div class='team-task'>" + team.task + "</div>";
   if (team.hasPainting) {
-    const showP = snap && snap.showPainting;
-    html += "<img src='" + PAINTING + "' alt='Жатва' style='width:100%;border-radius:3px;margin-top:1rem;border:1px solid #eee;display:" + (showP ? "block" : "none") + "' id='mon-painting'>";
-    html += "<div style='font-size:11px;color:#888;text-align:center;margin-top:.4rem;font-style:italic;display:" + (showP ? "block" : "none") + "' id='mon-painting-cap'>Жатва — Владимир Димитров-Майстора</div>";
+    html += "<img src='" + PAINTING + "' alt='Жатва' style='width:100%;border-radius:3px;margin-top:1rem;border:1px solid #eee;display:none' id='mon-painting'>";
+    html += "<div style='font-size:11px;color:#888;text-align:center;margin-top:.4rem;font-style:italic;display:none' id='mon-painting-cap'>Жатва — Владимир Димитров-Майстора</div>";
   }
   c.innerHTML = html;
   document.getElementById("sp-overlay").classList.add("open");
