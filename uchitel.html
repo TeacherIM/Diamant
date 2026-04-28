@@ -247,6 +247,7 @@ function highlightExBtn(exId) {
 
 window.setEx = function(exId) {
   if (exId !== 'etymology') db.ref(currentLesson + '/showEtymology').set(false);
+  else db.ref(currentLesson + '/showEtymology').set(true);
   db.ref(currentLesson + '/currentExercise').set(exId || null);
   currentEx = exId;
   highlightExBtn(exId);
